@@ -3,12 +3,31 @@
         <v-container>
             <h1 class="mb-4">Bem-vindo!</h1>
             <div class="d-flex flex-column ga-4">
-                <v-text-field label="Endereço de e-mail"></v-text-field>
-                <v-text-field label="Senha"></v-text-field>
-                <p>Esqueceu a senha?</p>
-                <v-btn>Login</v-btn>
-                <v-btn>Cadastre-se</v-btn>
-                <v-btn>Entrar com o Google</v-btn>
+                <v-text-field 
+                rounded="lg" 
+                label="Endereço de e-mail"></v-text-field>
+                <v-text-field 
+                label="Senha"
+                rounded="lg"
+                color="blue-dark"></v-text-field>
+                <p class="font-bold color-blue">Esqueceu a senha?</p>
+                <v-btn
+                variant="flat"
+                color="blue-dark"
+                rounded="lg">Login</v-btn>
+                <v-btn
+                variant="flat"
+                color="blue-dark"
+                rounded="lg">Cadastre-se</v-btn>
+                <v-btn
+                color="grey"
+                variant="flat">
+                    <v-icon
+                    icon="mdi-google"
+                    color="pink"
+                    start></v-icon>
+                    Entrar com o Google
+                </v-btn>
             </div>
         </v-container>
     </v-layout>
