@@ -5,11 +5,13 @@
             <div class="d-flex flex-column ga-4">
                 <v-text-field 
                 rounded="lg" 
-                label="Endereço de e-mail"></v-text-field>
+                label="E-mail"
+                variant="outlined"></v-text-field>
                 <v-text-field 
                 label="Senha"
                 rounded="lg"
-                color="blue-dark"></v-text-field>
+                color="blue-dark"
+                variant="outlined"></v-text-field>
                 <p class="font-bold color-blue">Esqueceu a senha?</p>
                 <v-btn
                 variant="flat"
