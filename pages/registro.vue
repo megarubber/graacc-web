@@ -20,18 +20,18 @@
                 rounded="lg"
                 placeholder="Crie a sua senha"
                 color="blue-dark"
-								:type="show ? 'text' : 'password'"
-								:append-icon="show ?'mdi-eye': 'mdi-eye-off'"
-								@click:append="show = !show"
+				:type="show ? 'text' : 'password'"
+				:append-icon="show ?'mdi-eye': 'mdi-eye-off'"
+				@click:append="show = !show"
                 variant="outlined"></v-text-field>
                 <v-text-field 
                 label="Confirme a sua senha"
                 rounded="lg"
                 placeholder="Confirme a sua senha"
                 color="blue-dark"
-								:type="show_confirm ? 'text' : 'password'"
-								:append-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
-								@click:append="show_confirm = !show_confirm"
+				:type="show_confirm ? 'text' : 'password'"
+				:append-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
+				@click:append="show_confirm = !show_confirm"
                 variant="outlined"></v-text-field>
                 <v-btn
                 variant="flat"
@@ -45,12 +45,12 @@
 <script lang="ts">
 export default defineComponent({
     name: 'Registro',
-	  data() {
-			return {
-				show: false,
-				show_confirm: false
-			}
-		}
+	data() {
+        return {
+            show: false,
+            show_confirm: false
+        }
+	}
 });
 </script>
 

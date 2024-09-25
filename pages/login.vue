@@ -10,10 +10,12 @@
                 <v-text-field 
                 label="Senha"
                 rounded="lg"
-								type="password"
                 color="blue-dark"
+                :type="show ? 'text' : 'password'"
+				:append-icon="show ?'mdi-eye': 'mdi-eye-off'"
+				@click:append="show = !show"
                 variant="outlined"></v-text-field>
-                <p class="font-bold color-blue">Esqueceu a senha?</p>
+                <p class="font-weight-bold text-primary">Esqueceu a senha?</p>
                 <v-btn
                 variant="flat"
                 color="blue-dark"
@@ -29,7 +31,7 @@
                     icon="mdi-google"
                     color="pink"
                     start></v-icon>
-										<p>Entrar com o Google</p>
+					Entrar com o Google
                 </v-btn>
             </div>
         </v-container>
@@ -39,6 +41,9 @@
 <script lang="ts">
 export default defineComponent({
     name: 'LoginPage',
+    data() {
+        return { show: false }
+	}
 })
 </script>
 
