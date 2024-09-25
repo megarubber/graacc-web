@@ -1,7 +1,7 @@
 <template>
     <v-layout>
         <v-container>
-            <h1 class="mb-4">Bem-vindo!</h1>
+            <h1 class="text-center mb-4 font-weight-bold">Bem-vindo!</h1>
             <div class="d-flex flex-column ga-4">
                 <v-text-field 
                 rounded="lg" 
@@ -10,6 +10,7 @@
                 <v-text-field 
                 label="Senha"
                 rounded="lg"
+								type="password"
                 color="blue-dark"
                 variant="outlined"></v-text-field>
                 <p class="font-bold color-blue">Esqueceu a senha?</p>
@@ -28,7 +29,7 @@
                     icon="mdi-google"
                     color="pink"
                     start></v-icon>
-                    Entrar com o Google
+										<p>Entrar com o Google</p>
                 </v-btn>
             </div>
         </v-container>
