@@ -1,7 +1,7 @@
 <template>
     <v-layout>
         <v-container>
-            <h1 class="font-weight-bold mb-4">Sign up</h1>
+            <h1 class="font-weight-bold mb-4">Cadastro</h1>
             <p class="mb-4">Crie sua conta para começar</p>
             <div class="d-flex flex-column ga-4">
                 <v-text-field 

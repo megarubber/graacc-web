@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <ScheduleXCalendar :calendar-app="this.calendarApp" />
   </div>
@@ -29,20 +29,7 @@ export default defineComponent({
         createViewWeek(),
         createViewMonthGrid(),
       ],
-      events: [
-        {
-          id: 1,
-          title: 'Event 1',
-          start: '2023-12-19',
-          end: '2023-12-19',
-        },
-        {
-          id: 2,
-          title: 'Event 2',
-          start: '2023-12-20 12:00',
-          end: '2023-12-20 13:00',
-        },
-      ],
+      events: [ ],
     });
 
     return { calendarApp };
