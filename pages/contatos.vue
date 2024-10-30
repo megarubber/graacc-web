@@ -1,9 +1,7 @@
 <template>
     <v-layout>
         <v-container>
-            <Header>
-
-            </Header>
+            <TheHeader/>
             <h1 class = "mb-4">Contatos do GRAAC</h1>
             <div class = "cards-contatos">
                 <v-card
@@ -26,8 +24,7 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue';
-    import Header from '@/components/header.vue'; 
+    import { defineComponent } from 'vue'; 
     export default defineComponent({
         name: 'ContactsPage',
         data(){

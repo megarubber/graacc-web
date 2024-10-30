@@ -1,7 +1,7 @@
 <template>
     <v-layout>
         <v-container>
-            <Header></Header>
+            <TheHeader/>
             <h1 class="mb-4">Próximos Exames</h1>
             <div class="d-flex flex-column ga-4">
                 <v-card
@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from '@/components/header.vue';
 export default defineComponent({
     name: 'ExamsPage',
     data() {
