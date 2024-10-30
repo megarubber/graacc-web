@@ -11,7 +11,7 @@
                 variant="outlined"></v-text-field>
                 <div class="d-flex flex-row">
                     <p class="mb-4 mr-2">Lembrou sua senha?</p>
-                    <a href="#" class="font-weight-bold">Faça login</a>
+                    <a href="/login" class="font-weight-bold">Faça login</a>
                 </div>
                 <v-btn
                 variant="flat"
