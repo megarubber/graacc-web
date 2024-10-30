@@ -1,12 +1,9 @@
 <template>
     <v-layout>
         <v-container>
-            <v-tabs>
-                <v-tab to="/exames">Exames</v-tab>
-                <v-tab to="/calendario">Calendário</v-tab>
-                <v-tab to="/contatos">Contatos</v-tab>
-                <v-tab to="/notificacoes">Notificações</v-tab>
-            </v-tabs>
+            <Header>
+
+            </Header>
             <h1 class = "mb-4">Contatos do GRAAC</h1>
             <div class = "cards-contatos">
                 <v-card
@@ -29,6 +26,8 @@
 </template>
 
 <script>
+    import { defineComponent } from 'vue';
+    import Header from '@/components/header.vue'; 
     export default defineComponent({
         name: 'ContactsPage',
         data(){
