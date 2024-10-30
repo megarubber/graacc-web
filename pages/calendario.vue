@@ -23,11 +23,11 @@ export default defineComponent({
   setup() {
     const calendarApp = createCalendar({
       selectedDate: '2023-12-19',
+      locale: 'pt-BR',
       views: [
         createViewDay(),
         createViewWeek(),
         createViewMonthGrid(),
-        createViewMonthAgenda(),
       ],
       events: [
         {
