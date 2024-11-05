@@ -3,11 +3,13 @@
         <v-container>
             <h1 class="text-center mb-4 font-weight-bold">Bem-vindo!</h1>
             <div class="d-flex flex-column ga-4">
-                <v-text-field 
-                rounded="lg" 
+                <v-text-field
+                v-model="user.email"
+                rounded="lg"
                 label="E-mail"
                 variant="outlined"></v-text-field>
-                <v-text-field 
+                <v-text-field
+                v-model="user.senha"
                 label="Senha"
                 rounded="lg"
                 color="blue-dark"
@@ -19,11 +21,13 @@
                 <v-btn
                 variant="flat"
                 color="blue-dark"
-                rounded="lg">Login</v-btn>
+                rounded="lg"
+                @click="login()">Login</v-btn>
                 <v-btn
                 variant="flat"
                 color="blue-dark"
-                rounded="lg">Cadastre-se</v-btn>
+                rounded="lg"
+                to="/registro">Cadastre-se</v-btn>
                 <v-btn
                 color="grey"
                 variant="flat">
@@ -39,11 +43,30 @@
 </template>
 
 <script lang="ts">
+import { useAuthStore } from '~/store/auth'
+
 export default defineComponent({
     name: 'LoginPage',
     data() {
-        return { show: false }
-	}
+        return {
+            user: {
+                email: '',
+                senha: ''
+            },
+            show: false,
+            auth: useAuthStore(),
+            authenticated: storeToRefs(useAuthStore()),
+        }
+	},
+    methods: {
+        async login() {
+            await this.auth.authenticateUser(this.user)
+
+            if (this.authenticated) {
+                this.$router.push('/')
+            }
+        }
+    },
 })
 </script>
 
