@@ -14,11 +14,11 @@
                             {{ formatDate(exam.data) }}
                         </v-card-title>
                         <template v-slot:append>
-                            <v-chip variant="flat" color="green">Sala {{ exam.room }}</v-chip>
+                            <v-chip variant="flat" color="green">Sala {{ exam.local }}</v-chip>
                         </template>
                     </v-card-item>
                     <v-card-subtitle>
-                        {{ exam.name }}
+                        {{ exam.titulo }}
                     </v-card-subtitle>
                     <v-card-actions>
                         <v-btn variant="flat" rounded="xl" color="blue-dark">
@@ -32,25 +32,27 @@
 </template>
 
 <script lang="ts">
-import getExams from '~/utils/api/exams/getUserExams'
+import type Exam from '~/interfaces/exam';
+import getUserExams from '~/utils/api/exams/getUserExams'
 
 export default defineComponent({
     name: 'ExamsPage',
+    data() {
+        return {
+            exams: ref([] as Exam[])
+        }
+    },
     setup() {
         definePageMeta({
             middleware: 'auth',
         })
     },
     async mounted() {
-        const exams = await getExams()
-        console.log(exams)
-
-        return {
-            exams
-        }
+        this.exams = await getUserExams()
     },
     methods: {
-        formatDate(date: Date) {
+        formatDate(event_date: string) {
+            const date = new Date(event_date)
             const formattedDate = date.toLocaleDateString('pt-BR')
             const formattedTime = date.toLocaleTimeString('pt-BR', {
                 hour: '2-digit',
