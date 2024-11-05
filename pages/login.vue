@@ -1,6 +1,13 @@
 <template>
     <v-layout>
         <v-container>
+            <v-snackbar
+                v-model="alert"
+                location="top end"
+                color="error"
+            >
+                {{ alert_message }}
+            </v-snackbar>
             <h1 class="text-center mb-4 font-weight-bold">Bem-vindo!</h1>
             <div class="d-flex flex-column ga-4">
                 <v-text-field
@@ -51,19 +58,27 @@ export default defineComponent({
         return {
             user: {
                 email: '',
-                senha: ''
+                senha: '',
             },
             show: false,
             auth: useAuthStore(),
             authenticated: storeToRefs(useAuthStore()),
+            alert: false,
+            alert_message: '',
         }
 	},
     methods: {
         async login() {
-            await this.auth.authenticateUser(this.user)
+            try {
+                await this.auth.authenticateUser(this.user)
 
-            if (this.authenticated) {
-                this.$router.push('/')
+                if (this.authenticated) {
+                    this.$router.push('/')
+                }
+            }
+            catch (error: any) {
+                this.alert = true
+                this.alert_message = error.response._data.mensagem
             }
         }
     },
