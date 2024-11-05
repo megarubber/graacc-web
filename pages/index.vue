@@ -14,7 +14,7 @@
                             {{ formatDate(exam.data) }}
                         </v-card-title>
                         <template v-slot:append>
-                            <v-chip variant="flat" color="green">Sala {{ exam.local }}</v-chip>
+                            <v-chip variant="flat" color="green">{{ exam.local }}</v-chip>
                         </template>
                     </v-card-item>
                     <v-card-subtitle>
