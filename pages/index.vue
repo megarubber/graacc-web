@@ -11,7 +11,7 @@
                 >
                     <v-card-item>
                         <v-card-title>
-                            {{ formatDate(exam.date) }}
+                            {{ formatDate(exam.data) }}
                         </v-card-title>
                         <template v-slot:append>
                             <v-chip variant="flat" color="green">Sala {{ exam.room }}</v-chip>
@@ -32,22 +32,21 @@
 </template>
 
 <script lang="ts">
+import getExams from '~/utils/api/exams/getUserExams'
+
 export default defineComponent({
     name: 'ExamsPage',
-    data() {
+    setup() {
+        definePageMeta({
+            middleware: 'auth',
+        })
+    },
+    async mounted() {
+        const exams = await getExams()
+        console.log(exams)
+
         return {
-            exams: [
-                {
-                    name: "Exame 1",
-                    date: new Date(2024, 9, 2, 14),
-                    room: "21",
-                },
-                {
-                    name: "Exame 2",
-                    date: new Date(2024, 10, 13, 15),
-                    room: "14",
-                }
-            ]
+            exams
         }
     },
     methods: {
@@ -59,7 +58,7 @@ export default defineComponent({
             }).replace(':', 'h')
             return `${formattedDate} - ${formattedTime}`
         }
-    }
+    },
 })
 </script>
 
