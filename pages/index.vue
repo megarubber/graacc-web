@@ -1,7 +1,6 @@
 <template>
     <v-layout>
         <v-container>
-            <TheHeader/>
             <h1 class="mb-4">Próximos Exames</h1>
             <div class="d-flex flex-column ga-4">
                 <v-card
@@ -12,14 +11,14 @@
                 >
                     <v-card-item>
                         <v-card-title>
-                            {{ formatDate(exam.date) }}
+                            {{ formatDate(exam.data) }}
                         </v-card-title>
                         <template v-slot:append>
-                            <v-chip variant="flat" color="green">Sala {{ exam.room }}</v-chip>
+                            <v-chip variant="flat" color="green">{{ exam.local }}</v-chip>
                         </template>
                     </v-card-item>
                     <v-card-subtitle>
-                        {{ exam.name }}
+                        {{ exam.titulo }}
                     </v-card-subtitle>
                     <v-card-actions>
                         <v-btn variant="flat" rounded="xl" color="blue-dark">
@@ -33,27 +32,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import type Exam from '~/interfaces/exam';
+import getUserExams from '~/utils/api/exams/getUserExams'
+
 export default defineComponent({
     name: 'ExamsPage',
     data() {
         return {
-            exams: [
-                {
-                    name: "Exame 1",
-                    date: new Date(2024, 9, 2, 14),
-                    room: "21",
-                },
-                {
-                    name: "Exame 2",
-                    date: new Date(2024, 10, 13, 15),
-                    room: "14",
-                }
-            ]
+            exams: ref([] as Exam[])
         }
     },
+    setup() {
+        definePageMeta({
+            middleware: 'auth',
+        })
+    },
+    async mounted() {
+        this.exams = await getUserExams()
+    },
     methods: {
-        formatDate(date: Date) {
+        formatDate(event_date: string) {
+            const date = new Date(event_date)
             const formattedDate = date.toLocaleDateString('pt-BR')
             const formattedTime = date.toLocaleTimeString('pt-BR', {
                 hour: '2-digit',
@@ -61,7 +60,7 @@ export default defineComponent({
             }).replace(':', 'h')
             return `${formattedDate} - ${formattedTime}`
         }
-    }
+    },
 })
 </script>
 

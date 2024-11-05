@@ -11,11 +11,18 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "nuxt": "^3.12.4",
+    "@pinia/nuxt": "^0.7.0",
+    "@schedule-x/theme-default": "^2.4.1",
+    "@schedule-x/vue": "^2.3.1",
+    "pinia": "2.2",
     "vue": "latest"
   },
   "devDependencies": {
+    "nuxt": "^3.14.0",
     "vite-plugin-vuetify": "^2.0.4",
     "vuetify": "^3.7.0"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
