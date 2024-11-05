@@ -16,7 +16,6 @@ export const useAuthStore = defineStore('auth', {
       })
 
       if (response) {
-        console.log(response)
         const token = useCookie('token')
         token.value = response.token
         this.authenticated = true
