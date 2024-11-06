@@ -29,7 +29,7 @@
 
 <script lang="ts">
 export default defineComponent({
-    name: 'ExamsPage',
+    name: 'NotificationsPage',
     data() {
         return {
             exams: [
