@@ -1,6 +1,13 @@
 <template>
     <v-layout>
         <v-container>
+            <v-snackbar
+                v-model="alert"
+                location="top end"
+                color="error"
+            >
+                {{ alert_message }}
+            </v-snackbar>
             <h1 class="font-weight-bold mb-4">Cadastro</h1>
             <p class="mb-4">Crie sua conta para começar</p>
             <div class="d-flex flex-column ga-4">
@@ -68,6 +75,19 @@ export default defineComponent({
   },
   methods: {
     async register() {
+      const testEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      if(!testEmail.test(this.user.email)) {
+        this.alert = true
+        this.alert_message = 'E-mail inválido'
+        return
+      }
+
+      if(this.user.senha.length <= 0) {
+        this.alert = true
+        this.alert_message = 'Senha vazia'
+        return
+      }
+
       if(this.user.senha != this.user.confirme_senha) {
         this.alert = true
         this.alert_message = 'Senhas estão diferentes'
@@ -75,7 +95,12 @@ export default defineComponent({
       }
 
       try { 
-        const userRegister = await createUser(this.user)
+        const userRegister = await createUser({
+          nome: this.user.nome,
+          email: this.user.email,
+          senha: this.user.senha,
+          cadastro_confirmado: false
+        })
         if (userRegister) this.$router.push('/login')
       }
       catch (error: any) {
@@ -86,4 +111,3 @@ export default defineComponent({
   }
 });
 </script>
-
