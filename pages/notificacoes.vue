@@ -10,7 +10,7 @@
         >
           <v-card-item>
             <v-card-title>
-              Novo agendamento: {{ formatDate(exam.date) }}
+              <p class="text-wrap">Novo agendamento: {{ formatDate(exam.date) }}</p>
             </v-card-title>
             <template v-slot:append>
               <v-icon icon="mdi-delete-forever" size="x-large"></v-icon>
