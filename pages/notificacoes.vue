@@ -6,11 +6,11 @@
             variant="flat"
             color="blue-light"
             rounded="lg"
-            v-for="exam in exams"
+            v-for="notification in notifications"
         >
           <v-card-item>
             <v-card-title>
-              <p class="text-wrap">Novo agendamento: {{ formatDate(exam.date) }}</p>
+              <p class="text-wrap">Novo agendamento: {{ formatDate(notification.data) }}</p>
             </v-card-title>
             <template v-slot:append>
               <v-icon icon="mdi-delete-forever" size="x-large"></v-icon>
@@ -28,26 +28,22 @@
 </template>
 
 <script lang="ts">
+import type Notification from '~/interfaces/notification';
+import getUserNotifications from '~/utils/api/notifications/getUserNotifications';
+
 export default defineComponent({
     name: 'NotificationsPage',
     data() {
         return {
-            exams: [
-                {
-                    name: "Exame 1",
-                    date: new Date(2024, 9, 2, 14),
-                    room: "21",
-                },
-                {
-                    name: "Exame 2",
-                    date: new Date(2024, 10, 13, 15),
-                    room: "14",
-                }
-            ]
+            notifications: ref([] as Notification[])
         }
     },
+    async mounted() {
+        this.notifications = await getUserNotifications()
+    },
     methods: {
-        formatDate(date: Date) {
+        formatDate(event_date: Date) {
+            const date = new Date(event_date)
             const formattedDate = date.toLocaleDateString('pt-BR')
             const formattedTime = date.toLocaleTimeString('pt-BR', {
                 hour: '2-digit',
