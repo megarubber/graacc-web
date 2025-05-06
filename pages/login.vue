@@ -24,7 +24,7 @@
 				:append-icon="show ?'mdi-eye': 'mdi-eye-off'"
 				@click:append="show = !show"
                 variant="outlined"></v-text-field>
-                <p class="font-weight-bold text-primary">Esqueceu a senha?</p>
+                <a href="/senha" class="font-weight-bold text-primary">Esqueceu a senha?</a>
                 <v-btn
                 variant="flat"
                 color="blue-dark"
@@ -86,5 +86,9 @@ export default defineComponent({
 </script>
 
 <style>
-
+a { 
+    color: inherit; 
+    text-decoration: none;
+    color:#007AFF;
+} 
 </style>
