@@ -29,7 +29,7 @@
                 variant="flat"
                 color="blue-dark"
                 rounded="lg"
-                @click="login()">Login</v-btn>
+                @click="login(user)">Login</v-btn>
                 <v-btn
                 variant="flat"
                 color="blue-dark"
@@ -53,6 +53,7 @@
 <script lang="ts">
 import { useAuthStore } from '~/store/auth'
 import getResponseOAuth2 from '~/utils/google/getResponseOAuth2'
+import createUser from '~/utils/api/register/createUser'
 
 export default defineComponent({
     name: 'LoginPage',
@@ -71,15 +72,26 @@ export default defineComponent({
 	  },
     methods: {
         loginWithGoogle() {
-          getResponseOAuth2((response) => console.log(response));
-        },
-        async login() {
-            try {
-                await this.auth.authenticateUser(this.user)
+          getResponseOAuth2(async (token: string, email: string) => {
+            const user = { email, senha: 'google' }
+            await this.login(user)
 
-                if (this.authenticated) {
-                    this.$router.push('/')
-                }
+            if (!this.authenticated) {
+              const userRegister = await createUser({
+                nome: email.split('@')[0],
+                email: email,
+                senha: 'google',
+                cadastro_confirmado: true
+              })
+              await this.login(user)
+            }
+          });
+        },
+        async login(user) {
+            try {
+                await this.auth.authenticateUser(user)
+
+                if (this.authenticated) this.$router.push('/')
             }
             catch (error: any) {
                 this.alert = true

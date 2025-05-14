@@ -8,20 +8,37 @@ export default function getResponseOAuth2(callback) {
       client_id: runtimeConfig.public.googleClientId,
       scope: "openid email",
       callback: async (response) => {
-        const tokenData = useFetch(
-          "https://oauth2.googleapis.com/token",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              code: response.code,
-              client_id: runtimeConfig.public.googleClientId,
-              client_secret: runtimeConfig.public.googleClientSecret,
-              redirect_uri: "postmessage",
-              grant_type: "authorization_code"
-            }),
-          }
-        );
+        try {
+          const tokenData = await $fetch(
+            "https://oauth2.googleapis.com/token",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                code: response.code,
+                client_id: runtimeConfig.public.googleClientId,
+                client_secret: runtimeConfig.public.googleClientSecret,
+                redirect_uri: "postmessage",
+                grant_type: "authorization_code"
+              }),
+            }
+          )
+          
+          const accessToken = tokenData.access_token
+
+          const userResponse = await $fetch(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            }
+          )
+
+          callback(accessToken, userResponse.email)
+        } catch(error: any) {
+          console.error(`Failed to fetch user details: ${error}`)
+        }
       }
-    }).requestCode();
+    }).requestCode()
   });
 }
