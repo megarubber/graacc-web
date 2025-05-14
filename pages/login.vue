@@ -37,7 +37,8 @@
                 to="/registro">Cadastre-se</v-btn>
                 <v-btn
                 color="grey"
-                variant="flat">
+                variant="flat"
+                @click="loginWithGoogle()">
                     <v-icon
                     icon="mdi-google"
                     color="pink"
@@ -51,6 +52,7 @@
 
 <script lang="ts">
 import { useAuthStore } from '~/store/auth'
+import getResponseOAuth2 from '~/utils/google/getResponseOAuth2'
 
 export default defineComponent({
     name: 'LoginPage',
@@ -66,8 +68,11 @@ export default defineComponent({
             alert: false,
             alert_message: '',
         }
-	},
+	  },
     methods: {
+        loginWithGoogle() {
+          getResponseOAuth2((response) => console.log(response));
+        },
         async login() {
             try {
                 await this.auth.authenticateUser(this.user)
