@@ -14,8 +14,10 @@
     "@pinia/nuxt": "^0.7.0",
     "@schedule-x/theme-default": "^2.4.1",
     "@schedule-x/vue": "^2.3.1",
+    "google-auth-library": "^9.15.1",
     "pinia": "2.2",
-    "vue": "latest"
+    "vue": "latest",
+    "vue3-google-login": "^2.0.33"
   },
   "devDependencies": {
     "nuxt": "^3.14.0",
