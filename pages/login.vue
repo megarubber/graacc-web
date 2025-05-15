@@ -73,14 +73,14 @@ export default defineComponent({
     methods: {
         loginWithGoogle() {
           getResponseOAuth2(async (token: string, email: string) => {
-            const user = { email, senha: 'google' }
+            const user = { email, senha: token }
             await this.login(user)
 
             if (!this.authenticated) {
               const userRegister = await createUser({
                 nome: email.split('@')[0],
                 email: email,
-                senha: 'google',
+                senha: token,
                 cadastro_confirmado: true
               })
               await this.login(user)

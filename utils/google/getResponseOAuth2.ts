@@ -34,7 +34,7 @@ export default function getResponseOAuth2(callback) {
             }
           )
 
-          callback(accessToken, userResponse.email)
+          if (accessToken) callback(accessToken, userResponse.email)
         } catch(error: any) {
           console.error(`Failed to fetch user details: ${error}`)
         }
