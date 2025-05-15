@@ -20,6 +20,11 @@ export const useAuthStore = defineStore('auth', {
         token.value = response.token
         this.authenticated = true
       }
+    },
+    logUserOut() {
+      const token = useCookie('token')
+      this.authenticated = false
+      token.value = null;
     }
   }
 })
