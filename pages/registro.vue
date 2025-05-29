@@ -99,7 +99,7 @@ export default defineComponent({
           nome: this.user.nome,
           email: this.user.email,
           senha: this.user.senha,
-          cadastro_confirmado: false
+          nomeCompletoPaciente: this.user.nome
         })
         if (userRegister) this.$router.push('/login')
       }
