@@ -1,6 +1,6 @@
 import type userNewPassword from "~/interfaces/newPassword"
 
-export default async function postPassword(password: userNewPassword) {
+export default async function setNewPassword(password: userNewPassword) {
   const { $api } = useNuxtApp()
   const token = useCookie('token')
 

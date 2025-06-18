@@ -25,6 +25,17 @@
 <script lang="ts">
 export default defineComponent({
     name: 'EncontrarSenhaPage',
+    data() {
+      return {
+        email: '',
+      }
+    },
+    methods: {
+        async sendResetPasswordRequest() {
+              this.alert = true
+              this.alert_message = error.response._data.mensagem
+        }
+    },
 })
 </script>
 <style>
