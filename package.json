@@ -7,7 +7,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier . --check",
+    "lint:full": "eslint . --fix && prettier --write --list-different .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -16,11 +20,19 @@
     "@schedule-x/vue": "^2.3.1",
     "google-auth-library": "^9.15.1",
     "pinia": "2.2",
-    "vue": "latest",
-    "vue3-google-login": "^2.0.33"
+    "vue3-google-login": "^2.0.33",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "pinia": "2.2",
+    "prettier": "^3.5.3",
+    "vue": "latest"
   },
   "devDependencies": {
+    "@nuxt/eslint": "^1.4.1",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "eslint": "^9.28.0",
     "nuxt": "^3.14.0",
+    "typescript": "^5.8.3",
     "vite-plugin-vuetify": "^2.0.4",
     "vuetify": "^3.7.0"
   },
