@@ -1,28 +1,28 @@
 <template>
     <v-layout>
-        <v-container>
+        <v-container class="d-flex justify-md-center">
             <v-tabs>
                 <v-tab to="/exames">
                     <div class="custom-tab">
-                        <v-icon size= "24">mdi-home</v-icon>
+                        <v-icon size="24">mdi-home</v-icon>
                             <div>Exames</div>
                     </div>
                 </v-tab>
                 <v-tab to="/calendario">
                     <div class="custom-tab">
-                        <v-icon size ="24">mdi-calendar</v-icon>
+                        <v-icon size="24">mdi-calendar</v-icon>
                         <div>Calendário</div>
                     </div>
                 </v-tab>
                 <v-tab to="/contatos">
                     <div class="custom-tab">
-                        <v-icon size= "24">mdi-contacts</v-icon>
+                        <v-icon size="24">mdi-contacts</v-icon>
                             <div>Contatos</div>
                     </div>
                 </v-tab>
                 <v-tab to="/notificacoes">
                     <div class="custom-tab">
-                        <v-icon size ="24">{{hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'}}</v-icon>
+                        <v-icon size="24">{{hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'}}</v-icon>
                         <div>Notificações</div>
                     </div>
                 </v-tab>
@@ -37,13 +37,7 @@
     export default defineComponent({
         name: 'TheHeader',
         setup() {
-            // simulação icone de notificações
             const hasNotifications = ref(false);
-
-            // a cada 5 segundos muda o estado da notificação
-            setTimeout(() => {
-                hasNotifications.value = !hasNotifications.value;
-            }, 2000);
 
             return {hasNotifications};
         },
