@@ -1,75 +1,55 @@
-# Nuxt 3 Minimal Starter
+# **Agendinha do GRAAC**
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## **Objetivo**
 
-## Setup
+### *Gerais:*
 
-Make sure to install the dependencies:
+- montar uma agenda em detalhes, a partir de um calendário;
+- Exibir informações sobre contatos de médicos e funcionários;
+- Marcar consultas e exames, tanto para pacientes quanto profissionais.
 
-```bash
-# npm
-npm install
+### *Específicos:*
 
-# pnpm
-pnpm install
+- Transferir dados de uma agenda para o dispositivo móvel de forma local ou em nuvem (ex: Google Calendar).
 
-# yarn
-yarn install
+## **Público Alvo**
 
-# bun
-bun install
-```
+Funcionários da instituição, médicos, enfermeiros e pais/responsáveis;
 
-## Development Server
+## **Onde o Projeto Será Utilizado**
 
-Start the development server on `http://localhost:3000`:
+A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um aplicativo para dispositivos móveis), cuja integração será necessária realizar ao final do projeto.
 
-```bash
-# npm
-npm run dev
+## **Tecnologias Utilizadas**
 
-# pnpm
-pnpm run dev
+- **Front-end**: Nuxt (Vue.js, Nitro, Vite);
 
-# yarn
-yarn dev
+- **Back-end**: Spring Boot (microsserviços).
 
-# bun
-bun run dev
-```
+## **Como Rodar o Projeto**
+**1.** Instale Node.js e npm;
 
-## Production
+**2.** Clone o repositório e entre na pasta `graac-web`;
 
-Build the application for production:
+**3.** Faça uma cópia de `.env.example` com o nome de `.env` e prepare as variáveis de ambiente;
 
-```bash
-# npm
-npm run build
+**4.** Execute `npm install` ou `npm i`. Você também pode usar o Makefile com make (se fez dessa maneira, pode pular o passo 5);
 
-# pnpm
-pnpm run build
+**5.** Execute `npm run dev`;
 
-# yarn
-yarn build
+**6.** *(Opcional)* Para executar a API mockada, clone e entre na pasta graacc-api-mock. Depois siga as instruções desse [Tutorial](*https://github.com/UnifespCodeLab/graacc-api-mock/blob/main/tutorial-wiremock.md*)
 
-# bun
-bun run build
-```
+## **Protótipo**
 
-Locally preview production build:
+[Link do Figma](*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*)
 
-```bash
-# npm
-npm run preview
+## **Imagens do Protótipo**
 
-# pnpm
-pnpm run preview
 
-# yarn
-yarn preview
+## **Status**
 
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [ ] Em ideação
+- [x] Em desenvolvimento
+- [ ] Testando com usuário
+- [ ] Em uso
+- [ ] Descontinuado
