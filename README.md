@@ -45,6 +45,23 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 
 ## **Imagens do Protótipo**
 
+### **Página de Cadastro**
+![Cadastro](./screenshots/print_cadastro.png)
+
+### **Página de Login**
+![Login](./screenshots/print_login.png)
+
+### **Página de 'Esqueceu a Senha'**
+![Esqueceu_a_Senha](./screenshots/print_senha.png)
+
+### **Página de Notificações**
+![Notificações](./screenshots/print_notificacoes.png)
+
+### **Página de Contatos**
+![Contatos](./screenshots/print_contatos.png)
+
+### **Página de Exames**
+![Exames](./screenshots/print_exames.png)
 
 ## **Status**
 
