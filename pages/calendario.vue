@@ -1,6 +1,7 @@
 <template>
   <div>
     <ScheduleXCalendar :calendar-app="this.calendarApp" />
+    <TheHeader/>
   </div>
 </template>
 

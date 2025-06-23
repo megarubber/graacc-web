@@ -1,7 +1,6 @@
 <template>
     <v-layout>
         <v-container>
-            <TheHeader />
             <h1 class="mb-4">Próximos Exames</h1>
             <div class="d-flex flex-column ga-4">
                 <v-card
@@ -28,6 +27,7 @@
                     </v-card-actions>
                 </v-card>
             </div>
+					<TheHeader />
         </v-container>
     </v-layout>
 </template>
@@ -65,6 +65,5 @@ export default defineComponent({
 })
 </script>
 
-<style>
-
+<style scoped>
 </style>

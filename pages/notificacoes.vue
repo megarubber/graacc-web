@@ -23,6 +23,7 @@
           </v-card-actions>
         </v-card>
       </div>
+      <TheHeader/>
     </v-container>
   </v-layout>
 </template>

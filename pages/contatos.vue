@@ -1,7 +1,6 @@
 <template>
     <v-layout>
         <v-container>
-            <TheHeader/>
             <h1 class = "mb-4">Contatos do GRAAC</h1>
             <div class = "cards-contatos">
                 <v-card
@@ -19,6 +18,7 @@
                 </v-card-item>
                 </v-card>
             </div>
+            <TheHeader/>
         </v-container>
     </v-layout>
 </template>
