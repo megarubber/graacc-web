@@ -30,7 +30,7 @@
     "eslint": "^9.28.0",
     "nuxt": "^3.14.0",
     "typescript": "^5.8.3",
-    "vite-plugin-vuetify": "^2.0.4",
+    "vite-plugin-vuetify": "^2.1.1",
     "vuetify": "^3.7.0"
   },
   "overrides": {
