@@ -1,29 +1,30 @@
 <template>
     <v-layout>
-        <v-container class="d-flex justify-md-center">
+        <v-container class="pa-0 position-fixed bottom-0 
+          bg-white left-0 d-flex justify-center">
             <v-tabs>
-                <v-tab to="/exames">
+                <v-tab to="/">
                     <div class="custom-tab">
                         <v-icon size="24">mdi-home</v-icon>
-                            <div>Exames</div>
+                        <p>Exames</p>
                     </div>
                 </v-tab>
                 <v-tab to="/calendario">
                     <div class="custom-tab">
                         <v-icon size="24">mdi-calendar</v-icon>
-                        <div>Calendário</div>
+                        <p>Calendário</p>
                     </div>
                 </v-tab>
                 <v-tab to="/contatos">
                     <div class="custom-tab">
                         <v-icon size="24">mdi-contacts</v-icon>
-                            <div>Contatos</div>
+                        <p>Contatos</p>
                     </div>
                 </v-tab>
                 <v-tab to="/notificacoes">
                     <div class="custom-tab">
                         <v-icon size="24">{{hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'}}</v-icon>
-                        <div>Notificações</div>
+                        <p>Notificações</p>
                     </div>
                 </v-tab>
             </v-tabs>
@@ -32,26 +33,30 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
-    export default defineComponent({
-        name: 'TheHeader',
-        setup() {
-            const hasNotifications = ref(false);
+export default defineComponent({
+    name: 'TheHeader',
+    setup() {
+        const hasNotifications = ref(false);
 
-            return {hasNotifications};
-        },
-    });
+        return {hasNotifications};
+    },
+});
 </script>
 
-
-<style>
+<style scoped>
 .custom-tab {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-transform: none;
-    gap: 4px;
+}
+
+@media (max-width: 400px) {
+  .custom-tab p {
+    font-size: 10px;
+  }
 }
 </style>
