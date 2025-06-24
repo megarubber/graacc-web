@@ -41,7 +41,7 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 
 ## **Protótipo**
 
-[Link do Figma](*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*)
+*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*
 
 ## **Imagens do Protótipo**
 
