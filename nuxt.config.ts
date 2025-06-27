@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/eslint',
     '@nuxtjs/eslint-module',
+    '@nuxt/icon',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -17,6 +18,14 @@ export default defineNuxtConfig({
       })
     },
   ],
+  icon: {
+    customCollections: [
+      {
+        prefix: 'icons',
+        dir: './public/assets/icons'
+      }
+    ],
+  },
   eslint: { },
   vite: {
     vue: {
@@ -29,5 +38,5 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8080/'
     }
-  }
+  },
 })

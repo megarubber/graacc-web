@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.4.1",
+    "@nuxt/icon": "^1.14.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "eslint": "^9.28.0",
     "nuxt": "^3.14.0",
