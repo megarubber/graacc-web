@@ -8,19 +8,25 @@
             >
                 {{ alert_message }}
             </v-snackbar>
-            <h1 class="font-weight-bold mb-4">Cadastro</h1>
-            <p class="mb-4">Crie sua conta para começar</p>
+            <h2 class="text-center font-weight-bold">Cadastro</h2>
+            <h3 class="text-center mb-6">Crie sua conta para começar</h3>
             <div class="d-flex flex-column ga-4">
                 <v-text-field 
                 rounded="lg" 
-                label="Nome"
+                label="Nome Completo do Responsável"
                 v-model="user.nome"
-                placeholder="José Maria da Silva"
+                placeholder="José da Silva"
+                variant="outlined"></v-text-field>
+                <v-text-field 
+                rounded="lg" 
+                label="Nome Completo do Paciente"
+                v-model="user.nome_completo_paciente"
+                placeholder="Pedro da Silva"
                 variant="outlined"></v-text-field>
                 <v-text-field 
                 label="E-mail"
                 rounded="lg"
-                placeholder="exemplo@gmail.com"
+                placeholder="exemplo@email.com"
                 v-model="user.email"
                 color="blue-dark"
                 variant="outlined"></v-text-field>
@@ -31,7 +37,7 @@
                 v-model="user.senha"
                 color="blue-dark"
                 :type="show ? 'text' : 'password'"
-                :append-icon="show ?'mdi-eye': 'mdi-eye-off'"
+                :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
                 @click:append="show = !show"
                 variant="outlined"></v-text-field>
                 <v-text-field 
@@ -41,14 +47,16 @@
                 v-model="user.confirme_senha"
                 color="blue-dark"
                 :type="show_confirm ? 'text' : 'password'"
-                :append-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
+                :append-inner-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
                 @click:append="show_confirm = !show_confirm"
                 variant="outlined"></v-text-field>
                 <v-btn
                 variant="flat"
-                color="blue-dark"
+                @click="register()">Enviar</v-btn>
+                <v-btn
+                variant="flat"
                 @click="register()"
-                rounded="lg">Enviar</v-btn>
+                to="/login">Voltar</v-btn>
             </div>
         </v-container>
     </v-layout>
