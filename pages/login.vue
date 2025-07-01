@@ -8,7 +8,13 @@
             >
                 {{ alert_message }}
             </v-snackbar>
-            <img src="/assets/images/agendinha_logo.png" class="align-self-center"/>
+            <div class="glow">
+              <div class="glow-effect t-l"></div>
+              <div class="glow-effect t-r"></div>
+              <div class="glow-effect b-l"></div>
+              <div class="glow-effect b-r"></div>
+            </div>
+            <img src="/assets/images/agendinha_logo.png" class="align-self-center mb-4"/>
             <h2 class="text-center font-weight-bold">Vamos começar?</h2>
             <h3 class="text-center mb-6">Faça seu login</h3>
             <div class="d-flex flex-column ga-4">
@@ -85,11 +91,51 @@ export default defineComponent({
 
 <style>
 a { 
-    color: inherit; 
-    text-decoration: none;
-    color:#007AFF;
+  color: #007AFF; 
+  text-decoration: none;
 } 
+
 img {
   width: 200px;
+}
+
+.glow-effect {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  opacity: 15%;
+  z-index: -1;
+}
+
+.glow-effect.t-l {
+  top: 0px;
+  left: 5px;
+  box-shadow:
+    0 0 100px 5rem #80D9FF,
+    0 0 140px 6rem #009EE0;
+}
+
+.glow-effect.t-r {
+  top: 0px;
+  right: 5px;
+  box-shadow:
+    0 0 100px 5rem #E32585,
+    0 0 140px 6rem #E858A1;
+}
+
+.glow-effect.b-r {
+  bottom: 0px;
+  right: 5px;
+  box-shadow:
+    0 0 100px 5rem #80D9FF,
+    0 0 140px 6rem #009EE0;
+}
+
+.glow-effect.b-l {
+  bottom: 0px;
+  left: 5px;
+  box-shadow:
+    0 0 100px 5rem #80D9FF,
+    0 0 140px 6rem #009EE0;
 }
 </style>
