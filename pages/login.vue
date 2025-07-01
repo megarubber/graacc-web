@@ -9,12 +9,12 @@
                 {{ alert_message }}
             </v-snackbar>
             <div class="glow">
-              <div class="glow-effect t-l"></div>
-              <div class="glow-effect t-r"></div>
-              <div class="glow-effect b-l"></div>
-              <div class="glow-effect b-r"></div>
+              <div class="glow-effect l top-0"/>
+              <div class="glow-effect r t"/>
+              <div class="glow-effect l bottom-0"/>
+              <div class="glow-effect r bottom-0"/>
             </div>
-            <img src="/assets/images/agendinha_logo.png" class="align-self-center mb-4"/>
+            <img src="/assets/images/agendinha_logo.png" class="align-self-center mb-4">
             <h2 class="text-center font-weight-bold">Vamos começar?</h2>
             <h3 class="text-center mb-6">Faça seu login</h3>
             <div class="d-flex flex-column ga-4">
@@ -22,15 +22,15 @@
                 v-model="user.email"
                 rounded="lg"
                 label="E-mail"
-                variant="outlined"></v-text-field>
+                variant="outlined"/>
                 <v-text-field
                 v-model="user.senha"
                 label="Senha"
                 rounded="lg"
+                variant="outlined"
                 :type="show ? 'text' : 'password'"
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
-                @click:append-inner="show = !show"
-                variant="outlined"></v-text-field>
+                @click:append-inner="show = !show"/>
                 <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
                 <v-btn
                 variant="flat"
@@ -80,7 +80,7 @@ export default defineComponent({
                     this.$router.push('/')
                 }
             }
-            catch (error: any) {
+            catch (error) {
                 this.alert = true
                 this.alert_message = error.response._data.mensagem
             }
@@ -89,15 +89,13 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 a { 
   color: #007AFF; 
   text-decoration: none;
 } 
 
-img {
-  width: 200px;
-}
+img { width: 200px; }
 
 .glow-effect {
   position: absolute;
@@ -105,37 +103,19 @@ img {
   width: 1px;
   opacity: 15%;
   z-index: -1;
-}
-
-.glow-effect.t-l {
-  top: 0px;
-  left: 5px;
   box-shadow:
     0 0 100px 5rem #80D9FF,
     0 0 140px 6rem #009EE0;
 }
 
-.glow-effect.t-r {
+.glow-effect.r.t {
   top: 0px;
-  right: 5px;
   box-shadow:
     0 0 100px 5rem #E32585,
     0 0 140px 6rem #E858A1;
 }
 
-.glow-effect.b-r {
-  bottom: 0px;
-  right: 5px;
-  box-shadow:
-    0 0 100px 5rem #80D9FF,
-    0 0 140px 6rem #009EE0;
-}
+.glow-effect.r { right: 5px; }
 
-.glow-effect.b-l {
-  bottom: 0px;
-  left: 5px;
-  box-shadow:
-    0 0 100px 5rem #80D9FF,
-    0 0 140px 6rem #009EE0;
-}
+.glow-effect.l { left: 5px; }
 </style>
