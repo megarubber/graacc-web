@@ -1,6 +1,6 @@
 <template>
-    <v-layout>
-        <v-container>
+    <v-layout class="h-100">
+        <v-container class="d-flex flex-column justify-center">
             <v-snackbar
                 v-model="alert"
                 location="top end"
@@ -12,50 +12,36 @@
             <h3 class="text-center mb-6">Crie sua conta para começar</h3>
             <div class="d-flex flex-column ga-4">
                 <v-text-field 
-                rounded="lg" 
-                label="Nome Completo do Responsável"
                 v-model="user.nome"
-                placeholder="José da Silva"
-                variant="outlined"></v-text-field>
+                label="Nome Completo do Responsável"
+                placeholder="José da Silva"/>
                 <v-text-field 
-                rounded="lg" 
+                v-model="user.nomeCompletoPaciente"
                 label="Nome Completo do Paciente"
-                v-model="user.nome_completo_paciente"
-                placeholder="Pedro da Silva"
-                variant="outlined"></v-text-field>
+                placeholder="Pedro da Silva"/>
                 <v-text-field 
-                label="E-mail"
-                rounded="lg"
-                placeholder="exemplo@email.com"
                 v-model="user.email"
-                color="blue-dark"
-                variant="outlined"></v-text-field>
+                label="E-mail"
+                placeholder="exemplo@email.com"/>
                 <v-text-field 
-                label="Senha"
-                rounded="lg"
-                placeholder="Crie a sua senha"
                 v-model="user.senha"
-                color="blue-dark"
+                label="Senha"
+                placeholder="Crie a sua senha"
                 :type="show ? 'text' : 'password'"
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
-                @click:append="show = !show"
-                variant="outlined"></v-text-field>
+                @click:append="show = !show"/>
                 <v-text-field 
-                label="Confirme a sua senha"
-                rounded="lg"
-                placeholder="Confirme a sua senha"
                 v-model="user.confirme_senha"
-                color="blue-dark"
+                label="Confirme a sua senha"
+                placeholder="Confirme a sua senha"
                 :type="show_confirm ? 'text' : 'password'"
                 :append-inner-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
-                @click:append="show_confirm = !show_confirm"
-                variant="outlined"></v-text-field>
+                @click:append="show_confirm = !show_confirm"/>
                 <v-btn
                 variant="flat"
                 @click="register()">Enviar</v-btn>
                 <v-btn
                 variant="flat"
-                @click="register()"
                 to="/login">Voltar</v-btn>
             </div>
         </v-container>
@@ -73,7 +59,7 @@ export default defineComponent({
           nome: '',
           email: '',
           senha: '',
-          confirme_senha: ''
+          nomeCompletoPaciente: '',
       },
       show: false,
       show_confirm: false,
@@ -103,15 +89,10 @@ export default defineComponent({
       }
 
       try { 
-        const userRegister = await createUser({
-          nome: this.user.nome,
-          email: this.user.email,
-          senha: this.user.senha,
-          nomeCompletoPaciente: this.user.nome
-        })
+        const userRegister = await createUser(this.user)
         if (userRegister) this.$router.push('/login')
       }
-      catch (error: any) {
+      catch (error) {
         this.alert = true
         this.alert_message = error.response._data.mensagem
       }
