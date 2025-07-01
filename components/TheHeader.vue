@@ -27,22 +27,33 @@
                         <p>Notificações</p>
                     </div>
                 </v-tab>
+                <v-tab to="/login" @click="logUserOut()">
+                    Logout
+                </v-tab>
             </v-tabs>
         </v-container>
     </v-layout>
 </template>
 
-<script>
+<script lang="ts">
+import { useAuthStore } from '~/store/auth'
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'TheHeader',
-    setup() {
-        const hasNotifications = ref(false);
-
-        return {hasNotifications};
-    },
+  name: 'TheHeader',
+  auth: useAuthStore(),
+  data() {
+    return {
+      auth: useAuthStore(),
+    }
+  },
+  methods: {
+    logUserOut() {
+      this.auth.logUserOut()
+    }
+  }
 });
+
 </script>
 
 <style scoped>

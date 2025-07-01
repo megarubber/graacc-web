@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', {
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp()
 
-      const response: User = await $api('/usuarios/login', {
+      const response: User = await $api('/usuario/login', {
         method: 'POST',
         body: user_auth,
       })
@@ -20,6 +20,11 @@ export const useAuthStore = defineStore('auth', {
         token.value = response.token
         this.authenticated = true
       }
+    },
+    logUserOut() {
+      const token = useCookie('token')
+      this.authenticated = false
+      token.value = null;
     }
   }
 })

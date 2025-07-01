@@ -34,7 +34,7 @@
                 <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
                 <v-btn
                 variant="flat"
-                @click="login()">Entrar</v-btn>
+                @click="login(user)">Entrar</v-btn>
                 <p class="text-center">ou</p>
                 <v-btn
                 color="black"
@@ -55,6 +55,8 @@
 
 <script lang="ts">
 import { useAuthStore } from '~/store/auth'
+import getResponseOAuth2 from '~/utils/google/getResponseOAuth2'
+import createUser from '~/utils/api/register/createUser'
 
 export default defineComponent({
     name: 'LoginPage',
@@ -70,15 +72,29 @@ export default defineComponent({
             alert: false,
             alert_message: '',
         }
-	},
+	  },
     methods: {
-        async login() {
-            try {
-                await this.auth.authenticateUser(this.user)
+        loginWithGoogle() {
+          getResponseOAuth2(async (token: string, email: string) => {
+            const user = { email, senha: token }
+            await this.login(user)
 
-                if (this.authenticated) {
-                    this.$router.push('/')
-                }
+            if (!this.authenticated) {
+              const userRegister = await createUser({
+                nome: email.split('@')[0],
+                email: email,
+                senha: token,
+                cadastro_confirmado: true
+              })
+              await this.login(user)
+            }
+          });
+        },
+        async login(user) {
+            try {
+                await this.auth.authenticateUser(user)
+
+                if (this.authenticated) this.$router.push('/')
             }
             catch (error) {
                 this.alert = true
