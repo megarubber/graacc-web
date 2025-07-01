@@ -32,6 +32,7 @@ export default defineNuxtPlugin((app) => {
             style: [ { 'letterSpacing': 'normal' } ],
             rounded: 'xl',
             size: 'x-large',
+            variant: 'flat',
           },
         },
      })

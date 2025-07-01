@@ -37,12 +37,8 @@
                 :type="show_confirm ? 'text' : 'password'"
                 :append-inner-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
                 @click:append="show_confirm = !show_confirm"/>
-                <v-btn
-                variant="flat"
-                @click="register()">Enviar</v-btn>
-                <v-btn
-                variant="flat"
-                to="/login">Voltar</v-btn>
+                <v-btn @click="register()">Enviar</v-btn>
+                <v-btn to="/login">Voltar</v-btn>
             </div>
         </v-container>
     </v-layout>

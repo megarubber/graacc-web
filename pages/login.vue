@@ -15,8 +15,10 @@
               <div class="glow-effect r bottom-0"/>
             </div>
             <img src="/assets/images/agendinha_logo.png" class="align-self-center mb-4">
-            <h2 class="text-center font-weight-bold">Vamos começar?</h2>
-            <h3 class="text-center mb-6">Faça seu login</h3>
+            <div class="titles text-center">
+              <h2 class="font-weight-bold">Vamos começar?</h2>
+              <h3 class="mb-6">Faça seu login</h3>
+            </div>
             <div class="d-flex flex-column ga-4">
                 <v-text-field
                 v-model="user.email"
@@ -29,7 +31,6 @@
                 @click:append-inner="show = !show"/>
                 <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
                 <v-btn
-                variant="flat"
                 @click="login(user)">Entrar</v-btn>
                 <p class="text-center">ou</p>
                 <v-btn
