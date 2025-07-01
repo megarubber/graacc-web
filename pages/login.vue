@@ -20,14 +20,10 @@
             <div class="d-flex flex-column ga-4">
                 <v-text-field
                 v-model="user.email"
-                rounded="lg"
-                label="E-mail"
-                variant="outlined"/>
+                label="E-mail"/>
                 <v-text-field
                 v-model="user.senha"
                 label="Senha"
-                rounded="lg"
-                variant="outlined"
                 :type="show ? 'text' : 'password'"
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
                 @click:append-inner="show = !show"/>
@@ -86,7 +82,7 @@ export default defineComponent({
                 senha: token,
                 cadastro_confirmado: true
               })
-              await this.login(user)
+              await this.login(userRegister)
             }
           });
         },
