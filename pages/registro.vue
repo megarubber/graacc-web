@@ -1,6 +1,6 @@
 <template>
     <v-layout class="h-100">
-        <v-container class="d-flex flex-column justify-center">
+        <v-container class="d-flex ga-4 flex-column justify-center">
             <v-snackbar
                 v-model="alert"
                 location="top end"
@@ -10,7 +10,7 @@
             </v-snackbar>
             <h2 class="text-center font-weight-bold">Cadastro</h2>
             <h3 class="text-center mb-6">Crie sua conta para começar</h3>
-            <div class="d-flex flex-column ga-4">
+            <section>
                 <v-text-field 
                 v-model="user.nome"
                 label="Nome Completo do Responsável"
@@ -37,9 +37,9 @@
                 :type="show_confirm ? 'text' : 'password'"
                 :append-inner-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
                 @click:append="show_confirm = !show_confirm"/>
-                <v-btn @click="register()">Enviar</v-btn>
-                <v-btn to="/login">Voltar</v-btn>
-            </div>
+            </section>
+            <v-btn @click="register()">Enviar</v-btn>
+            <v-btn to="/login">Voltar</v-btn>
         </v-container>
     </v-layout>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <v-layout class="h-100">
-        <v-container class="d-flex flex-column justify-center">
+        <v-container class="d-flex ga-2 flex-column justify-center">
             <v-snackbar
                 v-model="alert"
                 location="top end"
@@ -19,7 +19,7 @@
               <h2 class="font-weight-bold">Vamos começar?</h2>
               <h3 class="mb-6">Faça seu login</h3>
             </div>
-            <div class="d-flex flex-column ga-4">
+            <section>
                 <v-text-field
                 v-model="user.email"
                 label="E-mail"/>
@@ -29,24 +29,24 @@
                 :type="show ? 'text' : 'password'"
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
                 @click:append-inner="show = !show"/>
-                <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
-                <v-btn
-                @click="login(user)">Entrar</v-btn>
-                <p class="text-center">ou</p>
-                <v-btn
-                color="black"
-                variant="outlined">
-                  <Icon style="margin-right: 10px;" name="icons:google-logo" size="30"/>
-					        Entrar com o Google
-                </v-btn>
-                <div class="text-center mt-6">
-                  <p>Ainda não tem uma conta?</p>
-                  <a href="/registro" class="font-weight-bold mb-6 text-blue-light">
-                    Cadastre-se aqui.
-                  </a>
-                </div>
+            </section>
+            <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
+            <v-btn
+            @click="login(user)">Entrar</v-btn>
+            <p class="text-center">ou</p>
+            <v-btn
+            color="black"
+            variant="outlined">
+              <Icon style="margin-right: 10px;" name="icons:google-logo" size="30"/>
+              Entrar com o Google
+            </v-btn>
+            <div class="text-center mt-6">
+              <p>Ainda não tem uma conta?</p>
+              <a href="/registro" class="font-weight-bold mb-6 text-blue-light">
+                Cadastre-se aqui.
+              </a>
             </div>
-        </v-container>
+          </v-container>
     </v-layout>
 </template>
 
