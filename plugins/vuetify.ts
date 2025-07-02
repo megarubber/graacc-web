@@ -25,10 +25,13 @@ export default defineNuxtPlugin((app) => {
         },
         defaults: {
           global: { ripple: false },
-          VTextField: { rounded: 'lg', variant: 'outlined' },
+          VTextField: { 
+            rounded: 'lg', 
+            variant: 'outlined',
+          },
           VBtn: {
             color: '#1C3B72',
-            class: ['font-weight-regular', 'text-none'],
+            class: ['w-100', 'font-weight-regular', 'text-none'],
             style: [ { 'letterSpacing': 'normal' } ],
             rounded: 'xl',
             size: 'x-large',
