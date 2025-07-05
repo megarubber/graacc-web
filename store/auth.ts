@@ -9,8 +9,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp()
-
-      const response: User = await $api('/usuario/login', {
+      const response: User = await $api('/auth/usuario/login', {
         method: 'POST',
         body: user_auth,
       })
