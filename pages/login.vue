@@ -32,7 +32,7 @@
             </section>
             <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
             <v-btn
-            @click="login(user)">Entrar</v-btn>
+            @click="login()">Entrar</v-btn>
             <p class="text-center">ou</p>
             <v-btn
             color="black"
@@ -87,9 +87,16 @@ export default defineComponent({
             }
           });
         },
-        async login(user) {
+        async login() {
+            const testEmail = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+            if(!testEmail.test(this.user.email)) {
+              this.alert = true
+              this.alert_message = 'E-mail inválido'
+              return
+            }
+
             try {
-                await this.auth.authenticateUser(user)
+                await this.auth.authenticateUser(this.user)
 
                 if (this.authenticated) this.$router.push('/')
             }

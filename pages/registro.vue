@@ -63,7 +63,7 @@ export default defineComponent({
   },
   methods: {
     async register() {
-      const testEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      const testEmail = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
       if(!testEmail.test(this.user.email)) {
         this.alert = true
         this.alert_message = 'E-mail inválido'
