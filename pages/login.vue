@@ -95,7 +95,11 @@ export default defineComponent({
             }
             catch (error) {
                 this.alert = true
-                this.alert_message = error.response._data.mensagem
+                if(error.response.status == 401) {
+                  this.alert_message = "E-mail/senha não encontrado."
+                  return
+                }
+                this.alert_message = "Erro ao fazer login."
             }
         }
     },

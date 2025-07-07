@@ -29,14 +29,12 @@
                 placeholder="Crie a sua senha"
                 :type="show ? 'text' : 'password'"
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
-                @click:append="show = !show"/>
+                @click:append-inner="show = !show"/>
                 <v-text-field 
-                v-model="user.confirme_senha"
+                v-model="confirme_senha"
                 label="Confirme a sua senha"
                 placeholder="Confirme a sua senha"
-                :type="show_confirm ? 'text' : 'password'"
-                :append-inner-icon="show_confirm ?'mdi-eye':'mdi-eye-off'"
-                @click:append="show_confirm = !show_confirm"/>
+                type="password"/>
             </section>
             <v-btn @click="register()">Enviar</v-btn>
             <v-btn to="/login">Voltar</v-btn>
@@ -57,8 +55,8 @@ export default defineComponent({
           senha: '',
           nomeCompletoPaciente: '',
       },
+      confirme_senha: '',
       show: false,
-      show_confirm: false,
       alert: false,
       alert_message: '',
     }
@@ -78,19 +76,24 @@ export default defineComponent({
         return
       }
 
-      if(this.user.senha != this.user.confirme_senha) {
+      if(this.user.senha != this.confirme_senha) {
         this.alert = true
         this.alert_message = 'Senhas estão diferentes'
         return
       }
 
       try { 
-        const userRegister = await createUser(this.user)
-        if (userRegister) this.$router.push('/login')
+        await createUser(this.user)
+        this.$router.push('/login')
       }
       catch (error) {
         this.alert = true
-        this.alert_message = error.response._data.mensagem
+        console.error(error.response)
+        if(error.response._data == "Não existe nenhum paciente com esse nome") {
+          this.alert_message = "Erro: paciente não existe."
+          return
+        }
+        this.alert_message = "Erro ao realizar cadastro."
       }
     }
   }
