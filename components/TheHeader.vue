@@ -1,23 +1,16 @@
 <template>
     <v-layout>
-        <v-container class="pa-0 position-fixed bottom-0 
-          bg-white left-0 d-flex justify-center">
+        <v-container class="pa-0 position-fixed bottom-0 bg-white left-0 d-flex justify-center">
             <v-tabs>
                 <v-tab to="/">
                     <div class="custom-tab">
                         <v-icon size="24">mdi-home</v-icon>
-                        <p>Exames</p>
-                    </div>
-                </v-tab>
-                <v-tab to="/calendario">
-                    <div class="custom-tab">
-                        <v-icon size="24">mdi-calendar</v-icon>
-                        <p>Calendário</p>
+                        <p>Início</p>
                     </div>
                 </v-tab>
                 <v-tab to="/contatos">
                     <div class="custom-tab">
-                        <v-icon size="24">mdi-contacts</v-icon>
+                        <v-icon size="24">mdi-phone</v-icon>
                         <p>Contatos</p>
                     </div>
                 </v-tab>
@@ -27,9 +20,17 @@
                         <p>Notificações</p>
                     </div>
                 </v-tab>
+                <v-tab to="/perfil">
+                    <div class="custom-tab">
+                        <v-icon size="24">mdi-account</v-icon>
+                        <p>Perfil</p>
+                    </div>
+                </v-tab>
+                <!--
                 <v-tab to="/login" @click="logUserOut()">
                     Logout
                 </v-tab>
+                -->
             </v-tabs>
         </v-container>
     </v-layout>
@@ -41,7 +42,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'TheHeader',
-  auth: useAuthStore(),
   data() {
     return {
       auth: useAuthStore(),
@@ -63,6 +63,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     text-transform: none;
+    width: 10px;
 }
 
 @media (max-width: 400px) {

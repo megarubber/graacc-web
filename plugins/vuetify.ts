@@ -31,7 +31,7 @@ export default defineNuxtPlugin((app) => {
           },
           VBtn: {
             color: '#1C3B72',
-            class: ['w-100', 'font-weight-regular', 'text-none'],
+            class: ['font-weight-regular', 'text-none'],
             style: [ { 'letterSpacing': 'normal' } ],
             rounded: 'xl',
             size: 'x-large',

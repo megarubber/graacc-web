@@ -1,17 +1,17 @@
 <template>
     <v-layout class="h-100">
         <v-container class="d-flex flex-column justify-center align-center">
-          <v-icon icon="mdi-lock" size="x-large"></v-icon>
+          <v-icon icon="mdi-lock" size="x-large"/>
           <h1 class="text-center mb-4 font-weight-bold">Esqueceu sua senha?</h1>
           <section class="w-100">
             <p class="mb-4 text-center">Digite o e-mail associado à sua conta</p>
-            <v-text-field label="E-mail"></v-text-field>
+            <v-text-field label="E-mail"/>
           </section>
           <div class="d-flex flex-row">
               <p class="mb-4 mr-2">Lembrou sua senha?</p>
               <a href="/login" class="font-weight-bold mb-6 text-blue-light">Faça login</a>
           </div>
-          <v-btn>Enviar pedido de alteração</v-btn>
+          <v-btn class="w-100">Enviar pedido de alteração</v-btn>
         </v-container>
     </v-layout>
 </template>
