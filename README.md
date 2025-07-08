@@ -70,7 +70,11 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 
 ## **Logo do Projeto**
 
+![Logo](./screenshots/logo_projeto.png)
 
+## **Diagrama Entidade-Relacionamento**
+
+![Diagrama_Entidade_Relacionamento](./public/diagrama_entidade-relacionamento.jpg)
 
 ## **Status**
 
