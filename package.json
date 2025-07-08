@@ -15,17 +15,17 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "@nuxt/fonts": "^0.11.4",
     "@pinia/nuxt": "^0.7.0",
     "@schedule-x/theme-default": "^2.4.1",
     "@schedule-x/vue": "^2.3.1",
-    "google-auth-library": "^9.15.1",
-    "pinia": "2.2",
-    "vue3-google-login": "^2.0.33",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
+    "google-auth-library": "^9.15.1",
     "pinia": "2.2",
     "prettier": "^3.5.3",
-    "vue": "latest"
+    "vue": "latest",
+    "vue3-google-login": "^2.0.33"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.4.1",

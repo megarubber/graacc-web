@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxtjs/eslint-module',
     '@nuxt/icon',
+		'@nuxt/fonts',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
