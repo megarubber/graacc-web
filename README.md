@@ -40,7 +40,8 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 **6.** *(Opcional)* Para executar a API mockada, clone e entre na pasta graacc-api-mock. Depois siga as instruções desse [Tutorial](*https://github.com/UnifespCodeLab/graacc-api-mock/blob/main/tutorial-wiremock.md*)
 
 ## **Protótipo**
-*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*
+
+[Link para o Figma](https://www.figma.com/destan/M4BjYcGLkDluFm9M8SKvh/GRAACmode-id=6-28p-f8t-x88a1Yj5G3XycbJ0-8)
 
 ## **Imagens do Protótipo**
 
