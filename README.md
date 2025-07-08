@@ -40,28 +40,37 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 **6.** *(Opcional)* Para executar a API mockada, clone e entre na pasta graacc-api-mock. Depois siga as instruções desse [Tutorial](*https://github.com/UnifespCodeLab/graacc-api-mock/blob/main/tutorial-wiremock.md*)
 
 ## **Protótipo**
-
-[Link do Figma](*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*)
+*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*
 
 ## **Imagens do Protótipo**
 
 ### **Página de Cadastro**
+
 ![Cadastro](./screenshots/print_cadastro.png)
 
 ### **Página de Login**
+
 ![Login](./screenshots/print_login.png)
 
 ### **Página de 'Esqueceu a Senha'**
+
 ![Esqueceu_a_Senha](./screenshots/print_senha.png)
 
 ### **Página de Notificações**
+
 ![Notificações](./screenshots/print_notificacoes.png)
 
 ### **Página de Contatos**
+
 ![Contatos](./screenshots/print_contatos.png)
 
 ### **Página de Exames**
+
 ![Exames](./screenshots/print_exames.png)
+
+## **Logo do Projeto**
+
+
 
 ## **Status**
 
