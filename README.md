@@ -74,7 +74,7 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 
 ## **Diagrama Entidade-Relacionamento**
 
-![Diagrama_Entidade_Relacionamento](./public/diagrama_entidade-relacionamento.jpg)
+![Diagrama_Entidade_Relacionamento](./public/diagrama_entidade_relacionamento.jpg)
 
 ## **Status**
 
