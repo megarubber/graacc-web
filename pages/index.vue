@@ -36,51 +36,9 @@
                     <span class="font-weight-bold">{{ statusMessage.middle }}</span>
                     {{ statusMessage.end }} para esta semana.
                   </p>
-                  <div 
-										v-for="exam in weekExams" 
-										:key="exam.idAgendamento"
-										class="d-flex align-center">
-                    <section class="text-center mr-4 text-h6 font-weight-bold">
-                      <p>{{ formatDate(convertToISODate(exam.data)).day }}</p>
-                      <p>{{ formatDate(convertToISODate(exam.data)).month }}</p>
-                    </section>
-                    <v-card
-                      variant="flat"
-                      color="#E6F6FE"
-                      rounded="xl"
-                      class="w-100 mb-2"
-                      :subtitle="exam.titulo"
-                      :text="exam.local">
-                      <template #title>
-                        <span class="font-weight-bold">
-													{{ formatDate(convertToISODate(exam.data)).weekday }}
-												</span>
-                      </template>
-                    </v-card>
-                  </div>
+                  <ExamCardGenerator :exams="weekExams" />
                   <p class="mt-4 mb-4">Compromissos futuros</p>
-                  <div 
-										v-for="exam in futureExams" 
-										:key="exam.idAgendamento"
-										class="d-flex align-center">
-                    <section class="text-center mr-4 text-h6 font-weight-bold">
-                      <p>{{ formatDate(convertToISODate(exam.data)).day }}</p>
-                      <p>{{ formatDate(convertToISODate(exam.data)).month }}</p>
-                    </section>
-                    <v-card
-                      variant="flat"
-                      color="#E6F6FE"
-                      rounded="xl"
-                      class="w-100 mb-2"
-                      :subtitle="exam.titulo"
-                      :text="exam.local">
-                      <template #title>
-                        <span class="font-weight-bold">
-													{{ formatDate(convertToISODate(exam.data)).weekday }}
-												</span>
-                      </template>
-                    </v-card>
-                  </div>
+                  <ExamCardGenerator :exams="futureExams" />
                 </v-tabs-window-item>
                 <v-tabs-window-item value="calendar">
                   <Calendar />
@@ -93,8 +51,9 @@
 </template>
 
 <script lang="ts">
-import type Exam from '~/interfaces/exam';
+import type Exam from '~/interfaces/exam'
 import getUserExams from '~/utils/api/exams/getUserExams'
+import convertToISODate from '~/utils/convertToISODate'
 import moment from 'moment'
 
 export default defineComponent({
@@ -119,10 +78,10 @@ export default defineComponent({
         const allExams: Exam[] = await getUserExams()
 
 				this.weekExams = allExams.filter(
-					exam => this.isDateInThisWeek(this.convertToISODate(exam.data))
+					exam => this.isDateInThisWeek(convertToISODate(exam.data))
 				)
 				this.futureExams = allExams.filter(
-					exam => !this.isDateInThisWeek(this.convertToISODate(exam.data))
+					exam => !this.isDateInThisWeek(convertToISODate(exam.data))
 				)
 
         this.statusMessage.begin = this.weekExams.length == 1 ? "Existe" : "Existem"
@@ -136,29 +95,6 @@ export default defineComponent({
 						
 						return now.isoWeek() === currentDate.isoWeek()
 				},
-				convertToISODate(eventDate: string) {
-            const [datePart, timePart] = eventDate.split(' ')
-            const [day, month, year] = datePart.split('/').map(Number)
-            const [hours, minutes] = timePart.split(':').map(Number)
-
-            return new Date(year, month - 1, day, hours, minutes)
-				},
-        formatDate(date: Date) {
-            const weekdays = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta", "Sábado"]
-            const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
-
-            const formattedDate = date.toLocaleDateString('pt-BR')
-            const formattedTime = date.toLocaleTimeString('pt-BR', {
-                hour: '2-digit',
-                minute: '2-digit',
-            }).replace(':', 'h')
-
-            return {
-              weekday: `${weekdays[date.getDay()]} às ${formattedTime}`,
-              day: formattedDate[0] + formattedDate[1],
-              month: months[date.getMonth()]
-            }
-        },
     },
 })
 </script>
