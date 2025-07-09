@@ -3,7 +3,7 @@
     v-for="exam in exams" 
     :key="exam.idAgendamento"
     class="d-flex align-center">
-    <section class="text-center mr-4 text-h6 font-weight-bold">
+    <section class="text-center mr-4 text-h6 text-blue-dark font-weight-bold">
       <p>{{ formatDate(convertToISODate(exam.data)).day }}</p>
       <p>{{ formatDate(convertToISODate(exam.data)).month }}</p>
     </section>
