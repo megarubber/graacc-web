@@ -33,7 +33,7 @@
                 <v-tabs-window-item value="appointment">
                   <p class="mb-2">
                     {{ statusMessage.begin }}
-                    <span class="font-weight-bold">{{ statusMessage.middle }}</span>
+                    <span class="text-blue-dark font-weight-bold">{{ statusMessage.middle }}</span>
                     {{ statusMessage.end }} para esta semana.
                   </p>
                   <ExamCardGenerator :exams="weekExams" />
@@ -41,7 +41,7 @@
                   <ExamCardGenerator :exams="futureExams" />
                 </v-tabs-window-item>
                 <v-tabs-window-item value="calendar">
-                  <Calendar />
+                  <Calendar :exams="weekExams"/>
                 </v-tabs-window-item>
               </v-tabs-window>
             </div>
