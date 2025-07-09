@@ -21,16 +21,11 @@
                     </div>
                 </v-tab>
                 <v-tab to="/perfil">
-                    <div class="custom-tab">
+                    <div @click="logUserOut()" class="custom-tab">
                         <v-icon size="24">mdi-account</v-icon>
                         <p>Perfil</p>
                     </div>
                 </v-tab>
-                <!--
-                <v-tab to="/login" @click="logUserOut()">
-                    Logout
-                </v-tab>
-                -->
             </v-tabs>
         </v-container>
     </v-layout>
@@ -45,6 +40,7 @@ export default defineComponent({
   data() {
     return {
       auth: useAuthStore(),
+      hasNotifications: false,
     }
   },
   methods: {

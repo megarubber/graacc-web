@@ -4,10 +4,10 @@ export default async function getExams() {
   const { $api } = useNuxtApp()
   const token = useCookie('token')
 
-  const response: Exam[] = await $api('/agendamentos', {
+  const response: Exam[] = await $api('/usuario/agendamentos', {
     method: 'GET',
     headers: {
-      Authorization: `${token.value}`
+      Authorization: `Bearer ${token.value}`
     }
   })
   return (response)

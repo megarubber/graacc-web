@@ -1,7 +1,8 @@
 export default interface Exam {
-  id_agendamento: number,
+  idAgendamento: number,
   titulo: string,
   descricao: string,
   data: string,
   local: string,
+  idPaciente: number
 }

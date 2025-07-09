@@ -1,7 +1,6 @@
 <template>
   <div>
     <ScheduleXCalendar :calendar-app="this.calendarApp" />
-    <TheHeader/>
   </div>
 </template>
 
@@ -20,7 +19,7 @@ import type Exam from '~/interfaces/exam'
 import getUserExams from '~/utils/api/exams/getUserExams'
 
 export default defineComponent({
-  name: 'CalendarioPage',
+  name: 'Calendar',
   components: {
     ScheduleXCalendar,
   },
