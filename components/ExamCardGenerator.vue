@@ -25,7 +25,6 @@
 
 <script lang="ts">
 import type Exam from '~/interfaces/exam'
-import convertToISODate from '~/utils/convertToISODate'
 
 export default defineComponent({
     name: 'ExamCardGenerator',
@@ -33,7 +32,6 @@ export default defineComponent({
         exams: { 
           type: Array as PropType<Exam[]>, 
           required: true,
-          default: () => [],
         },
     },
     methods: {

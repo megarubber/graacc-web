@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-container class="pa-0 position-fixed bottom-0 bg-white left-0 d-flex justify-center">
+        <v-container class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center">
             <v-tabs>
                 <v-tab to="/">
                     <div class="custom-tab">
@@ -21,7 +21,7 @@
                     </div>
                 </v-tab>
                 <v-tab to="/perfil">
-                    <div @click="logUserOut()" class="custom-tab">
+                    <div class="custom-tab" @click="logUserOut()">
                         <v-icon size="24">mdi-account</v-icon>
                         <p>Perfil</p>
                     </div>
@@ -65,6 +65,10 @@ export default defineComponent({
 @media (max-width: 400px) {
   .custom-tab p {
     font-size: 10px;
+  }
+  
+  .fix-header {
+    left: 0;
   }
 }
 </style>
