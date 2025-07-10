@@ -1,14 +1,9 @@
 <template>
-    <v-layout>
-        <v-container>
+    <v-layout :class="['h-100', 'd-flex', 'justify-center', {'align-center': loading }]">
+        <v-progress-circular v-if="loading" indeterminate />
+        <v-container v-else>
+            <SearchBar label="Buscar compromisso, médico ou data" />
             <div class="d-flex flex-column ga-2">
-              <v-text-field
-              v-model="search"
-              prepend-inner-icon="mdi-magnify"
-              rounded="pill"
-              bg-color="#ECEDF4"
-              base-color="white"
-              label="Buscar compromisso, médico ou data"/>
               <v-tabs v-model="tab">
                 <v-tab 
                   class="w-50"
@@ -41,7 +36,7 @@
                   <ExamCardGenerator :exams="futureExams" />
                 </v-tabs-window-item>
                 <v-tabs-window-item value="calendar">
-                  <Calendar :exams="weekExams"/>
+                  <TheCalendar :exams="weekExams"/>
                 </v-tabs-window-item>
               </v-tabs-window>
             </div>
@@ -71,7 +66,8 @@ export default defineComponent({
               begin: 'Existem',
               middle: '0 compromissos',
               end: 'agendados'
-            })
+            }),
+						loading: ref(true)
         }
     },
     async mounted() {
@@ -83,6 +79,7 @@ export default defineComponent({
 				this.futureExams = allExams.filter(
 					exam => !this.isDateInThisWeek(convertToISODate(exam.data))
 				)
+				this.loading = false
 
         this.statusMessage.begin = this.weekExams.length == 1 ? "Existe" : "Existem"
         this.statusMessage.middle = this.weekExams.length == 1 ? "1 compromisso" : `${this.weekExams.length} compromissos`
@@ -100,7 +97,5 @@ export default defineComponent({
 </script>
 
 <style>
-div {
-  font-family: Rubik, sans-serif;
-}
+div { font-family: Rubik, sans-serif; }
 </style>

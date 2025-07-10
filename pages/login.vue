@@ -1,6 +1,13 @@
 <template>
-    <v-layout class="h-100">
-        <v-container class="d-flex ga-2 flex-column justify-center">
+    <v-layout class="h-100 d-flex justify-center align-center">
+        <div class="glow">
+          <div class="glow-effect l top-0"/>
+          <div class="glow-effect r t"/>
+          <div class="glow-effect l bottom-0"/>
+          <div class="glow-effect r bottom-0"/>
+        </div>
+        <v-progress-circular v-if="loading" indeterminate />
+        <v-container v-else class="d-flex ga-2 flex-column justify-center">
             <v-snackbar
                 v-model="alert"
                 location="top end"
@@ -8,12 +15,7 @@
             >
                 {{ alert_message }}
             </v-snackbar>
-            <div class="glow">
-              <div class="glow-effect l top-0"/>
-              <div class="glow-effect r t"/>
-              <div class="glow-effect l bottom-0"/>
-              <div class="glow-effect r bottom-0"/>
-            </div>
+
             <img src="/assets/images/agendinha_logo.png" class="align-self-center mb-4">
             <div class="titles text-center">
               <h2 class="font-weight-bold">Vamos começar?</h2>
@@ -30,19 +32,19 @@
                 :append-inner-icon="show ?'mdi-eye': 'mdi-eye-off'"
                 @click:append-inner="show = !show"/>
             </section>
-            <a href="/senha" class="font-weight-bold mb-4 text-blue-light">Esqueceu a senha?</a>
+            <a href="/senha" class="font-weight-bold mb-4 text-blue-dark">Esqueceu a senha?</a>
             <v-btn
             @click="login()">Entrar</v-btn>
             <p class="text-center">ou</p>
             <v-btn
             color="black"
             variant="outlined">
-              <Icon style="margin-right: 10px;" name="icons:google-logo" size="30"/>
+              <Icon class="mr-4" name="icons:google-logo" size="30"/>
               Entrar com o Google
             </v-btn>
             <div class="text-center mt-6">
               <p>Ainda não tem uma conta?</p>
-              <a href="/registro" class="font-weight-bold mb-6 text-blue-light">
+              <a href="/registro" class="font-weight-bold mb-6 text-blue-dark">
                 Cadastre-se aqui.
               </a>
             </div>
@@ -68,6 +70,7 @@ export default defineComponent({
             authenticated: storeToRefs(useAuthStore()),
             alert: false,
             alert_message: '',
+						loading: ref(false)
         }
 	  },
     methods: {
@@ -88,10 +91,12 @@ export default defineComponent({
           });
         },
         async login() {
+            this.loading = true;
             const testEmail = /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
             if(!testEmail.test(this.user.email)) {
               this.alert = true
               this.alert_message = 'E-mail inválido'
+              this.loading = false;
               return
             }
 
@@ -101,8 +106,9 @@ export default defineComponent({
                 if (this.authenticated) this.$router.push('/')
             }
             catch (error) {
+                this.loading = false;
                 this.alert = true
-                if(error.response.status == 401) {
+                if(error.response.status == 401 || error.response.status == 400) {
                   this.alert_message = "E-mail/senha não encontrado."
                   return
                 }
