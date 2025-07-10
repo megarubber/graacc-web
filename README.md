@@ -1,5 +1,5 @@
 # **Agendinha do GRAAC**
-
+![Logo](./screenshots/logo_projeto.png)
 ## **Objetivo**
 
 ### *Gerais:*
@@ -68,10 +68,6 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 ### **Página de Exames**
 
 ![Exames](./screenshots/print_exames.png)
-
-## **Logo do Projeto**
-
-![Logo](./screenshots/logo_projeto.png)
 
 ## **Diagrama Entidade-Relacionamento**
 
