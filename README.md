@@ -1,5 +1,5 @@
 # **Agendinha do GRAAC**
-
+![Logo](./screenshots/logo_projeto.png)
 ## **Objetivo**
 
 ### *Gerais:*
@@ -41,27 +41,37 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 
 ## **Protótipo**
 
-*https://www.figma.com/design/N4BjYcG1kDHuFm0VW8SKvh/GRAAC?node-id=6-2&p=f&t=X88a1YjSG3XycbJO-0*
+[Link para o Figma](https://www.figma.com/destan/M4BjYcGLkDluFm9M8SKvh/GRAACmode-id=6-28p-f8t-x88a1Yj5G3XycbJ0-8)
 
 ## **Imagens do Protótipo**
 
 ### **Página de Cadastro**
+
 ![Cadastro](./screenshots/print_cadastro.png)
 
 ### **Página de Login**
+
 ![Login](./screenshots/print_login.png)
 
 ### **Página de 'Esqueceu a Senha'**
+
 ![Esqueceu_a_Senha](./screenshots/print_senha.png)
 
 ### **Página de Notificações**
+
 ![Notificações](./screenshots/print_notificacoes.png)
 
 ### **Página de Contatos**
+
 ![Contatos](./screenshots/print_contatos.png)
 
 ### **Página de Exames**
+
 ![Exames](./screenshots/print_exames.png)
+
+## **Diagrama Entidade-Relacionamento**
+
+![Diagrama_Entidade_Relacionamento](./public/diagrama_entidade_relacionamento.jpg)
 
 ## **Status**
 
