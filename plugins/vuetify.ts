@@ -9,7 +9,7 @@ const graacc_light: ThemeDefinition = {
         'blue-light': '#E6F6FE',
         'blue-dark': '#1C3B72',
         'green': '#4CAF50',
-        'grey': '#F5F5F5',
+        'grey': '#4B4B4B',
         'pink': '#E91E63'
     }
 }

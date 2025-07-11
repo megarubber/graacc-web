@@ -4,25 +4,25 @@
             <v-tabs>
                 <v-tab to="/">
                     <div class="custom-tab">
-                        <v-icon size="24">mdi-home</v-icon>
+                        <v-icon size="24" icon="mdi-home"/>
                         <p>Início</p>
                     </div>
                 </v-tab>
                 <v-tab to="/contatos">
                     <div class="custom-tab">
-                        <v-icon size="24">mdi-phone</v-icon>
+                        <v-icon icon="mdi-phone" size="24"/>
                         <p>Contatos</p>
                     </div>
                 </v-tab>
                 <v-tab to="/notificacoes">
                     <div class="custom-tab">
-                        <v-icon size="24">{{hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'}}</v-icon>
+                        <v-icon :icon="hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'" size="24" />
                         <p>Notificações</p>
                     </div>
                 </v-tab>
                 <v-tab to="/perfil">
-                    <div class="custom-tab" @click="logUserOut()">
-                        <v-icon size="24">mdi-account</v-icon>
+                    <div class="custom-tab">
+                        <v-icon icon="mdi-account" size="24"/>
                         <p>Perfil</p>
                     </div>
                 </v-tab>

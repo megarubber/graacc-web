@@ -16,7 +16,7 @@
                       {{ contact.title }}
                     </v-card-title>
                   </v-card-item>
-                  <v-card-text style="color: #4B4B4B; line-height: 0.1rem;" v-for="info in contact.info">
+                  <v-card-text class="text-grey" style="line-height: 0.1rem;" v-for="info in contact.info">
                     {{ info }}
                   </v-card-text>
                   <v-card-actions >
