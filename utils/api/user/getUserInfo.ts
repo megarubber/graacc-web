@@ -1,4 +1,4 @@
-import type Exam from "~/interfaces/exam"
+import type User from "~/interfaces/user"
 
 export default async function getUserInfo() {
   const { $api } = useNuxtApp()
