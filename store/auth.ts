@@ -1,4 +1,4 @@
-import type User from "~/interfaces/user"
+import type UserToken from "~/interfaces/userToken"
 import type UserAuth from "~/interfaces/userAuth"
 
 export const useAuthStore = defineStore('auth', {
@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp()
-      const response: User = await $api('/auth/usuario/login', {
+      const response: UserToken = await $api('/auth/usuario/login', {
         method: 'POST',
         body: user_auth,
       })
