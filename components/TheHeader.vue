@@ -32,20 +32,13 @@
 </template>
 
 <script lang="ts">
-import { useAuthStore } from '~/store/auth'
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'TheHeader',
   data() {
     return {
-      auth: useAuthStore(),
       hasNotifications: false,
-    }
-  },
-  methods: {
-    logUserOut() {
-      this.auth.logUserOut()
     }
   }
 });

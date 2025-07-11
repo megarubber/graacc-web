@@ -6,9 +6,10 @@
             <SearchBar label="Pesquisar contatos"/>
             <div class="d-flex flex-column ga-2">
                 <v-card
+                  v-for="contact in contacts"
+                  :key="contact.title"
                   variant="flat"
                   color="white"
-                  v-for="contact in contacts"
                 >
                   <v-card-item class="mb-4">
                     <v-card-title>
@@ -16,7 +17,11 @@
                       {{ contact.title }}
                     </v-card-title>
                   </v-card-item>
-                  <v-card-text class="text-grey" style="line-height: 0.1rem;" v-for="info in contact.info">
+                  <v-card-text 
+                    v-for="info in contact.info"
+                    :key="info"
+                    class="text-grey" 
+                    style="line-height: 0.1rem;">
                     {{ info }}
                   </v-card-text>
                   <v-card-actions >
