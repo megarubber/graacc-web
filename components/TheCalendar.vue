@@ -3,13 +3,13 @@
 </template>
 
 <script lang="ts">
-import type Exam from '~/interfaces/exam'
+import type Exam from "~/interfaces/exam";
 
 export default defineComponent({
-  name: 'TheCalendar',
+  name: "TheCalendar",
   props: {
-    exams: { 
-      type: Array as PropType<Exam[]>, 
+    exams: {
+      type: Array as PropType<Exam[]>,
       required: true,
     },
   },

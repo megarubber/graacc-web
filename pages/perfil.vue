@@ -1,73 +1,76 @@
 <template>
   <v-layout class="h-100 d-flex flex-column justify-center align-center">
     <div class="glow">
-      <div class="glow-effect l top-0"/>
-      <div class="glow-effect r t"/>
+      <div class="glow-effect l top-0" />
+      <div class="glow-effect r t" />
     </div>
     <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else class="text-center d-flex flex-column justify-center align-center ga-4">
+    <v-container
+      v-else
+      class="text-center d-flex flex-column justify-center align-center ga-4"
+    >
       <div class="image-container">
-        <img src="/assets/images/sample.jpg">
+        <img src="/assets/images/sample.jpg" />
       </div>
       <h3>John Doe</h3>
-      <h3 style="color: #4B4B4B;">Responsável: {{ user.nome }}</h3>
-      <v-btn 
-        class="w-100" 
-        color="#F8F8F8" 
-        text="Atualizar dados" 
+      <h3 style="color: #4b4b4b">Responsável: {{ user.nome }}</h3>
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Atualizar dados"
         prepend-icon="mdi-pencil-outline"
       />
-      <v-btn 
-        class="w-100" 
-        color="#F8F8F8" 
-        text="Preferências de notificações" 
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Preferências de notificações"
         prepend-icon="mdi-bell-outline"
       />
-      <v-btn 
-        class="w-100" 
-        color="#F8F8F8" 
-        text="Desconectar" 
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Desconectar"
         prepend-icon="mdi-exit-to-app"
-				@click="logUserOut()"
-				to="/login"
+        @click="logUserOut()"
+        to="/login"
       />
-			<TheHeader />
+      <TheHeader />
     </v-container>
   </v-layout>
 </template>
 
 <script lang="ts">
-import getUserInfo from '~/utils/api/user/getUserInfo'
-import { useAuthStore } from '~/store/auth'
+import getUserInfo from "~/utils/api/user/getUserInfo";
+import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
   data() {
     return {
       user: ref({
-        nome: '',
-        email: '',
+        nome: "",
+        email: "",
       }),
       auth: useAuthStore(),
-			loading: ref(false)
-    }
+      loading: ref(false),
+    };
   },
   async mounted() {
-		this.loading = true
-    this.user = await getUserInfo()
-		this.loading = false
+    this.loading = true;
+    this.user = await getUserInfo();
+    this.loading = false;
   },
   methods: {
     logUserOut() {
-			try {
-				this.loading = true
-				this.auth.logUserOut()
-			} catch(e) {
-				console.error(e)
-				this.loading = false
-			}
-    }
-  }
+      try {
+        this.loading = true;
+        this.auth.logUserOut();
+      } catch (e) {
+        console.error(e);
+        this.loading = false;
+      }
+    },
+  },
 });
 </script>
 
@@ -79,20 +82,24 @@ export default defineComponent({
   opacity: 15%;
   z-index: -1;
   box-shadow:
-    0 0 100px 5rem #80D9FF,
-    0 0 140px 6rem #009EE0;
+    0 0 100px 5rem #80d9ff,
+    0 0 140px 6rem #009ee0;
 }
 
 .glow-effect.r.t {
   top: 0px;
   box-shadow:
-    0 0 100px 5rem #E32585,
-    0 0 140px 6rem #E858A1;
+    0 0 100px 5rem #e32585,
+    0 0 140px 6rem #e858a1;
 }
 
-.glow-effect.r { right: 5px; }
+.glow-effect.r {
+  right: 5px;
+}
 
-.glow-effect.l { left: 5px; }
+.glow-effect.l {
+  left: 5px;
+}
 
 .v-btn {
   justify-content: flex-start;
@@ -111,5 +118,4 @@ export default defineComponent({
   height: 100%;
   object-fit: cover;
 }
-
 </style>

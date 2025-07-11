@@ -1,4 +1,4 @@
 export default interface UserToken {
-  nome: string,
-  token: string
+  nome: string;
+  token: string;
 }
