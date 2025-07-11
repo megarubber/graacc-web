@@ -16,6 +16,11 @@ export default defineComponent({
       type: String, 
       required: true
     }
+  },
+  data() {
+    return {
+      search: '',
+    }
   }
 })
 </script>

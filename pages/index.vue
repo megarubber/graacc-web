@@ -60,7 +60,6 @@ export default defineComponent({
         return {
             weekExams: ref([] as Exam[]),
             futureExams: ref([] as Exam[]),
-            search: '',
             tab: ref(null),
             statusMessage: reactive({
               begin: 'Existem',
