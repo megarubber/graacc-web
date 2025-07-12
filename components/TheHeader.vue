@@ -4,8 +4,7 @@
       class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
     >
       <v-tabs>
-        <v-tab to="/">
-          <div class="custom-tab">
+        <v-tab to="/"> <div class="custom-tab">
             <v-icon size="24" icon="mdi-home" />
             <p>Início</p>
           </div>
@@ -19,9 +18,14 @@
         <v-tab to="/notificacoes">
           <div class="custom-tab">
             <v-icon
-              :icon="hasNotifications ? 'mdi-bell-ring' : 'mdi-bell'"
+              :icon="totalNotifications > 0 ? 'mdi-bell-ring' : 'mdi-bell'"
               size="24"
             />
+						<span class="number-indicator" v-if="totalNotifications > 9">+9</span>
+						<span class="number-indicator" 
+						v-if="totalNotifications > 0 && totalNotifications < 9">
+							{{ totalNotifications }}
+						</span>
             <p>Notificações</p>
           </div>
         </v-tab>
@@ -44,7 +48,7 @@ export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      hasNotifications: ref(false),
+      totalNotifications: ref(0),
     };
   },
   async mounted() {
@@ -52,13 +56,7 @@ export default defineComponent({
     const notReadNotifications: Notification[] = notifications.filter(
       (notification) => !notification.lida
     );
-    
-    if (notReadNotifications.length > 0) {
-      this.hasNotifications = true;
-      return;
-    }
-
-    this.hasNotifications = false;
+		this.totalNotifications = notReadNotifications.length;
   }
 });
 </script>
@@ -71,6 +69,17 @@ export default defineComponent({
   justify-content: center;
   text-transform: none;
   width: 10px;
+}
+
+.number-indicator {
+  position: absolute;
+  right: 11px;
+  top: 6px;
+	background-color: #A30052;
+	padding: 2px 5px;
+	border-radius: 20px;
+  color: #fff;
+	z-index: 2;
 }
 
 @media (max-width: 400px) {
