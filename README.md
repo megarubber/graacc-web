@@ -1,75 +1,82 @@
-# Nuxt 3 Minimal Starter
+# **Agendinha do GRAAC**
+![Logo](./screenshots/logo_projeto.png)
+## **Objetivo**
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### *Gerais:*
 
-## Setup
+- montar uma agenda em detalhes, a partir de um calendário;
+- Exibir informações sobre contatos de médicos e funcionários;
+- Marcar consultas e exames, tanto para pacientes quanto profissionais.
 
-Make sure to install the dependencies:
+### *Específicos:*
 
-```bash
-# npm
-npm install
+- Transferir dados de uma agenda para o dispositivo móvel de forma local ou em nuvem (ex: Google Calendar).
 
-# pnpm
-pnpm install
+## **Público Alvo**
 
-# yarn
-yarn install
+Funcionários da instituição, médicos, enfermeiros e pais/responsáveis;
 
-# bun
-bun install
-```
+## **Onde o Projeto Será Utilizado**
 
-## Development Server
+A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um aplicativo para dispositivos móveis), cuja integração será necessária realizar ao final do projeto.
 
-Start the development server on `http://localhost:3000`:
+## **Tecnologias Utilizadas**
 
-```bash
-# npm
-npm run dev
+- **Front-end**: Nuxt (Vue.js, Nitro, Vite);
 
-# pnpm
-pnpm run dev
+- **Back-end**: Spring Boot (microsserviços).
 
-# yarn
-yarn dev
+## **Como Rodar o Projeto**
+**1.** Instale Node.js e npm;
 
-# bun
-bun run dev
-```
+**2.** Clone o repositório e entre na pasta `graac-web`;
 
-## Production
+**3.** Faça uma cópia de `.env.example` com o nome de `.env` e prepare as variáveis de ambiente;
 
-Build the application for production:
+**4.** Execute `npm install` ou `npm i`. Você também pode usar o Makefile com make (se fez dessa maneira, pode pular o passo 5);
 
-```bash
-# npm
-npm run build
+**5.** Execute `npm run dev`;
 
-# pnpm
-pnpm run build
+**6.** *(Opcional)* Para executar a API mockada, clone e entre na pasta graacc-api-mock. Depois siga as instruções desse [Tutorial](*https://github.com/UnifespCodeLab/graacc-api-mock/blob/main/tutorial-wiremock.md*)
 
-# yarn
-yarn build
+## **Protótipo**
 
-# bun
-bun run build
-```
+[Link para o Figma](https://www.figma.com/destan/M4BjYcGLkDluFm9M8SKvh/GRAACmode-id=6-28p-f8t-x88a1Yj5G3XycbJ0-8)
 
-Locally preview production build:
+## **Imagens do Protótipo**
 
-```bash
-# npm
-npm run preview
+### **Página de Cadastro**
 
-# pnpm
-pnpm run preview
+![Cadastro](./screenshots/print_cadastro.png)
 
-# yarn
-yarn preview
+### **Página de Login**
 
-# bun
-bun run preview
-```
+![Login](./screenshots/print_login.png)
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### **Página de 'Esqueceu a Senha'**
+
+![Esqueceu_a_Senha](./screenshots/print_senha.png)
+
+### **Página de Notificações**
+
+![Notificações](./screenshots/print_notificacoes.png)
+
+### **Página de Contatos**
+
+![Contatos](./screenshots/print_contatos.png)
+
+### **Página de Exames**
+
+![Exames](./screenshots/print_exames.png)
+
+## **Diagrama Entidade-Relacionamento**
+
+![Diagrama_Entidade_Relacionamento](./public/diagrama_entidade_relacionamento.jpg)
+
+## **Status**
+
+- [ ] Em ideação
+- [x] Em desenvolvimento
+- [ ] Testando com usuário
+- [ ] Em uso
+- [ ] Descontinuado
