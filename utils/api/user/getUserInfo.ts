@@ -1,10 +1,10 @@
-import type Exam from "~/interfaces/exam";
+import type User from "~/interfaces/user";
 
-export default async function getExams() {
+export default async function getUserInfo() {
   const { $api } = useNuxtApp();
   const token = useCookie("token");
 
-  const response: Exam[] = await $api("/usuario/agendamentos", {
+  const response: User = await $api("/auth/usuario/listar", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token.value}`,

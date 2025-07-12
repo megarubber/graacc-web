@@ -1,5 +1,5 @@
 # **Agendinha do GRAAC**
-![Logo](./screenshots/logo_projeto.png)
+![Logo](./public/assets/images/agendinha_logo.png)
 ## **Objetivo**
 
 ### *Gerais:*

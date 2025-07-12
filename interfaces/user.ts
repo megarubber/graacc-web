@@ -1,7 +1,9 @@
 export default interface User {
-  id: number,
-  nome: string,
-  email: string,
-  cadastro_confirmado: boolean,
-  token: string
+  idUsuario: number;
+  nome: string;
+  email: string;
+  cadastroConfirmado: boolean;
+  token: string;
+  role: string;
+  idPaciente: number;
 }
