@@ -14,8 +14,7 @@
 
       <img
         src="/assets/images/agendinha_logo.png"
-        class="align-self-center mb-4"
-      />
+        class="align-self-center mb-4">
       <div class="titles text-center">
         <h2 class="font-weight-bold">Vamos começar?</h2>
         <h3 class="mb-6">Faça seu login</h3>
@@ -122,9 +121,7 @@ a {
   text-decoration: none;
 }
 
-img {
-  width: 200px;
-}
+img { width: 200px; }
 
 .glow-effect {
   position: absolute;

@@ -1,8 +1,8 @@
 <template>
   <v-layout>
     <v-container>
-      <h2 class="mb-4 mt-8 text-center">Contatos do GRAAC</h2>
-      <hr class="mb-2" />
+      <h2 class="mb-4 mt-8 text-center">Contatos do GRAACC</h2>
+      <hr class="mb-2">
       <SearchBar label="Pesquisar contatos" />
       <div class="d-flex flex-column ga-2">
         <v-card

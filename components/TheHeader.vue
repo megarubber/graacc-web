@@ -37,15 +37,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import type Notification from "~/interfaces/notification";
+import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 
 export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      hasNotifications: false,
+      hasNotifications: ref(false),
     };
   },
+  async mounted() {
+    const notifications = await getUserNotifications();
+    const notReadNotifications: Notification[] = notifications.filter(
+      (notification) => !notification.lida
+    );
+    
+    if (notReadNotifications.length > 0) {
+      this.hasNotifications = true;
+      return;
+    }
+
+    this.hasNotifications = false;
+  }
 });
 </script>
 

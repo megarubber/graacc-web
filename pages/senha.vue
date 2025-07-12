@@ -9,7 +9,7 @@
       </section>
       <div class="d-flex flex-row">
         <p class="mb-4 mr-2">Lembrou sua senha?</p>
-        <a href="/login" class="font-weight-bold mb-6 text-blue-light"
+        <a href="/login" class="font-weight-bold mb-6 text-blue-dark"
           >Faça login</a
         >
       </div>

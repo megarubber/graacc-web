@@ -10,7 +10,7 @@
       class="text-center d-flex flex-column justify-center align-center ga-4"
     >
       <div class="image-container">
-        <img src="/assets/images/sample.jpg" />
+        <img src="/assets/images/sample.jpg">
       </div>
       <h3>John Doe</h3>
       <h3 style="color: #4b4b4b">Responsável: {{ user.nome }}</h3>
@@ -31,8 +31,8 @@
         color="#F8F8F8"
         text="Desconectar"
         prepend-icon="mdi-exit-to-app"
-        @click="logUserOut()"
         to="/login"
+        @click="logUserOut()"
       />
       <TheHeader />
     </v-container>
