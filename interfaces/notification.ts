@@ -1,8 +1,8 @@
 import type Exam from "./exam";
 
 export default interface Notification {
-  id_notificacao: number;
+  idNotificacao: number;
   data: string;
   lida: boolean;
-  agendamento: Exam;
+  idAgendamento: number;
 }

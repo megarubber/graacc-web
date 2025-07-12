@@ -4,10 +4,10 @@ export default async function getNotifications() {
   const { $api } = useNuxtApp();
   const token = useCookie("token");
 
-  const response: Notification[] = await $api("/notificacoes/mes", {
+  const response: Notification[] = await $api("/usuario/notificacoes", {
     method: "GET",
     headers: {
-      Authorization: `${token.value}`,
+      Authorization: `Bearer ${token.value}`,
     },
   });
   return response;
