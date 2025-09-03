@@ -28,9 +28,8 @@ export default defineNuxtPlugin((app) => {
     defaults: {
       global: { ripple: false },
       VTextField: {
-        rounded: "xl",
+        rounded: "lg",
         variant: "outlined",
-        baseColor: "#545454",
       },
       VBtn: {
         color: "#1C3B72",

@@ -102,4 +102,16 @@ export default defineComponent({
 div {
   font-family: Rubik, sans-serif;
 }
+.v-field--active {
+	background-color: #E8E9ED;
+	border-radius: 10px;
+}
+
+.v-field--variant-outlined.v-field--active .v-field__outline__start,
+.v-field--variant-outlined.v-field--active .v-field__outline__notch::before,
+.v-field--variant-outlined.v-field--active .v-field__outline__notch::after,
+.v-field--variant-outlined.v-field--active .v-field__outline__end {
+  border-color: #017BFD !important;
+}
+
 </style>
