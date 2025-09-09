@@ -3,7 +3,7 @@
     :class="['h-100', 'd-flex', 'justify-center', { 'align-center': loading }]"
   >
     <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else>
+    <v-container class="pa-0" v-else>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="exams">
           <exams 

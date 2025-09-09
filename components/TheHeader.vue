@@ -87,9 +87,9 @@ export default defineComponent({
 	z-index: 2;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .custom-tab p {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .fix-header {

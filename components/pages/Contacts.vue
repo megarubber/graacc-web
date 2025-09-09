@@ -1,7 +1,7 @@
 <template>
   <h2 class="mb-4 mt-8 text-center">Contatos do GRAACC</h2>
   <hr class="mb-2">
-  <search-bar label="Pesquisar contatos" />
+  <search-bar class="mx-3" label="Pesquisar contatos" />
   <div class="d-flex flex-column ga-2">
     <v-card
       v-for="contact in contacts"

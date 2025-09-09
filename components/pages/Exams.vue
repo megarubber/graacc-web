@@ -1,5 +1,5 @@
 <template>
-  <SearchBar label="Buscar compromisso, médico ou data" />
+  <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
   <div class="d-flex flex-column ga-2">
     <v-tabs v-model="tab">
       <v-tab class="w-50" color="black" value="appointment">
@@ -15,7 +15,7 @@
         </div>
       </v-tab>
     </v-tabs>
-    <v-tabs-window v-model="tab">
+    <v-tabs-window v-model="tab" class="mx-3">
       <v-tabs-window-item value="appointment">
         <p class="mb-2">
           {{ statusMessage.begin }}
