@@ -3,19 +3,20 @@
     <v-container
       class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
     >
-      <v-tabs>
-        <v-tab to="/"> <div class="custom-tab">
+      <v-tabs v-model="currentTab" @change="$emit('changedTab', currentTab)">
+        <v-tab value="exams"> 
+          <div class="custom-tab">
             <v-icon size="24" icon="mdi-home" />
             <p>Início</p>
           </div>
         </v-tab>
-        <v-tab to="/contatos">
+        <v-tab value="contacts">
           <div class="custom-tab">
             <v-icon icon="mdi-phone" size="24" />
             <p>Contatos</p>
           </div>
         </v-tab>
-        <v-tab to="/notificacoes">
+        <v-tab value="notifications">
           <div class="custom-tab">
             <v-icon
               :icon="totalNotifications > 0 ? 'mdi-bell-ring' : 'mdi-bell'"
@@ -29,7 +30,7 @@
             <p>Notificações</p>
           </div>
         </v-tab>
-        <v-tab to="/perfil">
+        <v-tab value="profile">
           <div class="custom-tab">
             <v-icon icon="mdi-account" size="24" />
             <p>Perfil</p>
@@ -46,9 +47,13 @@ import getUserNotifications from "~/utils/api/notifications/getUserNotifications
 
 export default defineComponent({
   name: "TheHeader",
+  props: {
+    tab: { type: String, required: true },
+  },
   data() {
     return {
       totalNotifications: ref(0),
+      currentTab: ref(this.tab),
     };
   },
   async mounted() {
