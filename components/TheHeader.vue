@@ -3,7 +3,7 @@
     <v-container
       class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
     >
-      <v-tabs v-model="currentTab" @change="$emit('changedTab', currentTab)">
+      <v-tabs v-model="currentTab" @click="$emit('changedTab', currentTab)">
         <v-tab value="exams"> 
           <div class="custom-tab">
             <v-icon size="24" icon="mdi-home" />
