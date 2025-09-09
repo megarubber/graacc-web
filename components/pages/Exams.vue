@@ -37,9 +37,6 @@
 
 <script lang="ts">
 import type Exam from "~/interfaces/exam";
-import getUserExams from "~/utils/api/exams/getUserExams";
-import convertToISODate from "~/utils/convertToISODate";
-import moment from "moment";
 
 export default defineComponent({
   name: "Exams",

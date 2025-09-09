@@ -14,6 +14,15 @@
         <v-tabs-window-item value="contacts">
           <contacts />
         </v-tabs-window-item>
+        <v-tabs-window-item value="notifications">
+          <notifications 
+            :read-notifications="readNotifications" 
+            :not-read-notifications="notReadNotifications"
+            />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="profile">
+          <profile />
+        </v-tabs-window-item>
       </v-tabs-window>
       <the-header :tab="tab" @changed-tab="(newTab) => tab = newTab"/>
     </v-container>
@@ -22,9 +31,12 @@
 
 <script lang="ts">
 import type Exam from "~/interfaces/exam";
+import type Notification from "~/interfaces/notification";
 import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/convertToISODate";
 import moment from "moment";
+import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
+import getUserInfo from "~/utils/api/user/getUserInfo";
 
 export default defineComponent({
   name: "Home",
@@ -42,6 +54,12 @@ export default defineComponent({
         middle: "0 compromissos",
         end: "agendados",
       }),
+      readNotifications: ref([] as Notification[]),
+      notReadNotifications: ref([] as Notification[]),
+      user: ref({
+        nome: "",
+        email: "",
+      }),
     };
   },
   async mounted() {
@@ -53,6 +71,16 @@ export default defineComponent({
     this.futureExams = allExams.filter(
       (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
     );
+
+    const notifications = await getUserNotifications();
+    this.readNotifications = notifications.filter(
+      (notification) => notification.lida
+    );
+    this.notReadNotifications = notifications.filter(
+      (notification) => !notification.lida
+    );
+    this.user = await getUserInfo();
+
     this.loading = false;
 
     this.statusMessage.begin =
