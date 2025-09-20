@@ -42,4 +42,8 @@ export default defineNuxtConfig({
       googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET,
     },
   },
+  components: [
+    { path: "~/components/pages", pathPrefix: false },
+    { path: "~/components", pathPrefix: false },
+  ]
 });

@@ -1,47 +1,56 @@
 <template>
-  <v-layout class="h-100">
-    <v-container class="d-flex ga-4 flex-column justify-center">
+  <v-layout class="h-100 d-flex justify-center align-center">
+    <div class="glow">
+      <div class="glow-effect l top-0" />
+      <div class="glow-effect r t" />
+      <div class="glow-effect l bottom-0" />
+      <div class="glow-effect r bottom-0" />
+    </div>
+    <v-progress-circular v-if="loading" indeterminate />
+    <v-container v-else class="d-flex ga-2 flex-column justify-center">
       <v-snackbar v-model="alert" location="top end" color="error">
         {{ alert_message }}
       </v-snackbar>
-      <h2 class="text-center font-weight-bold">Cadastro</h2>
-      <h3 class="text-center mb-6">Crie sua conta para começar</h3>
+      <img
+        src="/assets/images/agendinha_logo.png"
+        class="align-self-center mb-4">
+      <div class="titles text-center">
+        <h2 class="font-weight-bold">Vamos começar?</h2>
+        <h3 class="mb-6">Crie a sua conta</h3>
+      </div>
       <section>
-        <v-text-field
-          v-model="user.nome"
-          label="Nome Completo do Responsável"
-          placeholder="José da Silva"
-        />
-        <v-text-field
-          v-model="user.nomeCompletoPaciente"
-          label="Nome Completo do Paciente"
-          placeholder="Pedro da Silva"
-        />
-        <v-text-field
-          v-model="user.email"
-          label="E-mail"
-          placeholder="exemplo@email.com"
-        />
+        <div class="d-flex">
+          <v-text-field v-model="user.nome" label="Nome" class="mr-2"/>
+          <v-text-field v-model="user.sobrenome" label="Sobrenome" class="ml-2"/>
+        </div>
+        <v-text-field v-model="user.email" label="E-mail" />
         <v-text-field
           v-model="user.senha"
           label="Senha"
-          placeholder="Crie a sua senha"
           :type="show ? 'text' : 'password'"
           :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append-inner="show = !show"
         />
-        <v-text-field
-          v-model="confirme_senha"
-          label="Confirme a sua senha"
-          placeholder="Confirme a sua senha"
-          type="password"
-        />
       </section>
-      <v-btn @click="register()">Enviar</v-btn>
-      <v-btn to="/login">Voltar</v-btn>
+      <v-btn @click="register()">Criar conta</v-btn>
+      <div class="text-center mt-6">
+        <p>Já tem uma conta?</p>
+        <a href="/login" class="font-weight-bold mb-6 text-blue-dark">
+          Faça login aqui.
+        </a>
+      </div>
     </v-container>
   </v-layout>
 </template>
+
+<style scoped>
+img { width: 200px; }
+
+a {
+  color: #007aff;
+  text-decoration: none;
+}
+</style>
 
 <script lang="ts">
 import createUser from "~/utils/api/register/createUser";
@@ -52,11 +61,10 @@ export default defineComponent({
     return {
       user: {
         nome: "",
+        sobrenome: "",
         email: "",
         senha: "",
-        nomeCompletoPaciente: "",
       },
-      confirme_senha: "",
       show: false,
       alert: false,
       alert_message: "",
@@ -85,7 +93,13 @@ export default defineComponent({
       }
 
       try {
-        await createUser(this.user);
+        const userRequest = {
+          nome: this.user.nome,
+          email: this.user.email,
+          senha: this.user.senha,
+          nomeCompletoPaciente: `${this.user.nome} ${this.user.sobrenome}`,
+        };
+        await createUser(this.userRequest);
         this.$router.push("/login");
       } catch (error) {
         this.alert = true;
