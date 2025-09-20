@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   modules: [
+    "@nuxt/test-utils/module",
     "@pinia/nuxt",
     "@nuxt/eslint",
     "@nuxtjs/eslint-module",
