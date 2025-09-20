@@ -21,6 +21,9 @@
           {{ formatDate(convertToISODate(exam.data)).weekday }}
         </span>
       </template>
+      <template v-slot:append>
+        <v-icon class="mt-6" color="blue-dark">mdi-arrow-right</v-icon>
+      </template>
     </v-card>
   </div>
 </template>

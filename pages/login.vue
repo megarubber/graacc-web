@@ -11,7 +11,6 @@
       <v-snackbar v-model="alert" location="top end" color="error">
         {{ alert_message }}
       </v-snackbar>
-
       <img
         src="/assets/images/agendinha_logo.png"
         class="align-self-center mb-4">
@@ -122,30 +121,4 @@ a {
 }
 
 img { width: 200px; }
-
-.glow-effect {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  opacity: 15%;
-  z-index: -1;
-  box-shadow:
-    0 0 100px 5rem #80d9ff,
-    0 0 140px 6rem #009ee0;
-}
-
-.glow-effect.r.t {
-  top: 0px;
-  box-shadow:
-    0 0 100px 5rem #e32585,
-    0 0 140px 6rem #e858a1;
-}
-
-.glow-effect.r {
-  right: 5px;
-}
-
-.glow-effect.l {
-  left: 5px;
-}
 </style>
