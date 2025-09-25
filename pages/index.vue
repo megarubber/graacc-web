@@ -3,7 +3,7 @@
     :class="['h-100', 'd-flex', 'justify-center', { 'align-center': loading }]"
   >
     <v-progress-circular v-if="loading" indeterminate />
-    <v-container class="pa-0" v-else>
+    <v-container v-else class="pa-0">
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="exams">
           <exams 
@@ -21,7 +21,7 @@
             />
         </v-tabs-window-item>
         <v-tabs-window-item value="profile">
-          <profile />
+          <profile :user="user" :patient="patient" />
         </v-tabs-window-item>
       </v-tabs-window>
       <the-header :tab="tab" @changed-tab="(newTab) => tab = newTab"/>
@@ -32,11 +32,14 @@
 <script lang="ts">
 import type Exam from "~/interfaces/exam";
 import type Notification from "~/interfaces/notification";
+import type User from "~/interfaces/user";
+import type Patient from "~/interfaces/patient";
 import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/convertToISODate";
 import moment from "moment";
 import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 import getUserInfo from "~/utils/api/user/getUserInfo";
+import getPatientById from "~/utils/api/patient/getPatientById";
 
 export default defineComponent({
   name: "Home",
@@ -56,10 +59,8 @@ export default defineComponent({
       }),
       readNotifications: ref([] as Notification[]),
       notReadNotifications: ref([] as Notification[]),
-      user: ref({
-        nome: "",
-        email: "",
-      }),
+      user: ref({} as User),
+      patient: ref({} as Patient),
     };
   },
   async mounted() {
@@ -79,7 +80,9 @@ export default defineComponent({
     this.notReadNotifications = notifications.filter(
       (notification) => !notification.lida
     );
+
     this.user = await getUserInfo();
+    this.patient = await getPatientById(this.user.idPaciente);
 
     this.loading = false;
 
