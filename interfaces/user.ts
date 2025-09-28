@@ -3,7 +3,6 @@ export default interface User {
   nome: string;
   email: string;
   cadastroConfirmado: boolean;
-  token: string;
   role: string;
   idPaciente: number;
 }

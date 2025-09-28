@@ -3,7 +3,7 @@
     :class="['h-100', 'd-flex', 'justify-center', { 'align-center': loading }]"
   >
     <v-progress-circular v-if="loading" indeterminate />
-    <v-container class="pa-0" v-else>
+    <v-container v-else class="pa-0">
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="exams">
           <exams 
@@ -36,7 +36,6 @@ import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/convertToISODate";
 import moment from "moment";
 import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
-import getUserInfo from "~/utils/api/user/getUserInfo";
 
 export default defineComponent({
   name: "Home",
@@ -56,10 +55,6 @@ export default defineComponent({
       }),
       readNotifications: ref([] as Notification[]),
       notReadNotifications: ref([] as Notification[]),
-      user: ref({
-        nome: "",
-        email: "",
-      }),
     };
   },
   async mounted() {
@@ -79,7 +74,6 @@ export default defineComponent({
     this.notReadNotifications = notifications.filter(
       (notification) => !notification.lida
     );
-    this.user = await getUserInfo();
 
     this.loading = false;
 
