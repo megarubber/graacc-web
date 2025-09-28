@@ -4,7 +4,7 @@
       class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
     >
       <v-tabs v-model="currentTab" @click="$emit('changedTab', currentTab)">
-        <v-tab value="exams"> 
+        <v-tab value="exams">
           <div class="custom-tab">
             <v-icon size="24" icon="mdi-home" />
             <p>Início</p>
@@ -22,11 +22,15 @@
               :icon="totalNotifications > 0 ? 'mdi-bell-ring' : 'mdi-bell'"
               size="24"
             />
-						<span class="number-indicator" v-if="totalNotifications > 9">+9</span>
-						<span class="number-indicator" 
-						v-if="totalNotifications > 0 && totalNotifications < 9">
-							{{ totalNotifications }}
-						</span>
+            <span class="number-indicator" v-if="totalNotifications > 9"
+              >+9</span
+            >
+            <span
+              class="number-indicator"
+              v-if="totalNotifications > 0 && totalNotifications < 9"
+            >
+              {{ totalNotifications }}
+            </span>
             <p>Notificações</p>
           </div>
         </v-tab>
@@ -59,10 +63,10 @@ export default defineComponent({
   async mounted() {
     const notifications = await getUserNotifications();
     const notReadNotifications: Notification[] = notifications.filter(
-      (notification) => !notification.lida
+      (notification) => !notification.lida,
     );
-		this.totalNotifications = notReadNotifications.length;
-  }
+    this.totalNotifications = notReadNotifications.length;
+  },
 });
 </script>
 
@@ -80,11 +84,11 @@ export default defineComponent({
   position: absolute;
   right: 11px;
   top: 6px;
-	background-color: #A30052;
-	padding: 2px 5px;
-	border-radius: 20px;
+  background-color: #a30052;
+  padding: 2px 5px;
+  border-radius: 20px;
   color: #fff;
-	z-index: 2;
+  z-index: 2;
 }
 
 @media (max-width: 450px) {

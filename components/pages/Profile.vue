@@ -7,13 +7,14 @@
     <div class="image-container">
       <img src="/assets/images/sample.jpg">
     </div>
-    <h3>{{ patient.nome }}</h3>
-    <h3 style="color: #4b4b4b">Responsável: {{ user.nome }}</h3>
+    <h3>{{ auth.patient.nome }}</h3>
+    <h3 style="color: #4b4b4b">Responsável: {{ auth.user.nome }}</h3>
     <v-btn
       class="w-100"
       color="#F8F8F8"
       text="Atualizar dados"
       prepend-icon="mdi-pencil-outline"
+      @click="this.$router.push('/editar-perfil');"
     />
     <v-btn
       class="w-100"
@@ -34,19 +35,9 @@
 
 <script lang="ts">
 import { useAuthStore } from "~/store/auth";
-import type User from "~/interfaces/user";
-import type Patient from "~/interfaces/patient";
 
 export default defineComponent({
   name: "Profile",
-  props: {
-    user: {
-      type: Object as PropType<User>, required: true,
-    },
-    patient: {
-      type: Object as PropType<Patient>, required: true,
-    },
-  },
   data() {
     return {
       auth: useAuthStore(),
