@@ -1,5 +1,8 @@
 <template>
   <v-layout class="h-100">
+    <v-snackbar v-model="alert" location="top end" color="error">
+      {{ alert_message }}
+    </v-snackbar>
     <v-container class="d-flex flex-column justify-center align-center">
       <h1 class="text-center mb-4 font-weight-bold">Editar dados</h1>
       <section class="w-100">
@@ -26,23 +29,26 @@ export default defineComponent({
     return {
       auth: useAuthStore(),
       loading: ref(false),
+      alert: false,
+      alert_message: "",
     };
   },
   methods: {
     async update() {
       this.loading = true;
-      /*
-      try {
-        const response = await updateUserInfo(this.user);
-        console.log(response);
-        if(response) this.$router.push("/");
+      const userUpdate: UserUpdate = {
+        nome: this.auth.user.nome,
+        email: this.auth.user.email,
+        nomeCompletoPaciente: this.auth.patient.nome,
+      };
 
+      try {
+        const response = await updateUserInfo(userUpdate);
+        this.$router.push("/");
       } catch(error) {
         this.alert = true;
-        this.alert_message = "Erro ao fazer login.";
+        this.alert_message = "Erro ao editar dados.";
       }
-      */
-      this.$router.push("/");
       
       this.loading = false;
     },
