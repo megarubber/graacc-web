@@ -4,10 +4,13 @@
       {{ alert_message }}
     </v-snackbar>
     <v-container class="d-flex flex-column justify-center align-center">
+      <div class="image-container">
+        <img src="/assets/images/sample.jpg">
+      </div>
       <h1 class="text-center mb-4 font-weight-bold">Editar dados</h1>
       <section class="w-100">
+        <v-file-input label="File input"></v-file-input>
         <v-text-field v-model="auth.user.nome" label="Nome completo do responsável" />
-        <v-text-field v-model="auth.patient.nome" label="Nome completo do paciente" />
       </section>
       <v-btn class="w-100" @click="update">Editar</v-btn>
     </v-container>
@@ -55,3 +58,13 @@ export default defineComponent({
   }, 
 });
 </script>
+
+<style scoped>
+.image-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 50px;
+}
+</style>
