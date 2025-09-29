@@ -31,6 +31,10 @@ export default defineNuxtPlugin((app) => {
         rounded: "lg",
         variant: "outlined",
       },
+      VFileInput: {
+        rounded: "lg",
+        variant: "outlined",
+      },
       VBtn: {
         color: "#1C3B72",
         class: ["font-weight-regular", "text-none"],

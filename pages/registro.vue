@@ -20,8 +20,12 @@
       </div>
       <section>
         <div class="d-flex">
-          <v-text-field v-model="user.nome" label="Nome" class="mr-2"/>
-          <v-text-field v-model="user.sobrenome" label="Sobrenome" class="ml-2"/>
+          <v-text-field v-model="user.nomeResponsavel" label="Nome do(a) responsável" class="mr-2"/>
+          <v-text-field v-model="user.sobrenomeResponsavel" label="Sobrenome do(a) responsável" class="ml-2"/>
+        </div>
+        <div class="d-flex">
+          <v-text-field v-model="user.nomePaciente" label="Nome do(a) paciente" class="mr-2"/>
+          <v-text-field v-model="user.sobrenomePaciente" label="Sobrenome do(a) paciente" class="ml-2"/>
         </div>
         <v-text-field v-model="user.email" label="E-mail" />
         <v-text-field
@@ -54,14 +58,17 @@ a {
 
 <script lang="ts">
 import createUser from "~/utils/api/register/createUser";
+import type UserRegister from "~/interfaces/userRegister";
 
 export default defineComponent({
   name: "Registro",
   data() {
     return {
       user: {
-        nome: "",
-        sobrenome: "",
+        nomeResponsavel: "",
+        sobrenomeResponsavel: "",
+        nomePaciente: "",
+        sobrenomePaciente: "",
         email: "",
         senha: "",
       },
@@ -86,20 +93,14 @@ export default defineComponent({
         return;
       }
 
-      if (this.user.senha != this.confirme_senha) {
-        this.alert = true;
-        this.alert_message = "Senhas estão diferentes";
-        return;
-      }
-
       try {
         const userRequest = {
-          nome: this.user.nome,
+          nome: `${this.user.nomeResponsavel} ${this.user.sobrenomeResponsavel}`,
           email: this.user.email,
           senha: this.user.senha,
-          nomeCompletoPaciente: `${this.user.nome} ${this.user.sobrenome}`,
+          nomeCompletoPaciente: `${this.user.nomePaciente} ${this.user.sobrenomePaciente}`,
         };
-        await createUser(this.userRequest);
+        await createUser(userRequest);
         this.$router.push("/login");
       } catch (error) {
         this.alert = true;
