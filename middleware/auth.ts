@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
   if (!token.value && to?.name !== "login") {
     abortNavigation();
-    return navigateTo("/login");
+    return navigateTo("/boas-vindas");
   }
 });
