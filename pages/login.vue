@@ -12,7 +12,7 @@
         {{ alert_message }}
       </v-snackbar>
       <img
-        src="/assets/images/agendinha_logo.png"
+        src="/images/agendinha_logo.png"
         class="align-self-center mb-4">
       <div class="titles text-center">
         <h2 class="font-weight-bold">Vamos começar?</h2>
@@ -115,10 +115,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-a {
-  color: #007aff;
-  text-decoration: none;
-}
-
 img { width: 200px; }
 </style>
