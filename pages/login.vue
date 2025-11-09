@@ -1,48 +1,56 @@
 <template>
-  <v-layout class="h-100 d-flex justify-center align-center">
-    <div class="glow">
-      <div class="glow-effect l top-0" />
-      <div class="glow-effect r t" />
-      <div class="glow-effect l bottom-0" />
-      <div class="glow-effect r bottom-0" />
-    </div>
+  <v-layout 
+  class="h-100 d-flex justify-center" 
+  :class="{'align-center': loading,}">
     <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else class="d-flex ga-2 flex-column justify-center">
+    <v-container v-else class="d-flex ga-2 flex-column">
       <v-snackbar v-model="alert" location="top end" color="error">
         {{ alert_message }}
       </v-snackbar>
-      <img
-        src="/images/agendinha_logo.png"
-        class="align-self-center mb-4">
-      <div class="titles text-center">
-        <h2 class="font-weight-bold">Vamos começar?</h2>
-        <h3 class="mb-6">Faça seu login</h3>
-      </div>
-      <section>
-        <v-text-field v-model="user.email" label="E-mail" />
-        <v-text-field
-          v-model="user.senha"
-          label="Senha"
-          :type="show ? 'text' : 'password'"
-          :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append-inner="show = !show"
-        />
-      </section>
-      <a href="/senha" class="font-weight-bold mb-4 text-blue-dark"
-        >Esqueceu a senha?</a
-      >
-      <v-btn @click="login()">Entrar</v-btn>
-      <p class="text-center">ou</p>
-      <v-btn color="black" variant="outlined">
-        <Icon class="mr-4" name="icons:google-logo" size="30" />
-        Entrar com o Google
-      </v-btn>
-      <div class="text-center mt-6">
-        <p>Ainda não tem uma conta?</p>
-        <a href="/registro" class="font-weight-bold mb-6 text-blue-dark">
-          Cadastre-se aqui.
-        </a>
-      </div>
+      <v-app-bar elevation="0">
+        <template #prepend>
+          <v-app-bar-nav-icon>
+            <a
+              href="/boas-vindas">
+              <v-icon 
+              style="background-color: #D7F2FF;"
+              class="pa-4 rounded-xl"
+              color="blue-dark" 
+              icon="mdi-chevron-left"/>
+            </a>
+          </v-app-bar-nav-icon>
+          <v-app-bar-title
+            class="font-weight-bold ml-2">Fazer login</v-app-bar-title>
+        </template>
+      </v-app-bar>
+      <v-main class="d-flex flex-column ga-2">
+        <p class="font-weight-bold text-h6 mb-3">Insira seus dados</p>
+        <section>
+          <v-text-field v-model="user.email" label="E-mail" />
+          <v-text-field
+            v-model="user.senha"
+            label="Senha"
+            :type="show ? 'text' : 'password'"
+            :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append-inner="show = !show"
+          />
+        </section>
+        <a href="/senha" class="font-weight-bold mb-4 text-blue-dark"
+          >Esqueci minha senha</a
+        >
+        <v-btn @click="login()">Entrar</v-btn>
+        <p class="text-center">ou</p>
+        <v-btn color="black" width="250" class="align-self-center" variant="outlined">
+          <Icon class="mr-4" name="icons:google-logo" size="30" />
+          Entrar com o Google
+        </v-btn>
+        <div class="text-center mt-6">
+          <p>Ainda não tem uma conta?</p>
+          <a href="/registro" class="font-weight-bold mb-6 text-blue-dark">
+            Cadastre-se aqui.
+          </a>
+        </div>
+      </v-main>
     </v-container>
   </v-layout>
 </template>
@@ -100,7 +108,7 @@ export default defineComponent({
         await this.auth.authenticateUser(this.user);
 
         if (this.authenticated) this.$router.push("/");
-      } catch (error) {
+      } catch (error: any) {
         this.loading = false;
         this.alert = true;
         if (error.response.status == 401 || error.response.status == 400) {
@@ -113,7 +121,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-img { width: 200px; }
-</style>

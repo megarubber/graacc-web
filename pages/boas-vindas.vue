@@ -1,15 +1,16 @@
 <template>
     <v-container class="d-flex ga-4 flex-column text-center h-100 justify-center">
         <v-app-bar elevation="0">
-            <template v-slot:prepend>
+            <template #prepend>
                 <v-app-bar-nav-icon>
                     <img
                         src="public/images/agendinha_logo.png"
                         class="logo">
                 </v-app-bar-nav-icon>
             </template>
-            <template v-slot:append>
-                <v-icon color="blue-dark" class="px-7 py-4 rounded-xl" 
+            <template #append>
+                <v-icon 
+                color="blue-dark" class="px-7 py-4 rounded-xl" 
                 style="background-color: #D7F2FF;" icon="mdi-human" />
             </template>
         </v-app-bar>
