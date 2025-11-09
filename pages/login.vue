@@ -1,23 +1,23 @@
 <template>
   <v-layout 
   class="h-100 d-flex justify-center" 
-  :class="{'align-center': loading,}">
+  :class="{'align-center': loading}">
     <v-progress-circular v-if="loading" indeterminate />
     <v-container v-else class="d-flex ga-2 flex-column">
       <v-snackbar v-model="alert" location="top end" color="error">
         {{ alert_message }}
       </v-snackbar>
-      <v-app-bar elevation="0">
+      <v-app-bar>
         <template #prepend>
           <v-app-bar-nav-icon>
-            <a
+            <NuxtLink
               href="/boas-vindas">
               <v-icon 
               style="background-color: #D7F2FF;"
               class="pa-4 rounded-xl"
               color="blue-dark" 
               icon="mdi-chevron-left"/>
-            </a>
+            </NuxtLink>
           </v-app-bar-nav-icon>
           <v-app-bar-title
             class="font-weight-bold ml-2">Fazer login</v-app-bar-title>
@@ -26,17 +26,21 @@
       <v-main class="d-flex flex-column ga-2">
         <p class="font-weight-bold text-h6 mb-3">Insira seus dados</p>
         <section>
-          <v-text-field v-model="user.email" label="E-mail" />
+          <v-text-field 
+            v-model="user.email" 
+            prepend-inner-icon="mdi-email-outline"
+            label="E-mail" />
           <v-text-field
             v-model="user.senha"
+            prepend-inner-icon="mdi-form-textbox-password"
             label="Senha"
             :type="show ? 'text' : 'password'"
             :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="show = !show"
           />
         </section>
-        <a href="/senha" class="font-weight-bold mb-4 text-blue-dark"
-          >Esqueci minha senha</a
+        <NuxtLink href="/senha" class="font-weight-bold mb-4 text-blue-dark"
+          >Esqueci minha senha</NuxtLink
         >
         <v-btn @click="login()">Entrar</v-btn>
         <p class="text-center">ou</p>
@@ -46,9 +50,9 @@
         </v-btn>
         <div class="text-center mt-6">
           <p>Ainda não tem uma conta?</p>
-          <a href="/registro" class="font-weight-bold mb-6 text-blue-dark">
+          <NuxtLink href="/registro" class="font-weight-bold mb-6 text-blue-dark">
             Cadastre-se aqui.
-          </a>
+          </NuxtLink>
         </div>
       </v-main>
     </v-container>
@@ -58,10 +62,9 @@
 <script lang="ts">
 import { useAuthStore } from "~/store/auth";
 import getResponseOAuth2 from "~/utils/google/getResponseOAuth2";
-import createUser from "~/utils/api/register/createUser";
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "Login",
   data() {
     return {
       user: {
@@ -79,18 +82,8 @@ export default defineComponent({
   methods: {
     loginWithGoogle() {
       getResponseOAuth2(async (token: string, email: string) => {
-        const user = { email, senha: token };
-        await this.login(user);
-
-        if (!this.authenticated) {
-          const userRegister = await createUser({
-            nome: email.split("@")[0],
-            email: email,
-            senha: token,
-            cadastro_confirmado: true,
-          });
-          await this.login(userRegister);
-        }
+        console.log(token, email);
+        if (!this.authenticated) return;
       });
     },
     async login() {

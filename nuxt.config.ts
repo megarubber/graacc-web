@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
+  app: {
+    pageTransition: { name: 'slide-right', mode: 'out-in' },
+  },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   build: {
@@ -14,8 +17,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/fonts",
     (_options, nuxt) => {
-      nuxt.hooks.hook("vite:extendConfig", (config) => {
-        // @ts-expect-error
+      nuxt.hooks.hook("vite:extendConfig", (config: any) => {
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
@@ -44,8 +46,8 @@ export default defineNuxtConfig({
     },
   },
   components: [
-    { path: "~/components/pages", pathPrefix: false },
-    { path: "~/components", pathPrefix: false },
+    '~/components',
+    { path: "~/pages", pattern: '**/subpages/**', pathPrefix: false },
   ],
   css: ['~/assets/css/main.css'],
 });
