@@ -43,6 +43,9 @@ export default defineNuxtPlugin((app) => {
         size: "x-large",
         variant: "flat",
       },
+      VAppBar: {
+        style: [{ boxShadow: "1px 1px #e8e9ed" }]
+      }
     },
   });
   app.vueApp.use(vuetify);
