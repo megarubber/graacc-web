@@ -1,9 +1,8 @@
 <template>
   <v-layout
-    :class="['h-100', 'd-flex', 'justify-center', { 'align-center': loading }]"
+    class="h-100 d-flex justify-center"
   >
-    <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else class="pa-0">
+    <v-container class="pa-0">
       <h2 class="mb-4 mt-8 text-center">Notificações</h2>
       <hr class="mb-2" />
       <div class="d-flex flex-column ga-4 mx-3">

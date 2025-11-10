@@ -1,12 +1,7 @@
 <template>
   <v-layout 
-  class="h-100 d-flex justify-center"
-  :class="{'align-center': loading}">
-    <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else class="d-flex ga-2 flex-column">
-      <v-snackbar v-model="alert" location="top end" color="error">
-        {{ alert_message }}
-      </v-snackbar>
+  class="h-100 d-flex justify-center">
+    <v-container class="d-flex ga-2 flex-column">
       <v-app-bar>
         <template #prepend>
           <v-app-bar-nav-icon>
@@ -64,6 +59,7 @@
 </template>
 
 <script lang="ts">
+import { useLoaderStore } from "~/store/loading";
 import createUser from "~/utils/api/register/createUser";
 
 export default defineComponent({
@@ -77,31 +73,32 @@ export default defineComponent({
         senha: "",
       },
       show: false,
-      alert: false,
-      alert_message: "",
-      loading: ref(false),
+      loader: useLoaderStore(),
+      toast: useNuxtApp().$toast as any,
     };
   },
   methods: {
     async register() {
+      this.loader.startLoading();
+
       const testEmail =
         /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
       if (!testEmail.test(this.user.email)) {
-        this.alert = true;
-        this.alert_message = "E-mail inválido";
+        this.toast.error("E-mail inválido.");
+        this.loader.endLoading();
         return;
       }
 
       const testId = /^\d$/;
       if (!testId.test(`${this.user.idPaciente}`)) {
-        this.alert = true;
-        this.alert_message = "ID inválido";
+        this.toast.error("ID inválido.");
+        this.loader.endLoading();
         return;
       }
 
       if (this.user.senha.length <= 0) {
-        this.alert = true;
-        this.alert_message = "Senha vazia";
+        this.toast.error("Senha inválida.");
+        this.loader.endLoading();
         return;
       }
 
@@ -115,15 +112,15 @@ export default defineComponent({
         await createUser(userRequest);
         this.$router.push("/login");
       } catch (error: any) {
-        this.alert = true;
         if (
           error.response._data == "Não existe nenhum paciente com esse nome"
         ) {
-          this.alert_message = "Erro: paciente não existe.";
+          this.toast.error("Erro: paciente não existe.");
           return;
         }
-        this.alert_message = "Erro ao realizar cadastro.";
+        this.toast.error("Erro ao realizar cadastro.");
       }
+      this.loader.endLoading();
     },
   },
 });

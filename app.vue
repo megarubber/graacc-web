@@ -1,10 +1,20 @@
 <template>
   <v-app>
     <NuxtLayout>
-      <NuxtPage />
+      <v-progress-circular 
+        v-if="loader.isLoading"
+        class="loading"
+        indeterminate />
+      <NuxtPage :class="{'overlay-loading': loader.isLoading }"/>
     </NuxtLayout>
   </v-app>
 </template>
+
+<script setup lang="ts">
+import { useLoaderStore } from './store/loading';
+
+const loader = useLoaderStore();
+</script>
 
 <style>
 .slide-left-enter-active,
@@ -28,5 +38,15 @@
 .slide-right-leave-to {
   opacity: 0;
   transform: translate(50px, 0);
+}
+.overlay-loading {
+  filter: blur(5px);
+  opacity: 50%;
+  pointer-events: none;
+}
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 48%;
 }
 </style>

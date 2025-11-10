@@ -1,9 +1,8 @@
 <template>
   <v-layout
-    :class="['h-100', 'd-flex', 'justify-center', { 'align-center': loading }]"
+    class="h-100 d-flex justify-center"
   >
-    <v-progress-circular v-if="loading" indeterminate />
-    <v-container v-else class="pa-0">
+    <v-container class="pa-0">
       <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
       <div class="d-flex flex-column ga-2">
         <v-tabs v-model="tab">
@@ -48,6 +47,7 @@ import type Exam from "~/interfaces/exam";
 import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/convertToISODate";
 import moment from "moment";
+import { useLoaderStore } from "~/store/loading";
 
 export default defineComponent({
   name: "Home",
@@ -56,7 +56,7 @@ export default defineComponent({
   },
   data() {
     return {
-      loading: ref(true),
+      loader: useLoaderStore(),
       weekExams: ref([] as Exam[]),
       futureExams: ref([] as Exam[]),
       statusMessage: reactive({ 
@@ -64,10 +64,11 @@ export default defineComponent({
         middle: "0 compromissos",
         end: "agendados",
       }),
-      tab: ref(null)
+      tab: ref(null),
     }
   },
   async mounted() {
+    this.loader.startLoading();
     const allExams: Exam[] = await getUserExams();
 
     if(allExams.length > 1) {
@@ -87,8 +88,7 @@ export default defineComponent({
         : `${this.weekExams.length} compromissos`;
     this.statusMessage.end =
       this.weekExams.length == 1 ? "agendado" : "agendados";
-
-    this.loading = false;
+    this.loader.endLoading();
   },
   methods: {
     isDateInThisWeek(date: Date) {
