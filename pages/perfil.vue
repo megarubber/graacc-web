@@ -1,36 +1,38 @@
 <template>
-  <div class="glow">
-    <div class="glow-effect l top-0" />
-    <div class="glow-effect r t" />
-  </div>
-  <v-container class="text-center d-flex flex-column justify-center align-center ga-4">
-    <div class="image-container">
-      <img src="/assets/images/sample.jpg">
+  <v-layout>
+    <div class="glow">
+      <div class="glow-effect l top-0" />
+      <div class="glow-effect r t" />
     </div>
-    <h3>{{ auth.patient.nome }}</h3>
-    <h3 style="color: #4b4b4b">Responsável: {{ auth.user.nome }}</h3>
-    <v-btn
-      class="w-100"
-      color="#F8F8F8"
-      text="Atualizar dados"
-      prepend-icon="mdi-pencil-outline"
-      @click="this.$router.push('/editar-perfil');"
-    />
-    <v-btn
-      class="w-100"
-      color="#F8F8F8"
-      text="Preferências de notificações"
-      prepend-icon="mdi-bell-outline"
-    />
-    <v-btn
-      class="w-100"
-      color="#F8F8F8"
-      text="Desconectar"
-      prepend-icon="mdi-exit-to-app"
-      to="/login"
-      @click="logUserOut()"
-    />
-  </v-container>
+    <v-container class="text-center d-flex flex-column justify-center align-center ga-4">
+      <div class="image-container">
+        <img src="/images/sample.jpg">
+      </div>
+      <h3>{{ auth.patient.nome }}</h3>
+      <h3 style="color: #4b4b4b">Responsável: {{ auth.user.nome }}</h3>
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Atualizar dados"
+        prepend-icon="mdi-pencil-outline"
+        @click="this.$router.push('/editar-perfil');"
+      />
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Preferências de notificações"
+        prepend-icon="mdi-bell-outline"
+      />
+      <v-btn
+        class="w-100"
+        color="#F8F8F8"
+        text="Desconectar"
+        prepend-icon="mdi-exit-to-app"
+        to="/login"
+        @click="logUserOut()"
+      />
+    </v-container>
+  </v-layout>
 </template>
 
 <script lang="ts">

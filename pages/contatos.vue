@@ -1,45 +1,49 @@
 <template>
-  <h2 class="mb-4 mt-8 text-center">Contatos do GRAACC</h2>
-  <hr class="mb-2">
-  <search-bar class="mx-3" label="Pesquisar contatos" />
-  <div class="d-flex flex-column ga-2">
-    <v-card
-      v-for="contact in contacts"
-      :key="contact.title"
-      variant="flat"
-      color="white"
-    >
-      <v-card-item class="mb-4">
-        <v-card-title>
-          <v-icon size="25" color="#E32585" :icon="contact.icon" />
-          {{ contact.title }}
-        </v-card-title>
-      </v-card-item>
-      <v-card-text
-        v-for="info in contact.info"
-        :key="info"
-        class="text-grey"
-        style="line-height: 0.1rem"
-      >
-        {{ info }}
-      </v-card-text>
-      <v-card-actions>
-        <v-btn
-          class="w-30 text-body-1 font-weight-bold"
-          prepend-icon="mdi-content-copy"
-          text="Copiar"
-        />
-        <v-btn
-          class="w-30 text-body-1 font-weight-bold"
-          color="#d7f2ff"
+  <v-layout>
+    <v-container>
+      <h2 class="mb-4 mt-8 text-center">Contatos do GRAACC</h2>
+      <hr class="mb-2">
+      <search-bar class="mx-3" label="Pesquisar contatos" />
+      <div class="d-flex flex-column ga-2">
+        <v-card
+          v-for="contact in contacts"
+          :key="contact.title"
           variant="flat"
-          style="color: #1c3b72"
-          prepend-icon="mdi-open-in-new"
-          >{{ contact.action }}</v-btn
+          color="white"
         >
-      </v-card-actions>
-    </v-card>
-  </div>
+          <v-card-item class="mb-4">
+            <v-card-title>
+              <v-icon size="25" color="#E32585" :icon="contact.icon" />
+              {{ contact.title }}
+            </v-card-title>
+          </v-card-item>
+          <v-card-text
+            v-for="info in contact.info"
+            :key="info"
+            class="text-grey"
+            style="line-height: 0.1rem"
+          >
+            {{ info }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="w-30 text-body-1 font-weight-bold"
+              prepend-icon="mdi-content-copy"
+              text="Copiar"
+            />
+            <v-btn
+              class="w-30 text-body-1 font-weight-bold"
+              color="#d7f2ff"
+              variant="flat"
+              style="color: #1c3b72"
+              prepend-icon="mdi-open-in-new"
+              >{{ contact.action }}</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </div>
+    </v-container>
+  </v-layout>
 </template>
 
 <script lang="ts">
