@@ -37,7 +37,6 @@
           </v-tabs-window-item>
         </v-tabs-window>
       </div>
-      <the-header tab="exams" />
     </v-container>
   </v-layout>
 </template>

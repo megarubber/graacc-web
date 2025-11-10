@@ -3,38 +3,40 @@
     <v-container
       class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
     >
-      <v-tabs v-model="currentTab" @click="$emit('changedTab', currentTab)">
-        <v-tab value="exams">
+      <v-tabs v-model="currentTab" @click="changePage">
+        <v-tab value="/">
           <div class="custom-tab">
             <v-icon size="24" icon="mdi-home" />
             <p>Início</p>
           </div>
         </v-tab>
-        <v-tab value="contacts">
+        <v-tab value="/contatos">
           <div class="custom-tab">
             <v-icon icon="mdi-phone" size="24" />
             <p>Contatos</p>
           </div>
         </v-tab>
-        <v-tab value="notifications">
+        <v-tab value="/notificacoes">
           <div class="custom-tab">
             <v-icon
               :icon="totalNotifications > 0 ? 'mdi-bell-ring' : 'mdi-bell'"
               size="24"
             />
-            <span class="number-indicator" v-if="totalNotifications > 9"
+            <span 
+              v-if="totalNotifications > 9"
+              class="number-indicator"
               >+9</span
             >
             <span
-              class="number-indicator"
               v-if="totalNotifications > 0 && totalNotifications < 9"
+              class="number-indicator"
             >
               {{ totalNotifications }}
             </span>
             <p>Notificações</p>
           </div>
         </v-tab>
-        <v-tab value="profile">
+        <v-tab value="/perfil">
           <div class="custom-tab">
             <v-icon icon="mdi-account" size="24" />
             <p>Perfil</p>
@@ -51,13 +53,10 @@ import getUserNotifications from "~/utils/api/notifications/getUserNotifications
 
 export default defineComponent({
   name: "TheHeader",
-  props: {
-    tab: { type: String, required: true },
-  },
   data() {
     return {
       totalNotifications: ref(0),
-      currentTab: ref(this.tab),
+      currentTab: ref('/'),
     };
   },
   async mounted() {
@@ -66,6 +65,11 @@ export default defineComponent({
       (notification) => !notification.lida,
     );
     this.totalNotifications = notReadNotifications.length;
+  },
+  methods: {
+    changePage() {
+      this.$router.push(this.currentTab ?? '/');
+    },
   },
 });
 </script>

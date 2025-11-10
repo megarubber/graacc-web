@@ -6,14 +6,19 @@
         class="loading"
         indeterminate />
       <NuxtPage :class="{'overlay-loading': loader.isLoading }"/>
+      <the-header
+        v-if="auth.authenticated"
+        :class="{'overlay-loading': loader.isLoading }" />
     </NuxtLayout>
   </v-app>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from './store/auth';
 import { useLoaderStore } from './store/loading';
 
 const loader = useLoaderStore();
+const auth = useAuthStore();
 </script>
 
 <style>
