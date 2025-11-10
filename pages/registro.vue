@@ -32,7 +32,7 @@
             label="Nome do(a) responsável" 
             />
           <v-text-field 
-            v-model="user.nomeResponsavel" 
+            v-model="user.idPaciente" 
             prepend-inner-icon="mdi-card-account-details-outline"
             label="ID do(a) paciente" 
             />
@@ -89,6 +89,13 @@ export default defineComponent({
       if (!testEmail.test(this.user.email)) {
         this.alert = true;
         this.alert_message = "E-mail inválido";
+        return;
+      }
+
+      const testId = /^\d$/;
+      if (!testId.test(`${this.user.idPaciente}`)) {
+        this.alert = true;
+        this.alert_message = "ID inválido";
         return;
       }
 
