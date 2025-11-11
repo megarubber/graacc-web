@@ -34,7 +34,7 @@
             @click:append-inner="show = !show"
           />
         </section>
-        <NuxtLink href="/senha" class="font-weight-bold mb-4 text-blue-dark"
+          <NuxtLink href="/pedido-alteracao-senha" class="font-weight-bold mb-4 text-blue-dark"
           >Esqueci minha senha</NuxtLink
         >
         <v-btn @click="login()">Entrar</v-btn>

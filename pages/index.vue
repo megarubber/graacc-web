@@ -8,13 +8,13 @@
         <v-tabs v-model="tab">
           <v-tab class="w-50" color="black" value="appointment">
             <div class="tab-content d-flex align-center">
-              <Icon class="mr-2" name="fluent-emoji:bookmark-tabs" size="25" />
+              <Icon class="mr-2" name="icons:bookmark-icons" size="25" />
               <p class="font-weight-bold">Agendamentos</p>
             </div>
           </v-tab>
           <v-tab class="w-50" color="black" value="calendar">
             <div class="tab-content d-flex align-center">
-              <Icon class="mr-2" name="fluent-emoji:calendar" size="25" />
+              <Icon class="mr-2" name="icons:calendar" size="25" />
               <p class="font-weight-bold">Calendário</p>
             </div>
           </v-tab>

@@ -1,15 +1,19 @@
 <template>
-  <v-layout>
-    <div class="glow">
-      <div class="glow-effect l top-0" />
-      <div class="glow-effect r t" />
-    </div>
-    <v-container class="text-center d-flex flex-column justify-center align-center ga-4">
+  <v-container>
+    <v-app-bar>
+      <template #prepend>
+        <v-app-bar-title
+          class="font-weight-bold ml-2">
+          Perfil
+        </v-app-bar-title>
+      </template>
+    </v-app-bar>
+    <v-main class="text-center d-flex flex-column justify-center align-center ga-4">
       <div class="image-container">
         <img src="/images/sample.jpg">
       </div>
-      <h3>{{ auth.patient.nome }}</h3>
       <h3 style="color: #4b4b4b">Responsável: {{ auth.user.nome }}</h3>
+      <h3>{{ auth.patient.nome }}</h3>
       <v-btn
         class="w-100"
         color="#F8F8F8"
@@ -31,8 +35,8 @@
         to="/login"
         @click="logUserOut()"
       />
-    </v-container>
-  </v-layout>
+    </v-main>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -42,7 +46,7 @@ export default defineComponent({
   name: "Profile",
   data() {
     return {
-      auth: useAuthStore(),
+      auth: storeToRefs(useAuthStore()),
     };
   },
   methods: {
@@ -58,32 +62,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.glow-effect {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  opacity: 15%;
-  z-index: -1;
-  box-shadow:
-    0 0 100px 5rem #80d9ff,
-    0 0 140px 6rem #009ee0;
-}
-
-.glow-effect.r.t {
-  top: 0px;
-  box-shadow:
-    0 0 100px 5rem #e32585,
-    0 0 140px 6rem #e858a1;
-}
-
-.glow-effect.r {
-  right: 5px;
-}
-
-.glow-effect.l {
-  left: 5px;
-}
-
 .v-btn {
   justify-content: flex-start;
   text-align: left;
