@@ -61,6 +61,7 @@
 <script lang="ts">
 import { useLoaderStore } from "~/store/loading";
 import createUser from "~/utils/api/register/createUser";
+import type UserRegister from "~/interfaces/userRegister";
 
 export default defineComponent({
   name: "Registro",
@@ -68,7 +69,7 @@ export default defineComponent({
     return {
       user: {
         nomeResponsavel: "",
-        idPaciente: 0,
+        idPaciente: null,
         email: "",
         senha: "",
       },
@@ -103,22 +104,16 @@ export default defineComponent({
       }
 
       try {
-        const userRequest = {
+        const userRequest: UserRegister = {
           nome: this.user.nomeResponsavel,
           email: this.user.email,
           senha: this.user.senha,
-          nomeCompletoPaciente: `${this.user.idPaciente}`,
+          idPaciente: Number(this.user.idPaciente),
         };
         await createUser(userRequest);
         this.$router.push("/login");
       } catch (error: any) {
-        if (
-          error.response._data == "Não existe nenhum paciente com esse nome"
-        ) {
-          this.toast.error("Erro: paciente não existe.");
-          return;
-        }
-        this.toast.error("Erro ao realizar cadastro.");
+        this.toast.error(error.response._data);
       }
       this.loader.endLoading();
     },

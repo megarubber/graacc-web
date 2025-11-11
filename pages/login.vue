@@ -100,9 +100,7 @@ export default defineComponent({
         if (error.response && 
         (error.response.status == 401 || error.response.status == 400)) {
           this.toast.error("E-mail/senha não encontrado.");
-          return;
-        }
-        this.toast.error("Erro ao fazer login.");
+        } else this.toast.error("Erro ao fazer login.");
         this.loader.endLoading();
       }
     },
