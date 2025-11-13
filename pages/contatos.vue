@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
@@ -14,10 +14,10 @@
         color="white"
       >
         <v-card-item class="mb-4">
-          <v-card-title>
-            <v-icon size="25" color="#E32585" :icon="contact.icon" />
-            {{ contact.title }}
-          </v-card-title>
+          <template #prepend>
+            <Icon size="20" :name="'icons:' + contact.icon" />
+          </template>
+          <v-card-title>{{ contact.title }}</v-card-title>
         </v-card-item>
         <v-card-text
           v-for="info in contact.info"
@@ -34,10 +34,10 @@
             text="Copiar"
           />
           <v-btn
-            class="w-30 text-body-1 font-weight-bold"
-            color="#d7f2ff"
+            class="w-30 text-body-1 px-4 font-weight-bold"
+            color="#BCD4FF"
             variant="flat"
-            style="color: #1c3b72"
+            style="color: #0C3784"
             prepend-icon="mdi-open-in-new"
             >{{ contact.action }}</v-btn
           >
@@ -54,19 +54,19 @@ export default defineComponent({
     return {
       contacts: [
         {
-          icon: "mdi-phone",
+          icon: "phone",
           title: "Telefone",
           info: ["(11) 5908-9100"],
           action: "Ligar",
         },
         {
-          icon: "mdi-email",
+          icon: "email",
           title: "E-mail",
           info: ["graacc@graacc.org.br"],
           action: "Enviar e-mail",
         },
         {
-          icon: "mdi-map-marker",
+          icon: "map-marker",
           title: "Endereço",
           info: [
             "Rua Pedro de Toledo, 572",
@@ -82,11 +82,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-hr {
-  height: 3px;
-  background-color: #e8e9ed;
-  border: none;
-}
 .v-btn--size-x-large {
   --v-btn-height: 35px;
 }

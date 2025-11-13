@@ -16,7 +16,7 @@
           class="font-weight-bold ml-2">Esqueci minha senha</v-app-bar-title>
       </template>
     </v-app-bar>
-    <v-main class="d-flex flex-column justify-center align-center">
+    <v-main class="d-flex flex-column pa-0 mt-14 justify-center align-center">
       <p class="mb-4 text-center">Digite o e-mail associado à sua conta</p>
       <v-text-field 
         label="E-mail" 

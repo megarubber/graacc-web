@@ -8,9 +8,9 @@
         </v-app-bar-title>
       </template>
     </v-app-bar>
-    <v-main class="text-center d-flex flex-column justify-center align-center ga-4">
+    <v-main class="text-center d-flex flex-column align-center ga-4">
       <div class="image-container">
-        <img src="/images/sample.jpg">
+        <v-icon icon="mdi-account-outline" size="60"/>
       </div>
       <h3 style="color: #4b4b4b">Responsável: {{ auth.user.nome }}</h3>
       <h3>{{ auth.patient.nome }}</h3>
@@ -46,7 +46,7 @@ export default defineComponent({
   name: "Profile",
   data() {
     return {
-      auth: storeToRefs(useAuthStore()),
+      auth: useAuthStore(),
     };
   },
   methods: {
@@ -72,7 +72,6 @@ export default defineComponent({
   height: 200px;
   border-radius: 50%;
   overflow: hidden;
-  margin-top: 50px;
 }
 
 .image-container img {

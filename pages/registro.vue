@@ -1,61 +1,58 @@
 <template>
-  <v-layout 
-  class="h-100 d-flex justify-center">
-    <v-container class="d-flex ga-2 flex-column">
-      <v-app-bar>
-        <template #prepend>
-          <v-app-bar-nav-icon>
-            <NuxtLink
-              href="/login">
-              <v-icon 
-              style="background-color: #D7F2FF;"
-              class="pa-4 rounded-xl"
-              color="blue-dark" 
-              icon="mdi-chevron-left"/>
-            </NuxtLink>
-          </v-app-bar-nav-icon>
-          <v-app-bar-title
-            class="font-weight-bold ml-2">Criar conta</v-app-bar-title>
-        </template>
-      </v-app-bar>
-      <v-main>
-        <p class="font-weight-bold text-h6 mb-3">Insira seus dados</p>
-        <section>
-          <v-text-field 
-            v-model="user.nomeResponsavel" 
-            prepend-inner-icon="mdi-account-outline"
-            label="Nome do(a) responsável" 
-            />
-          <v-text-field 
-            v-model="user.idPaciente" 
-            prepend-inner-icon="mdi-card-account-details-outline"
-            label="ID do(a) paciente" 
-            />
-          <v-text-field 
-            v-model="user.email" 
-            prepend-inner-icon="mdi-email-outline"
-            label="E-mail"
-            />
-          <v-text-field
-            v-model="user.senha"
-            prepend-inner-icon="mdi-form-textbox-password"
-            label="Senha"
-            :type="show ? 'text' : 'password'"
-            :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append-inner="show = !show"
-          />
-        </section>
-        <v-btn class="w-100" @click="register()">Criar conta</v-btn>
-        <div class="text-center mt-6">
-          <p>Já tem uma conta?</p>
-          <NuxtLink 
-          href="/login" class="font-weight-bold mb-6 text-blue-dark">
-            Faça login aqui.
+  <v-container class="d-flex ga-2 flex-column">
+    <v-app-bar>
+      <template #prepend>
+        <v-app-bar-nav-icon>
+          <NuxtLink
+            href="/login">
+            <v-icon 
+            style="background-color: #D7F2FF;"
+            class="pa-4 rounded-xl"
+            color="blue-dark" 
+            icon="mdi-chevron-left"/>
           </NuxtLink>
-        </div>
-      </v-main>
-    </v-container>
-  </v-layout>
+        </v-app-bar-nav-icon>
+        <v-app-bar-title
+          class="font-weight-bold ml-2">Criar conta</v-app-bar-title>
+      </template>
+    </v-app-bar>
+    <v-main>
+      <p class="font-weight-bold text-h6 mb-3">Insira seus dados</p>
+      <section>
+        <v-text-field 
+          v-model="user.nomeResponsavel" 
+          prepend-inner-icon="mdi-account-outline"
+          label="Nome do(a) responsável" 
+          />
+        <v-text-field 
+          v-model="user.idPaciente" 
+          prepend-inner-icon="mdi-card-account-details-outline"
+          label="ID do(a) paciente" 
+          />
+        <v-text-field 
+          v-model="user.email" 
+          prepend-inner-icon="mdi-email-outline"
+          label="E-mail"
+          />
+        <v-text-field
+          v-model="user.senha"
+          prepend-inner-icon="mdi-form-textbox-password"
+          label="Senha"
+          :type="show ? 'text' : 'password'"
+          :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="show = !show"
+        />
+      </section>
+      <v-btn class="w-100" @click="register()">Criar conta</v-btn>
+      <div class="text-center mt-6">
+        <p>Já tem uma conta?</p>
+        <NuxtLink 
+        href="/login" class="font-weight-bold mb-6 text-blue-dark">
+          Faça login aqui.
+        </NuxtLink>
+      </div>
+    </v-main>
+  </v-container>
 </template>
 
 <script lang="ts">

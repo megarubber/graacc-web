@@ -52,7 +52,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   nitro: {
     devProxy: {
-      '/api': {
+      '/graacc-api': {
         target: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8080/",
         changeOrigin: true,
         secure: false,

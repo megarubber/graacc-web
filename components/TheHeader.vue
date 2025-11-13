@@ -6,20 +6,20 @@
       <v-tabs v-model="currentTab" @click="changePage">
         <v-tab value="/">
           <div class="custom-tab">
-            <v-icon size="24" icon="mdi-home" />
+            <v-icon size="24" icon="mdi-home-outline" />
             <p>Início</p>
           </div>
         </v-tab>
         <v-tab value="/contatos">
           <div class="custom-tab">
-            <v-icon icon="mdi-phone" size="24" />
+            <v-icon icon="mdi-phone-outline" size="24" />
             <p>Contatos</p>
           </div>
         </v-tab>
         <v-tab value="/notificacoes">
           <div class="custom-tab">
             <v-icon
-              :icon="totalNotifications > 0 ? 'mdi-bell-ring' : 'mdi-bell'"
+              :icon="totalNotifications > 0 ? 'mdi-bell-ring-outline' : 'mdi-bell-outline'"
               size="24"
             />
             <span 
@@ -38,7 +38,7 @@
         </v-tab>
         <v-tab value="/perfil">
           <div class="custom-tab">
-            <v-icon icon="mdi-account" size="24" />
+            <v-icon icon="mdi-account-outline" size="24" />
             <p>Perfil</p>
           </div>
         </v-tab>

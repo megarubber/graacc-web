@@ -1,44 +1,49 @@
 <template>
-  <v-layout
-    class="h-100 d-flex justify-center"
-  >
-    <v-container class="pa-0">
-      <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
-      <div class="d-flex flex-column ga-2">
-        <v-tabs v-model="tab">
-          <v-tab class="w-50" color="black" value="appointment">
-            <div class="tab-content d-flex align-center">
-              <Icon class="mr-2" name="icons:bookmark-icons" size="25" />
-              <p class="font-weight-bold">Agendamentos</p>
-            </div>
-          </v-tab>
-          <v-tab class="w-50" color="black" value="calendar">
-            <div class="tab-content d-flex align-center">
-              <Icon class="mr-2" name="icons:calendar" size="25" />
-              <p class="font-weight-bold">Calendário</p>
-            </div>
-          </v-tab>
-        </v-tabs>
-        <v-tabs-window v-model="tab" class="mx-3">
-          <v-tabs-window-item value="appointment">
-            <p class="mb-2">
-              {{ statusMessage.begin }}
-              <span class="text-blue-dark font-weight-bold">{{
-                statusMessage.middle
-              }}</span>
-              {{ statusMessage.end }} para esta semana.
-            </p>
-            <exam-card-generator :exams="weekExams" />
-            <p class="mt-4 mb-4">Compromissos futuros</p>
-            <exam-card-generator :exams="futureExams" />
-          </v-tabs-window-item>
-          <v-tabs-window-item value="calendar">
-            <TheCalendar :exams="weekExams" />
-          </v-tabs-window-item>
-        </v-tabs-window>
-      </div>
-    </v-container>
-  </v-layout>
+  <v-container class="pa-0">
+    <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
+    <div class="d-flex flex-column ga-2">
+      <v-tabs v-model="tab">
+        <v-tab class="w-50" color="black" value="appointment">
+          <div class="tab-content d-flex align-center">
+            <Icon 
+              class="mr-2" 
+              :style="tab === 'appointment' ? 'transform: rotate(-10deg); transition: transform 0.3s ease;' 
+              : 'transform: none; transition: transform 0.3s ease;'"
+              name="icons:bookmark-icons" 
+              size="25" />
+            <p class="font-weight-bold">Agendamentos</p>
+          </div>
+        </v-tab>
+        <v-tab class="w-50" color="black" value="calendar">
+          <div class="tab-content d-flex align-center">
+            <Icon 
+              class="mr-2"
+              :style="tab === 'calendar' ? 'transform: rotate(-10deg); transition: transform 0.3s ease;' 
+              : 'transform: none; transition: transform 0.3s ease;'"
+              name="icons:calendar" size="25" />
+            <p class="font-weight-bold">Calendário</p>
+          </div>
+        </v-tab>
+      </v-tabs>
+      <v-tabs-window v-model="tab" class="px-3">
+        <v-tabs-window-item value="appointment">
+          <p class="mb-2">
+            {{ statusMessage.begin }}
+            <span class="text-blue-dark font-weight-bold">{{
+              statusMessage.middle
+            }}</span>
+            {{ statusMessage.end }} para esta semana.
+          </p>
+          <exam-card-generator :exams="weekExams" />
+          <p class="mt-4 mb-4">Compromissos futuros</p>
+          <exam-card-generator :exams="futureExams" />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="calendar">
+          <TheCalendar :exams="weekExams" />
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
