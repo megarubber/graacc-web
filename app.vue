@@ -6,9 +6,6 @@
         class="loading"
         indeterminate />
       <NuxtPage :class="{'overlay-loading': loader.isLoading }"/>
-      <the-header
-        v-if="auth.authenticated"
-        :class="{'overlay-loading': loader.isLoading }" />
     </NuxtLayout>
   </v-app>
 </template>

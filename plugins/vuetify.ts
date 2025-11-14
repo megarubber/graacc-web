@@ -11,6 +11,7 @@ const graacc_light: ThemeDefinition = {
     green: "#4CAF50",
     grey: "#4B4B4B",
     pink: "#E91E63",
+    primary: "#0C3784",
   },
 };
 
