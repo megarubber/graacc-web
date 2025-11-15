@@ -5,6 +5,7 @@ import type Patient from "~/interfaces/patient";
 import type Notification from "~/interfaces/notification";
 import getUserInfo from "~/utils/api/user/getUserInfo";
 import getPatientById from "~/utils/api/patient/getPatientById";
+import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -23,25 +24,36 @@ export const useAuthStore = defineStore("auth", {
         body: user_auth,
       });
 
-      console.log(response);
-      /*
-      if (response) {
+      if (response.status == 200) {
+        const data: UserToken = response.data;
+
         const token = useCookie("token");
-        token.value = response.token;
+        token.value = data.token;
 
-        this.user = await getUserInfo();
-        this.patient = await getPatientById(this.user.idPaciente);
-        this.notifications = await getUserNotifications();
+        try {
+          const userInfo = await getUserInfo();
+          if(userInfo.status != 200) return userInfo.status;
+          this.user = userInfo.data;
 
-        this.authenticated = true;
+          const patientInfo = await getPatientById(this.user.idPaciente);
+          if(patientInfo.status != 200) return patientInfo.status;
 
-        const notReadNotifications: Notification[] = this.notifications.filter(
-          (notification) => !notification.lida,
-        );
+          this.patient = patientInfo.data;
+          this.notifications = await getUserNotifications() ?? [];
 
-        this.notReadNotifications = notReadNotifications.length;
+          this.authenticated = true;
+
+          const notReadNotifications: Notification[] = this.notifications.filter(
+            (notification) => !notification.lida,
+          );
+
+          this.notReadNotifications = notReadNotifications.length;
+        } catch(error: any) {
+          console.log(error.status);
+          return error.status;
+        }
       }
-      */
+      return response.status;
     },
     updatePage(page: string) {
       this.page = page;

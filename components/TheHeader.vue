@@ -54,10 +54,15 @@ export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      auth: storeToRefs(useAuthStore()),
-      totalNotifications: ref(this.auth.notReadNotifications),
-      currentTab: ref(this.auth.headerIndex),
+      auth: useAuthStore(),
+      totalNotifications: ref(0),
+      currentTab: ref('/'),
     };
+  },
+  mounted() {
+    const { notReadNotifications, page } = this.auth;
+    this.totalNotifications = notReadNotifications;
+    this.currentTab = page;
   },
   methods: {
     changePage() {

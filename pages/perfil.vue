@@ -11,8 +11,8 @@
     <v-main class="text-center d-flex h-100 justify-space-between flex-column">
       <section class="d-flex flex-column ga-4">
         <profile-image :size="100" />
-        <h3 style="color: #4b4b4b">{{ auth.user.nome }}</h3>
-        <h3 class="mb-4">{{ auth.patient.nome }}</h3>
+        <h3 style="color: #4b4b4b">{{ authData.user.nome }}</h3>
+        <h3 class="mb-4">{{ authData.patient.nome }}</h3>
         <v-btn
           class="w-100"
           color="#F8F8F8"
@@ -48,16 +48,13 @@ export default defineComponent({
   name: "Profile",
   data() {
     return {
-      auth: storeToRefs(useAuthStore()),
+      auth: useAuthStore(),
+      authData: storeToRefs(useAuthStore()),
     };
   },
   methods: {
     logUserOut() {
-      try {
-        this.auth.logUserOut();
-      } catch (e) {
-        console.error(e);
-      }
+      this.auth.logUserOut();
     },
   },
 });

@@ -89,19 +89,17 @@ export default defineComponent({
         return;
       }
 
-      //try {
-        await this.auth.authenticateUser(this.user);
+      const status = await this.auth.authenticateUser(this.user);
 
-        if (this.authenticated) this.$router.push("/");
-      /*
-      } catch (error: any) {
-        if (error.response && 
-        (error.response.status == 401 || error.response.status == 400)) {
-          this.toast.error("E-mail/senha não encontrado.");
-        } else this.toast.error("Erro ao fazer login.");
-        this.loader.endLoading();
+      if (this.authenticated && status == 200) {
+        this.$router.push("/");
+        return;
       }
-      */
+
+      if (status == 401 || status == 400) {
+        this.toast.error("E-mail/senha não encontrado.");
+      } else this.toast.error("Erro ao fazer login.");
+      this.loader.endLoading();
     },
   },
 });

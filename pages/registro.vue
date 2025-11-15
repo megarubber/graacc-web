@@ -100,18 +100,17 @@ export default defineComponent({
         return;
       }
 
-      try {
-        const userRequest: UserRegister = {
-          nome: this.user.nomeResponsavel,
-          email: this.user.email,
-          senha: this.user.senha,
-          idPaciente: Number(this.user.idPaciente),
-        };
-        await createUser(userRequest);
-        this.$router.push("/login");
-      } catch (error: any) {
-        this.toast.error(error.response._data);
-      }
+      const userRequest: UserRegister = {
+        nome: this.user.nomeResponsavel,
+        email: this.user.email,
+        senha: this.user.senha,
+        idPaciente: Number(this.user.idPaciente),
+      };
+
+      const response = await createUser(userRequest);
+      if(response.status == 200) this.$router.push("/login");
+      else this.toast.error("Erro ao fazer o cadastro.");
+
       this.loader.endLoading();
     },
   },
