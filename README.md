@@ -29,7 +29,7 @@ A ideia é que seja utilizado no sistema principal do GRAAC (na forma de um apli
 ## **Como Rodar o Projeto**
 **1.** Instale Node.js e npm;
 
-**2.** Clone o repositório e entre na pasta `graac-web`;
+**2.** Clone o repositório e entre na pasta `graacc-web`;
 
 **3.** Faça uma cópia de `.env.example` com o nome de `.env` e prepare as variáveis de ambiente;
 
