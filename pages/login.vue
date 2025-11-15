@@ -89,10 +89,11 @@ export default defineComponent({
         return;
       }
 
-      try {
+      //try {
         await this.auth.authenticateUser(this.user);
 
         if (this.authenticated) this.$router.push("/");
+      /*
       } catch (error: any) {
         if (error.response && 
         (error.response.status == 401 || error.response.status == 400)) {
@@ -100,6 +101,7 @@ export default defineComponent({
         } else this.toast.error("Erro ao fazer login.");
         this.loader.endLoading();
       }
+      */
     },
   },
 });

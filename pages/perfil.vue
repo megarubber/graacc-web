@@ -37,6 +37,7 @@
       </section>
       <p class="text-primary mb-14">Excluir Conta</p>
     </v-main>
+    <the-header />
   </v-container>
 </template>
 

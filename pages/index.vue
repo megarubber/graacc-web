@@ -43,6 +43,7 @@
         </v-tabs-window-item>
       </v-tabs-window>
     </div>
+    <the-header />
   </v-container>
 </template>
 

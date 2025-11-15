@@ -1,24 +1,21 @@
 <template>
-  <v-layout
-    class="h-100 d-flex justify-center"
-  >
-    <v-container class="pa-0">
-      <v-app-bar>
-        <template #prepend>
-          <v-app-bar-title
-            class="font-weight-bold ml-2">
-            Notificações
-          </v-app-bar-title>
-        </template>
-      </v-app-bar>
-      <v-main class="d-flex flex-column ga-4 mx-3 mt-3">
-        <p>Não lidas</p>
-        <NotificationGenerator :notifications="readNotifications" color="blue-light" />
-        <p>Lidas</p>
-        <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
-      </v-main>
-    </v-container>
-  </v-layout>
+  <v-container class="pa-0">
+    <v-app-bar>
+      <template #prepend>
+        <v-app-bar-title
+          class="font-weight-bold ml-2">
+          Notificações
+        </v-app-bar-title>
+      </template>
+    </v-app-bar>
+    <v-main class="d-flex flex-column ga-4 mx-3 mt-3">
+      <p>Não lidas</p>
+      <NotificationGenerator :notifications="readNotifications" color="blue-light" />
+      <p>Lidas</p>
+      <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
+    </v-main>
+    <the-header />
+  </v-container>
 </template>
 
 <script lang="ts">

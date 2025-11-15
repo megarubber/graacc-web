@@ -43,6 +43,7 @@
           >
         </v-card-actions>
       </v-card>
+      <the-header />
     </v-main>
   </v-container>
 </template>
