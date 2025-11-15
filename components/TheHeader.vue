@@ -48,26 +48,20 @@
 </template>
 
 <script lang="ts">
-import type Notification from "~/interfaces/notification";
-import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
+import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      totalNotifications: ref(0),
-      currentTab: ref('/'),
+      auth: storeToRefs(useAuthStore()),
+      totalNotifications: ref(this.auth.notReadNotifications),
+      currentTab: ref(this.auth.headerIndex),
     };
-  },
-  async mounted() {
-    const notifications = await getUserNotifications();
-    const notReadNotifications: Notification[] = notifications.filter(
-      (notification) => !notification.lida,
-    );
-    this.totalNotifications = notReadNotifications.length;
   },
   methods: {
     changePage() {
+      this.auth.updatePage(this.currentTab);
       this.$router.push(this.currentTab ?? '/');
     },
   },
