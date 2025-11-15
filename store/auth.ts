@@ -17,6 +17,31 @@ export const useAuthStore = defineStore("auth", {
     page: '/'
   }),
   actions: {
+    async refreshAuth() {
+      try {
+        const userInfo = await getUserInfo();
+        if(userInfo.status != 200) return userInfo.status;
+        this.user = userInfo.data;
+
+        const patientInfo = await getPatientById(this.user.idPaciente);
+        if(patientInfo.status != 200) return patientInfo.status;
+
+        this.patient = patientInfo.data;
+        this.notifications = await getUserNotifications() ?? [];
+
+        this.authenticated = true;
+
+        const notReadNotifications: Notification[] = this.notifications.filter(
+          (notification) => !notification.lida,
+        );
+
+        this.notReadNotifications = notReadNotifications.length;
+      } catch(error: any) {
+        console.log(error.status);
+        return error.status;
+      }
+      return 200;
+    },
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp();
       const response = await $api("/auth/usuario/login", {
@@ -30,29 +55,10 @@ export const useAuthStore = defineStore("auth", {
         const token = useCookie("token");
         token.value = data.token;
 
-        try {
-          const userInfo = await getUserInfo();
-          if(userInfo.status != 200) return userInfo.status;
-          this.user = userInfo.data;
-
-          const patientInfo = await getPatientById(this.user.idPaciente);
-          if(patientInfo.status != 200) return patientInfo.status;
-
-          this.patient = patientInfo.data;
-          this.notifications = await getUserNotifications() ?? [];
-
-          this.authenticated = true;
-
-          const notReadNotifications: Notification[] = this.notifications.filter(
-            (notification) => !notification.lida,
-          );
-
-          this.notReadNotifications = notReadNotifications.length;
-        } catch(error: any) {
-          console.log(error.status);
-          return error.status;
-        }
+        const userInfoStatus: number = await this.refreshAuth();
+        if (userInfoStatus != 200) return userInfoStatus;
       }
+      
       return response.status;
     },
     updatePage(page: string) {

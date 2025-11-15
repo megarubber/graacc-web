@@ -51,6 +51,9 @@
 <script lang="ts">
 export default defineComponent({
   name: "Contacts",
+  setup() {
+    definePageMeta({ middleware: "auth" });
+  },
   data() {
     return {
       contacts: [

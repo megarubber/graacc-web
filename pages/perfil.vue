@@ -11,8 +11,8 @@
     <v-main class="text-center d-flex h-100 justify-space-between flex-column">
       <section class="d-flex flex-column ga-4">
         <profile-image :size="100" />
-        <h3 style="color: #4b4b4b">{{ authData.user.nome }}</h3>
-        <h3 class="mb-4">{{ authData.patient.nome }}</h3>
+        <h3 style="color: #4b4b4b">{{ parentName }}</h3>
+        <h3 class="mb-4">{{ patientName }}</h3>
         <v-btn
           class="w-100"
           color="#F8F8F8"
@@ -46,11 +46,20 @@ import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "Profile",
+  setup() {
+    definePageMeta({ middleware: "auth" });
+  },
   data() {
     return {
       auth: useAuthStore(),
-      authData: storeToRefs(useAuthStore()),
+      parentName: ref(''),
+      patientName: ref('')
     };
+  },
+  mounted() {
+    const { user, patient } = storeToRefs(this.auth);
+    this.parentName = user.value.nome;
+    this.patientName = patient.value.nome;
   },
   methods: {
     logUserOut() {

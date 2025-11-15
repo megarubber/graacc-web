@@ -11,11 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from './store/auth';
 import { useLoaderStore } from './store/loading';
 
 const loader = useLoaderStore();
-const auth = useAuthStore();
 </script>
 
 <style>
