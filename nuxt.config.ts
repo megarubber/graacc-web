@@ -50,13 +50,13 @@ export default defineNuxtConfig({
     { path: "~/pages", pattern: '**/subpages/**', pathPrefix: false },
   ],
   css: ['~/assets/css/main.css'],
-  nitro: {
-    devProxy: {
-      '/graacc-api': {
-        target: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8080/",
-        changeOrigin: true,
-        secure: false,
-      }
-    }
-  },
+  // nitro: {
+  //   devProxy: {
+  //     '/graacc-api': {
+  //       target: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8080/",
+  //       changeOrigin: true,
+  //       secure: false,
+  //     }
+  //   }
+  // },
 });

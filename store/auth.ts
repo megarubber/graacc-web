@@ -44,7 +44,7 @@ export const useAuthStore = defineStore("auth", {
     },
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp();
-      const response = await $api("/auth/usuario/login", {
+      const response = await $api("/usuarios/login", {
         method: "POST",
         body: user_auth,
       });
