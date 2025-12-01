@@ -4,5 +4,5 @@ export default interface User {
   email: string;
   cadastroConfirmado: boolean;
   role: string;
-  idPaciente: number;
+  id_paciente: number;
 }

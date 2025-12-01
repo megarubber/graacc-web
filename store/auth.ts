@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth", {
         if(userInfo.status != 200) return userInfo.status;
         this.user = userInfo.data;
 
-        const patientInfo = await getPatientById(this.user.idPaciente);
+        const patientInfo = await getPatientById(this.user.id_paciente);
         if(patientInfo.status != 200) return patientInfo.status;
 
         this.patient = patientInfo.data;
