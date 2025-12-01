@@ -74,9 +74,9 @@ export default defineComponent({
   },
   async mounted() {
     this.loader.startLoading();
-    const allExams: Exam[] = await getUserExams();
+    const allExams: Exam[] = await getUserExams() ?? [];
 
-    if(allExams?.length > 1) {
+    if(allExams.length > 1) {
       this.weekExams = allExams.filter((exam) =>
         this.isDateInThisWeek(convertToISODate(exam.data)),
       );

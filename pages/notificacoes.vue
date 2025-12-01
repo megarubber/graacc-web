@@ -35,7 +35,7 @@ export default defineComponent({
     };
   },
   async mounted() {
-    const notifications = await getUserNotifications();
+    const notifications = await getUserNotifications() ?? [];
     this.readNotifications = notifications.filter(
       (notification) => notification.lida
     );
