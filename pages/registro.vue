@@ -25,7 +25,7 @@
           label="Nome do(a) responsável" 
           />
         <v-text-field 
-          v-model="user.idPaciente" 
+          v-model="user.id_paciente" 
           prepend-inner-icon="mdi-card-account-details-outline"
           label="ID do(a) paciente" 
           />
@@ -66,7 +66,7 @@ export default defineComponent({
     return {
       user: {
         nomeResponsavel: "",
-        idPaciente: null,
+        id_paciente: null,
         email: "",
         senha: "",
       },
@@ -88,7 +88,7 @@ export default defineComponent({
       }
 
       const testId = /^\d$/;
-      if (!testId.test(`${this.user.idPaciente}`)) {
+      if (!testId.test(`${this.user.id_paciente}`)) {
         this.toast.error("ID inválido.");
         this.loader.endLoading();
         return;
@@ -104,7 +104,7 @@ export default defineComponent({
         nome: this.user.nomeResponsavel,
         email: this.user.email,
         senha: this.user.senha,
-        idPaciente: Number(this.user.idPaciente),
+        id_paciente: Number(this.user.id_paciente),
       };
 
       const response = await createUser(userRequest);

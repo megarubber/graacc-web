@@ -69,7 +69,7 @@ export default defineComponent({
       const userUpdate: UserUpdate = {
         nome: this.auth.user.nome,
         email: this.auth.user.email,
-        nomeCompletoPaciente: this.auth.patient.nome,
+        nome_completo_paciente: this.auth.patient.nome,
       };
 
       try {
