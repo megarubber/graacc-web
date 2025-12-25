@@ -1,7 +1,7 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 import { createVuetify, type ThemeDefinition } from "vuetify";
-import { VCalendar } from "vuetify/labs/VCalendar";
+import { VCalendar } from "vuetify/components";
 
 const graacc_light: ThemeDefinition = {
   dark: false,
@@ -18,7 +18,7 @@ const graacc_light: ThemeDefinition = {
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     components: {
-      VCalendar,
+      VCalendar
     },
     theme: {
       defaultTheme: "graacc_light",
