@@ -1,14 +1,15 @@
 import type Notification from "~/interfaces/notification";
 
-export default async function getNotifications() {
+export default async function getUserNotifications() {
   const { $api } = useNuxtApp();
   const token = useCookie("token");
 
-  const response: Notification[] = await $api("/usuario/notificacoes", {
+  const response = await $api("/notificacoes/1", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
   });
-  return response;
+  const data: Notification[] = response.data;
+  return data;
 }

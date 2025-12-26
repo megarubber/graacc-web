@@ -1,10 +1,8 @@
-import type Patient from "~/interfaces/patient";
-
-export default async function getPatientById(patientId: number) {
+export default async function getPatientById(id_paciente: number) {
   const { $api } = useNuxtApp();
   const token = useCookie("token");
 
-  const response: Patient = await $api(`/usuario/pacientes/${patientId}`, {
+  const response = await $api(`/pacientes/pesquisar/${id_paciente}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token.value}`,

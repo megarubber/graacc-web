@@ -1,0 +1,69 @@
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./fonts/Rubik-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/Nunito-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: bold;
+  font-weight: 800;
+  src: url("../fonts/Nunito-ExtraBold.ttf") format("truetype");
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+a {
+  color: #007aff;
+  text-decoration: none;
+}
+
+.v-field--active {
+	background-color: #E8E9ED;
+	border-radius: 10px;
+}
+
+.v-field--variant-outlined.v-field--active .v-field__outline__start,
+.v-field--variant-outlined.v-field--active .v-field__outline__notch::before,
+.v-field--variant-outlined.v-field--active .v-field__outline__notch::after,
+.v-field--variant-outlined.v-field--active .v-field__outline__end {
+  border-color: #017BFD !important;
+}
+
+.glow-effect {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  opacity: 15%;
+  z-index: -1;
+  box-shadow:
+    0 0 100px 5rem #80d9ff,
+    0 0 140px 6rem #009ee0;
+}
+
+.glow-effect.r.t {
+  top: 0px;
+  box-shadow:
+    0 0 100px 5rem #e32585,
+    0 0 140px 6rem #e858a1;
+}
+
+.glow-effect.r {
+  right: 5px;
+}
+
+.glow-effect.l {
+  left: 5px;
+}
