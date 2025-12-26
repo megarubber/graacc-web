@@ -1,19 +1,15 @@
 <template>
+  <NuxtLoadingIndicator />
   <v-app>
-    <NuxtLayout>
-      <v-progress-circular 
-        v-if="loader.isLoading"
-        class="loading"
-        indeterminate />
-      <NuxtPage :class="{'overlay-loading': loader.isLoading }"/>
-    </NuxtLayout>
+    <NuxtPage />
   </v-app>
+  <the-header v-if="auth.authenticated"/>
 </template>
 
 <script setup lang="ts">
-import { useLoaderStore } from './store/loading';
+import { useAuthStore } from './store/auth';
 
-const loader = useLoaderStore();
+const auth = useAuthStore();
 </script>
 
 <style>

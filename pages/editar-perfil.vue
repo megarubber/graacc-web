@@ -42,7 +42,6 @@
 
 <script lang="ts">
 import type UserUpdate from "~/interfaces/userUpdate";
-import type User from "~/interfaces/user";
 import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import { useAuthStore } from "~/store/auth";
 
@@ -74,10 +73,12 @@ export default defineComponent({
 
       try {
         const response = await updateUserInfo(userUpdate);
-        this.$router.push("/");
+        if(response.status == 200 || response.status == 201)
+          this.$router.push("/");
       } catch(error) {
         this.alert = true;
         this.alert_message = "Erro ao editar dados.";
+        throw error;
       }
       
       this.loading = false;

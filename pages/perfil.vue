@@ -1,5 +1,5 @@
 <template>
-  <v-container class="h-100">
+  <v-container class="h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
@@ -37,7 +37,6 @@
       </section>
       <p class="text-primary mb-14">Excluir Conta</p>
     </v-main>
-    <the-header />
   </v-container>
 </template>
 

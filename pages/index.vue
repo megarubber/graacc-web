@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 h-100 position-fixed">
     <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
     <div class="d-flex flex-column ga-2">
       <v-tabs v-model="tab">
@@ -43,7 +43,6 @@
         </v-tabs-window-item>
       </v-tabs-window>
     </div>
-    <the-header />
   </v-container>
 </template>
 
@@ -57,7 +56,7 @@ import { useLoaderStore } from "~/store/loading";
 export default defineComponent({
   name: "Home",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", layout: "blank" });
   },
   data() {
     return {

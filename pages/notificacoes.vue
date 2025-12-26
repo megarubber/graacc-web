@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
@@ -14,7 +14,6 @@
       <p>Lidas</p>
       <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
     </v-main>
-    <the-header />
   </v-container>
 </template>
 
@@ -25,7 +24,7 @@ import getUserNotifications from "~/utils/api/notifications/getUserNotifications
 export default defineComponent({
   name: "Notifications",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", layout: "blank" });
   },
   data() {
     return {

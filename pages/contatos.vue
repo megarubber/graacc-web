@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
@@ -43,7 +43,6 @@
           >
         </v-card-actions>
       </v-card>
-      <the-header />
     </v-main>
   </v-container>
 </template>
