@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({ size: Number });
+defineProps({ size: { type: Number, default: 30 } });
 </script>
 
 <style scoped>
