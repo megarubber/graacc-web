@@ -25,6 +25,7 @@
           color="#F8F8F8"
           text="Preferências de notificações"
           prepend-icon="mdi-bell-outline"
+          @click="$router.push('/configurar-notificacoes');"
         />
         <v-btn
           class="w-100"

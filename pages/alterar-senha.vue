@@ -24,19 +24,16 @@
       <p class="text-h7 mb-2">Esqueci minha senha</p>
       <v-text-field
         v-model="user.novaSenha" 
-        label="E-mail"
+        label="Nova Senha"
         />
       <v-text-field
         v-model="user.confirmarNovaSenha" 
         label="Confirmar Senha"
         />
-      <v-btn
+      <v-btn 
         class="w-100"
-        color="#F8F8F8"
-        text="Alterar senha"
-        prepend-icon="mdi-pencil-outline"
-        to="/alterar-senha"
-      />
+        @click="updatePassword"
+        >Alterar Senha</v-btn>
     </v-main>
   </v-container>
 </template>
@@ -45,9 +42,10 @@
 import type UserUpdate from "~/interfaces/userUpdate";
 import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import { useAuthStore } from "~/store/auth";
+import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
-  name: "UpdateProfile",
+  name: "UpdatePassword",
   setup() {
     definePageMeta({ middleware: "auth" });
   },
@@ -59,36 +57,13 @@ export default defineComponent({
         confirmarNovaSenha: "",
       },
       auth: storeToRefs(useAuthStore()),
-      loading: ref(false),
-      alert: false,
-      alert_message: "",
+      loader: useLoaderStore(),
     };
   },
-  mounted() {
-    this.user.nomeResponsavel = this.auth.user.nome;
-    this.user.email = this.auth.user.email;
-  },
   methods: {
-    async update() {
-      this.loading = true;
-
-      const userUpdate: UserUpdate = {
-        nome: this.user.nomeResponsavel,
-        email: this.user.email,
-        nome_completo_paciente: this.auth.patient.nome,
-      };
-
-      try {
-        const response = await updateUserInfo(userUpdate);
-        if(response.status == 200 || response.status == 201)
-          this.$router.push("/perfil");
-      } catch(error) {
-        this.alert = true;
-        this.alert_message = "Erro ao editar dados.";
-        throw error;
-      }
-      
-      this.loading = false;
+    async updatePassword() {
+      this.loader.startLoading();
+      this.loader.endLoading();
     },
   }, 
 });

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="position-fixed h-100">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-nav-icon>
@@ -88,11 +88,12 @@ export default defineComponent({
 
       try {
         const response = await updateUserInfo(userUpdate);
-        if(response.status == 200 || response.status == 201)
+        if(response.status == 200 || response.status == 201) {
+          this.toast.success("Alteração feita com sucesso.");
           this.$router.push("/perfil");
+        }
       } catch(error) {
-        this.alert = true;
-        this.alert_message = "Erro ao editar dados.";
+        this.toast.success("Erro ao editar dados.");
         throw error;
       }
       
