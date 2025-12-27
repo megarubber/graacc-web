@@ -3,14 +3,8 @@
   <v-app>
     <NuxtPage />
   </v-app>
-  <the-header v-if="auth.authenticated"/>
+  <the-header v-if="$route.meta.showHeader"/>
 </template>
-
-<script setup lang="ts">
-import { useAuthStore } from './store/auth';
-
-const auth = useAuthStore();
-</script>
 
 <style>
 .slide-left-enter-active,

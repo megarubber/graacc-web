@@ -49,14 +49,14 @@
 <script lang="ts">
 import type Exam from "~/interfaces/exam";
 import getUserExams from "~/utils/api/exams/getUserExams";
-import convertToISODate from "~/utils/convertToISODate";
+import convertToISODate from "~/utils/others/convertToISODate";
 import moment from "moment";
 import { useLoaderStore } from "~/store/loading";
 
 export default defineComponent({
   name: "Home",
   setup() {
-    definePageMeta({ middleware: "auth", layout: "blank" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {

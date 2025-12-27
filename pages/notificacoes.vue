@@ -24,7 +24,7 @@ import getUserNotifications from "~/utils/api/notifications/getUserNotifications
 export default defineComponent({
   name: "Notifications",
   setup() {
-    definePageMeta({ middleware: "auth", layout: "blank" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {

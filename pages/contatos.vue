@@ -51,7 +51,7 @@
 export default defineComponent({
   name: "Contacts",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {

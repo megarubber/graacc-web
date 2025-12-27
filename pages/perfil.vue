@@ -46,7 +46,7 @@ import { useAuthStore } from "~/store/auth";
 export default defineComponent({
   name: "Profile",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {
