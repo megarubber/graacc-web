@@ -36,6 +36,10 @@ export default defineNuxtPlugin((app) => {
         rounded: "lg",
         variant: "outlined",
       },
+      VSwitch: {
+        baseColor: "#545454",
+        color: "#0C3784"
+      },
       VBtn: {
         color: "#1C3B72",
         class: ["font-weight-regular", "text-none"],
