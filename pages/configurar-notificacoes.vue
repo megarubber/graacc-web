@@ -1,5 +1,5 @@
 <template>
-  <v-container class="h-100 position-fixed">
+  <v-container class="pa-2 h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-nav-icon>
@@ -21,22 +21,38 @@
         <p class="mt-4">Receber Notificações</p>
         <v-switch v-model="notifications" inset />
       </v-row>
-      <v-card v-if="notifications" flat>
-        <v-card-text class="notification-card">
-          <v-row class="d-flex pa-4 justify-space-between">
-            <p class="mt-4">Notificações sobre consultas</p>
-            <v-switch v-model="appointments" inset />
-          </v-row>
-          <v-row class="d-flex pa-4 justify-space-between">
-            <p class="mt-4">Notificações sobre exames</p>
-            <v-switch v-model="examinations" inset />
-          </v-row>
-          <v-row class="d-flex pa-4 justify-space-between">
-            <p class="mt-4">Informações sobre o GRAACC</p>
-            <v-switch v-model="graacc" inset />
-          </v-row>
-        </v-card-text>
-      </v-card>
+      <v-container v-if="notifications" class="notification-card">
+        <v-row class="d-flex justify-space-between mb-2">
+          <p class="mt-2">Notificações sobre consultas</p>
+          <v-switch 
+            v-model="appointments" 
+            class="ma-0 pa-0" 
+            inset 
+            density="compact"
+            hide-details
+            />
+        </v-row>
+        <v-row class="d-flex justify-space-between mb-2">
+          <p class="mt-2">Notificações sobre exames</p>
+          <v-switch 
+            v-model="examinations" 
+            class="ma-0 pa-0" 
+            inset 
+            density="compact"
+            hide-details
+            />
+        </v-row>
+        <v-row class="d-flex justify-space-between">
+          <p class="mt-2">Informações sobre o GRAACC</p>
+          <v-switch 
+            v-model="graacc" 
+            class="ma-0 pa-0" 
+            inset 
+            density="compact"
+            hide-details
+            />
+        </v-row>
+      </v-container>
     </v-main>
   </v-container>
 </template>
@@ -61,7 +77,7 @@ export default defineComponent({
 <style scoped>
 .notification-card {
   background-color: #ECEDF4;
-  display: flex;
-  flex-direction: column;
+  border-radius: 15px;
+  padding: 25px;
 }
 </style>
