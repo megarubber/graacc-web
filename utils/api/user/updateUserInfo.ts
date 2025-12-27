@@ -1,4 +1,3 @@
-import type User from "~/interfaces/user";
 import type UserUpdate from "~/interfaces/userUpdate";
 
 export default async function updateUserInfo(userInfo: UserUpdate) {

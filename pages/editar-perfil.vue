@@ -4,11 +4,11 @@
       <template #prepend>
         <v-app-bar-nav-icon>
           <NuxtLink
-            href="/login">
+            href="/perfil">
             <v-icon 
             style="background-color: #D7F2FF;"
             class="pa-4 rounded-xl"
-            color="blue-dark" 
+            color="blue-dark"
             icon="mdi-chevron-left"/>
           </NuxtLink>
         </v-app-bar-nav-icon>
@@ -18,10 +18,10 @@
     </v-app-bar>
     <v-main>
       <p class="text-h6 mb-2">Dados pessoais</p>
-      <v-text-field 
-        v-model="user.nomeResponsavel" 
+      <v-text-field
+        v-model="user.nomeResponsavel"
         prepend-inner-icon="mdi-account-outline"
-        label="Nome do(a) responsável" 
+        label="Nome do(a) responsável"
         />
       <p class="text-h6 mb-2">Dados de acesso</p>
       <v-text-field 
@@ -29,12 +29,16 @@
         prepend-inner-icon="mdi-email-outline"
         label="E-mail"
         />
+      <v-btn 
+        class="w-100 mb-5" 
+        @click="update"
+        >Atualizar</v-btn>
       <v-btn
         class="w-100"
         color="#F8F8F8"
         text="Alterar senha"
         prepend-icon="mdi-pencil-outline"
-        @click="$router.push('/alterar-senha');"
+        to="/alterar-senha"
       />
     </v-main>
   </v-container>
@@ -62,19 +66,24 @@ export default defineComponent({
       alert_message: "",
     };
   },
+  mounted() {
+    this.user.nomeResponsavel = this.auth.user.nome;
+    this.user.email = this.auth.user.email;
+  },
   methods: {
     async update() {
       this.loading = true;
+
       const userUpdate: UserUpdate = {
-        nome: this.auth.user.nome,
-        email: this.auth.user.email,
+        nome: this.user.nomeResponsavel,
+        email: this.user.email,
         nome_completo_paciente: this.auth.patient.nome,
       };
 
       try {
         const response = await updateUserInfo(userUpdate);
         if(response.status == 200 || response.status == 201)
-          this.$router.push("/");
+          this.$router.push("/perfil");
       } catch(error) {
         this.alert = true;
         this.alert_message = "Erro ao editar dados.";
