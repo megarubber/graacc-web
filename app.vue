@@ -1,10 +1,20 @@
 <template>
   <NuxtLoadingIndicator />
+  <v-progress-circular 
+    v-if="loader.isLoading"
+    class="loading"
+    indeterminate />
   <v-app>
     <NuxtPage />
   </v-app>
   <the-header v-if="$route.meta.showHeader"/>
 </template>
+
+<script setup lang="ts">
+import { useLoaderStore } from './store/loading';
+
+const loader = useLoaderStore();
+</script>
 
 <style>
 .slide-left-enter-active,
