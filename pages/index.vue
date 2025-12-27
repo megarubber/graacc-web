@@ -51,7 +51,7 @@ import type Exam from "~/interfaces/exam";
 import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/others/convertToISODate";
 import moment from "moment";
-import { useLoaderStore } from "~/store/loading";
+import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
   name: "Home",

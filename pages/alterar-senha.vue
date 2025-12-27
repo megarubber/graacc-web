@@ -4,7 +4,7 @@
       <template #prepend>
         <v-app-bar-nav-icon>
           <NuxtLink
-            href="/perfil">
+            href="/editar-perfil">
             <v-icon 
             style="background-color: #D7F2FF;"
             class="pa-4 rounded-xl"
@@ -13,26 +13,23 @@
           </NuxtLink>
         </v-app-bar-nav-icon>
         <v-app-bar-title
-          class="font-weight-bold ml-2">Alterar dados</v-app-bar-title>
+          class="font-weight-bold ml-2">Alterar senha</v-app-bar-title>
       </template>
     </v-app-bar>
     <v-main>
-      <p class="text-h6 mb-2">Dados pessoais</p>
       <v-text-field
-        v-model="user.nomeResponsavel"
-        prepend-inner-icon="mdi-account-outline"
-        label="Nome do(a) responsável"
+        v-model="user.senhaAtual"
+        label="Senha atual"
         />
-      <p class="text-h6 mb-2">Dados de acesso</p>
-      <v-text-field 
-        v-model="user.email" 
-        prepend-inner-icon="mdi-email-outline"
+      <p class="text-h7 mb-2">Esqueci minha senha</p>
+      <v-text-field
+        v-model="user.novaSenha" 
         label="E-mail"
         />
-      <v-btn 
-        class="w-100 mb-5"
-        @click="update"
-        >Atualizar</v-btn>
+      <v-text-field
+        v-model="user.confirmarNovaSenha" 
+        label="Confirmar Senha"
+        />
       <v-btn
         class="w-100"
         color="#F8F8F8"
@@ -48,7 +45,6 @@
 import type UserUpdate from "~/interfaces/userUpdate";
 import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import { useAuthStore } from "~/store/auth";
-import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
   name: "UpdateProfile",
@@ -58,12 +54,14 @@ export default defineComponent({
   data() {
     return {
       user: {
-        nomeResponsavel: "",
-        email: "",
+        senhaAtual: "",
+        novaSenha: "",
+        confirmarNovaSenha: "",
       },
       auth: storeToRefs(useAuthStore()),
-      loader: useLoaderStore(),
-      toast: useNuxtApp().$toast as any,
+      loading: ref(false),
+      alert: false,
+      alert_message: "",
     };
   },
   mounted() {
@@ -72,13 +70,7 @@ export default defineComponent({
   },
   methods: {
     async update() {
-      const testName = /^[A-Za-z](?:[A-Za-z ]*[A-Za-z])$/;
-      if (!testName.test(this.user.nomeResponsavel)) {
-        this.toast.error("Nome inválido.");
-        return;
-      }
-
-      this.loader.startLoading();
+      this.loading = true;
 
       const userUpdate: UserUpdate = {
         nome: this.user.nomeResponsavel,
@@ -96,7 +88,7 @@ export default defineComponent({
         throw error;
       }
       
-      this.loader.endLoading();
+      this.loading = false;
     },
   }, 
 });

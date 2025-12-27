@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLoaderStore } from './store/loading';
+import { useLoaderStore } from './store/loader';
 
 const loader = useLoaderStore();
 </script>
