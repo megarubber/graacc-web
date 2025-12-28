@@ -39,8 +39,6 @@
 </template>
 
 <script lang="ts">
-import type UserUpdate from "~/interfaces/userUpdate";
-import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import { useAuthStore } from "~/store/auth";
 import { useLoaderStore } from "~/store/loader";
 
