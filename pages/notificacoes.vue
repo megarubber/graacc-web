@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
@@ -14,27 +14,29 @@
       <p>Lidas</p>
       <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
     </v-main>
-    <the-header />
   </v-container>
 </template>
 
 <script lang="ts">
 import type Notification from "~/interfaces/notification";
 import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
+import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
   name: "Notifications",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {
-      loading: ref(true),
       readNotifications: ref([] as Notification[]),
       notReadNotifications: ref([] as Notification[]),
+      loader: useLoaderStore()
     };
   },
   async mounted() {
+    this.loader.startLoading();
+
     const notifications = await getUserNotifications() ?? [];
     this.readNotifications = notifications.filter(
       (notification) => notification.lida
@@ -43,7 +45,7 @@ export default defineComponent({
       (notification) => !notification.lida
     );
 
-    this.loading = false;
+    this.loader.endLoading();
   },
 });
 </script>

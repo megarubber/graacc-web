@@ -1,14 +1,14 @@
 <template>
-  <v-container>
+  <v-container class="position-fixed h-100">
     <v-app-bar>
       <template #prepend>
         <v-app-bar-nav-icon>
           <NuxtLink
-            href="/login">
+            href="/perfil">
             <v-icon 
             style="background-color: #D7F2FF;"
             class="pa-4 rounded-xl"
-            color="blue-dark" 
+            color="blue-dark"
             icon="mdi-chevron-left"/>
           </NuxtLink>
         </v-app-bar-nav-icon>
@@ -18,10 +18,10 @@
     </v-app-bar>
     <v-main>
       <p class="text-h6 mb-2">Dados pessoais</p>
-      <v-text-field 
-        v-model="user.nomeResponsavel" 
+      <v-text-field
+        v-model="user.nomeResponsavel"
         prepend-inner-icon="mdi-account-outline"
-        label="Nome do(a) responsável" 
+        label="Nome do(a) responsável"
         />
       <p class="text-h6 mb-2">Dados de acesso</p>
       <v-text-field 
@@ -29,12 +29,16 @@
         prepend-inner-icon="mdi-email-outline"
         label="E-mail"
         />
+      <v-btn 
+        class="w-100 mb-5"
+        @click="update"
+        >Atualizar</v-btn>
       <v-btn
         class="w-100"
         color="#F8F8F8"
         text="Alterar senha"
         prepend-icon="mdi-pencil-outline"
-        @click="$router.push('/alterar-senha');"
+        to="/alterar-senha"
       />
     </v-main>
   </v-container>
@@ -42,9 +46,9 @@
 
 <script lang="ts">
 import type UserUpdate from "~/interfaces/userUpdate";
-import type User from "~/interfaces/user";
 import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import { useAuthStore } from "~/store/auth";
+import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
   name: "UpdateProfile",
@@ -58,29 +62,42 @@ export default defineComponent({
         email: "",
       },
       auth: storeToRefs(useAuthStore()),
-      loading: ref(false),
-      alert: false,
-      alert_message: "",
+      loader: useLoaderStore(),
+      toast: useNuxtApp().$toast as any,
     };
+  },
+  mounted() {
+    this.user.nomeResponsavel = this.auth.user.nome;
+    this.user.email = this.auth.user.email;
   },
   methods: {
     async update() {
-      this.loading = true;
+      const testName = /^[A-Za-z](?:[A-Za-z ]*[A-Za-z])$/;
+      if (!testName.test(this.user.nomeResponsavel)) {
+        this.toast.error("Nome inválido.");
+        return;
+      }
+
+      this.loader.startLoading();
+
       const userUpdate: UserUpdate = {
-        nome: this.auth.user.nome,
-        email: this.auth.user.email,
+        nome: this.user.nomeResponsavel,
+        email: this.user.email,
         nome_completo_paciente: this.auth.patient.nome,
       };
 
       try {
         const response = await updateUserInfo(userUpdate);
-        this.$router.push("/");
+        if(response.status == 200 || response.status == 201) {
+          this.toast.success("Alteração feita com sucesso.");
+          this.$router.push("/perfil");
+        }
       } catch(error) {
-        this.alert = true;
-        this.alert_message = "Erro ao editar dados.";
+        this.toast.success("Erro ao editar dados.");
+        throw error;
       }
       
-      this.loading = false;
+      this.loader.endLoading();
     },
   }, 
 });

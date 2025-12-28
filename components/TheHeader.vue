@@ -1,50 +1,46 @@
 <template>
-  <v-layout>
-    <v-container
-      class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center"
-    >
-      <v-tabs v-model="currentTab" @click="changePage">
-        <v-tab value="/">
-          <div class="custom-tab">
-            <v-icon size="24" icon="mdi-home-outline" />
-            <p>Início</p>
-          </div>
-        </v-tab>
-        <v-tab value="/contatos">
-          <div class="custom-tab">
-            <v-icon icon="mdi-phone-outline" size="24" />
-            <p>Contatos</p>
-          </div>
-        </v-tab>
-        <v-tab value="/notificacoes">
-          <div class="custom-tab">
-            <v-icon
-              :icon="totalNotifications > 0 ? 'mdi-bell-ring-outline' : 'mdi-bell-outline'"
-              size="24"
-            />
-            <span 
-              v-if="totalNotifications > 9"
-              class="number-indicator"
-              >+9</span
-            >
-            <span
-              v-if="totalNotifications > 0 && totalNotifications < 9"
-              class="number-indicator"
-            >
-              {{ totalNotifications }}
-            </span>
-            <p>Notificações</p>
-          </div>
-        </v-tab>
-        <v-tab value="/perfil">
-          <div class="custom-tab">
-            <v-icon icon="mdi-account-outline" size="24" />
-            <p>Perfil</p>
-          </div>
-        </v-tab>
-      </v-tabs>
-    </v-container>
-  </v-layout>
+  <v-container class="fix-header pa-0 position-fixed bottom-0 bg-white d-flex justify-center">
+    <v-tabs v-model="currentTab" @click="changePage">
+      <v-tab value="/">
+        <div class="custom-tab">
+          <v-icon size="24" icon="mdi-home-outline" />
+          <p>Início</p>
+        </div>
+      </v-tab>
+      <v-tab value="/contatos">
+        <div class="custom-tab">
+          <v-icon icon="mdi-phone-outline" size="24" />
+          <p>Contatos</p>
+        </div>
+      </v-tab>
+      <v-tab value="/notificacoes">
+        <div class="custom-tab">
+          <v-icon
+            :icon="totalNotifications > 0 ? 'mdi-bell-ring-outline' : 'mdi-bell-outline'"
+            size="24"
+          />
+          <span 
+            v-if="totalNotifications > 9"
+            class="number-indicator"
+            >+9</span
+          >
+          <span
+            v-if="totalNotifications > 0 && totalNotifications < 9"
+            class="number-indicator"
+          >
+            {{ totalNotifications }}
+          </span>
+          <p>Notificações</p>
+        </div>
+      </v-tab>
+      <v-tab value="/perfil">
+        <div class="custom-tab">
+          <v-icon icon="mdi-account-outline" size="24" />
+          <p>Perfil</p>
+        </div>
+      </v-tab>
+    </v-tabs>
+  </v-container>
 </template>
 
 <script lang="ts">

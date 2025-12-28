@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { useLoaderStore } from "~/store/loading";
+import { useLoaderStore } from "~/store/loader";
 import createUser from "~/utils/api/register/createUser";
 import type UserRegister from "~/interfaces/userRegister";
 

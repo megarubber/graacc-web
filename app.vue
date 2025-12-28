@@ -1,17 +1,19 @@
 <template>
+  <NuxtLoadingIndicator />
+  <v-progress-circular 
+    v-if="loader.isLoading"
+    class="loading"
+    indeterminate />
   <v-app>
-    <NuxtLayout>
-      <v-progress-circular 
-        v-if="loader.isLoading"
-        class="loading"
-        indeterminate />
-      <NuxtPage :class="{'overlay-loading': loader.isLoading }"/>
-    </NuxtLayout>
+    <NuxtPage
+      :class="{'overlay-loading': loader.isLoading }"
+    />
   </v-app>
+  <the-header v-if="$route.meta.showHeader"/>
 </template>
 
 <script setup lang="ts">
-import { useLoaderStore } from './store/loading';
+import { useLoaderStore } from './store/loader';
 
 const loader = useLoaderStore();
 </script>
