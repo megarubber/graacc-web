@@ -1,9 +1,10 @@
 <template>
   <v-card
+    v-for="notification in notifications"
+    :key="notification.id_notificacao"
     variant="flat"
     :color="color"
     rounded="xl"
-    v-for="notification in notifications"
   >
     <v-card-item>
       <v-card-title>
@@ -11,7 +12,7 @@
           Consulta confirmada 
         </p>
       </v-card-title>
-      <template v-slot:append>
+      <template #append>
         <p class="text-blue-dark">{{ formatDate(notification.data) }}</p>
       </template>
     </v-card-item>

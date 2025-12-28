@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { useAuthStore } from "~/store/auth";
-import { useLoaderStore } from "~/store/loading";
+import { useLoaderStore } from "~/store/loader";
 import getResponseOAuth2 from "~/utils/google/getResponseOAuth2";
 
 export default defineComponent({

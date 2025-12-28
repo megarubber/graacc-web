@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 h-100 position-fixed">
     <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
     <div class="d-flex flex-column ga-2">
       <v-tabs v-model="tab">
@@ -43,21 +43,20 @@
         </v-tabs-window-item>
       </v-tabs-window>
     </div>
-    <the-header />
   </v-container>
 </template>
 
 <script lang="ts">
 import type Exam from "~/interfaces/exam";
 import getUserExams from "~/utils/api/exams/getUserExams";
-import convertToISODate from "~/utils/convertToISODate";
+import convertToISODate from "~/utils/others/convertToISODate";
 import moment from "moment";
-import { useLoaderStore } from "~/store/loading";
+import { useLoaderStore } from "~/store/loader";
 
 export default defineComponent({
   name: "Home",
   setup() {
-    definePageMeta({ middleware: "auth" });
+    definePageMeta({ middleware: "auth", showHeader: true });
   },
   data() {
     return {
