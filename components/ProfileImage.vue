@@ -1,6 +1,7 @@
 <template>
   <v-container class="d-flex justify-center align-center">
-    <svg :width="size" :height="size" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <v-img v-if="image" class="rounded-circle" :max-width="size" cover :aspect-ratio="1" :src="image" :height="size" />
+    <svg v-else :width="size" :height="size" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill="#E8F0FF"/>
       <g opacity="0.8">
       <mask id="mask0_314_575" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="15" y="15" width="73" height="70">
@@ -12,13 +13,30 @@
       </g>
     </svg>
     <div class="position-relative">
-      <v-icon class="edit-icon" icon="mdi-pencil"/>
+      <v-icon class="edit-icon" icon="mdi-pencil" @click="triggerFileInput"/>
     </div>
+    <input type="file" capture="user" ref="file-input" @change="handleCapture" style="display: none;" accept="image/*" />
   </v-container>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps({ size: { type: Number, default: 30 } });
+
+const image = ref(null);
+const fileInput = useTemplateRef<HTMLDivElement>('file-input');
+
+function handleCapture(event: MouseEvent) {
+  const file: File = event.target.files[0];
+  if(file) {
+    const fileReader: FileReader = new FileReader();
+    fileReader.onload = (eventFile) => image.value = eventFile.target.result;
+    fileReader.readAsDataURL(file);
+  }
+};
+
+function triggerFileInput() {
+  fileInput.value.click();
+}
 </script>
 
 <style scoped>

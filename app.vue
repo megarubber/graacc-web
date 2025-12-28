@@ -5,7 +5,9 @@
     class="loading"
     indeterminate />
   <v-app>
-    <NuxtPage />
+    <NuxtPage
+      :class="{'overlay-loading': loader.isLoading }"
+    />
   </v-app>
   <the-header v-if="$route.meta.showHeader"/>
 </template>
