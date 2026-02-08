@@ -15,27 +15,33 @@
     <div class="position-relative">
       <v-icon class="edit-icon" icon="mdi-pencil" @click="triggerFileInput"/>
     </div>
-    <input type="file" capture="user" ref="file-input" @change="handleCapture" style="display: none;" accept="image/*" />
+    <input ref="file-input" style="display: none;" accept="image/*" type="file" capture="user" @change="handleCapture">
   </v-container>
 </template>
 
 <script lang="ts" setup>
-defineProps({ size: { type: Number, default: 30 } });
+const props = defineProps<{size: number, mainImage: string | undefined}>();
 
-const image = ref(null);
+const image = ref('');
+
+const { mainImage } = props;
+if(mainImage) image.value = mainImage;
+
 const fileInput = useTemplateRef<HTMLDivElement>('file-input');
 
 function handleCapture(event: MouseEvent) {
-  const file: File = event.target.files[0];
+  if(!event.target) return;
+  
+  const file: File | null = (event.target as HTMLInputElement).files?.[0] || null;
   if(file) {
     const fileReader: FileReader = new FileReader();
-    fileReader.onload = (eventFile) => image.value = eventFile.target.result;
+    fileReader.onload = (eventFile) => image.value = eventFile.target!.result as string;
     fileReader.readAsDataURL(file);
   }
 };
 
 function triggerFileInput() {
-  fileInput.value.click();
+  fileInput.value!.click();
 }
 </script>
 
