@@ -5,5 +5,5 @@ export default interface User {
   cadastroConfirmado: boolean;
   role: string;
   id_paciente: number;
-  foto_perfil: string;
+  foto_perfil: string | null;
 }
