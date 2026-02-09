@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex justify-center align-center">
-    <v-img v-if="image" class="rounded-circle" :max-width="size" cover :aspect-ratio="1" :src="image" :height="size" />
+    <v-img v-if="image != 'no-image'" class="rounded-circle" :max-width="size" cover :aspect-ratio="1" :src="image" :height="size" />
     <svg v-else :width="size" :height="size" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill="#E8F0FF"/>
       <g opacity="0.8">
@@ -20,16 +20,17 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{size: number, mainImage: string | undefined}>();
-
+import type UserProfilePhotoUpdate from '~/interfaces/userProfilePhotoUpdate';
+import updateProfileImage from '~/utils/api/user/updateProfileImage';
+const props = defineProps<{id: number, size: number, mainImage: string}>();
 const image = ref('');
 
-const { mainImage } = props;
-if(mainImage) image.value = mainImage;
+const { id, mainImage } = props;
+image.value = mainImage;
 
 const fileInput = useTemplateRef<HTMLDivElement>('file-input');
 
-function handleCapture(event: MouseEvent) {
+async function handleCapture(event: Event) {
   if(!event.target) return;
   
   const file: File | null = (event.target as HTMLInputElement).files?.[0] || null;
@@ -37,6 +38,10 @@ function handleCapture(event: MouseEvent) {
     const fileReader: FileReader = new FileReader();
     fileReader.onload = (eventFile) => image.value = eventFile.target!.result as string;
     fileReader.readAsDataURL(file);
+    const data: UserProfilePhotoUpdate = {
+      id, foto_perfil: file
+    }
+    await updateProfileImage(data);
   }
 };
 
