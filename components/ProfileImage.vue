@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import type UserProfilePhotoUpdate from '~/interfaces/userProfilePhotoUpdate';
 import updateProfileImage from '~/utils/api/user/updateProfileImage';
 const props = defineProps<{id: number, size: number, mainImage: string}>();
 const image = ref('');
@@ -38,10 +37,9 @@ async function handleCapture(event: Event) {
     const fileReader: FileReader = new FileReader();
     fileReader.onload = (eventFile) => image.value = eventFile.target!.result as string;
     fileReader.readAsDataURL(file);
-    const data: UserProfilePhotoUpdate = {
+    await updateProfileImage({
       id, foto_perfil: file
-    }
-    await updateProfileImage(data);
+    });
   }
 };
 

@@ -35,7 +35,7 @@ export default defineComponent({
     }
   },
   methods: {
-    formatDate(eventDate) {
+    formatDate(eventDate: string) {
       return eventDate.substring(0, 5);
     }
   }
