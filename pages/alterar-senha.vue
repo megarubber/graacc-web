@@ -18,17 +18,26 @@
     </v-app-bar>
     <v-main>
       <v-text-field
-        v-model="user.senhaAtual"
+        v-model="user.senhaAtual.value"
         label="Senha atual"
+        :type="user.senhaAtual.show ? 'text' : 'password'"
+        :append-inner-icon="user.senhaAtual.show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="user.senhaAtual.show = !user.senhaAtual.show"
         />
       <p class="text-h7 mb-2">Esqueci minha senha</p>
       <v-text-field
-        v-model="user.novaSenha" 
+        v-model="user.novaSenha.value" 
         label="Nova Senha"
+        :type="user.novaSenha.show ? 'text' : 'password'"
+        :append-inner-icon="user.novaSenha.show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="user.novaSenha.show = !user.novaSenha.show"
         />
       <v-text-field
-        v-model="user.confirmarNovaSenha" 
+        v-model="user.confirmarNovaSenha.value" 
         label="Confirmar Senha"
+        :type="user.confirmarNovaSenha.show ? 'text' : 'password'"
+        :append-inner-icon="user.confirmarNovaSenha.show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="user.confirmarNovaSenha.show = !user.confirmarNovaSenha.show"
         />
       <v-btn 
         class="w-100"
@@ -39,8 +48,10 @@
 </template>
 
 <script lang="ts">
+import type UserNewPasswordWithLogin from "~/interfaces/userNewPasswordWithLogin";
 import { useAuthStore } from "~/store/auth";
 import { useLoaderStore } from "~/store/loader";
+import { setNewPasswordWithLogin } from "~/utils/api/user/setNewPassword";
 
 export default defineComponent({
   name: "UpdatePassword",
@@ -50,17 +61,56 @@ export default defineComponent({
   data() {
     return {
       user: {
-        senhaAtual: "",
-        novaSenha: "",
-        confirmarNovaSenha: "",
+        senhaAtual: {
+          value: "",
+          show: false
+        },
+        novaSenha: {
+          value: "",
+          show: false
+        },
+        confirmarNovaSenha: {
+          value: "",
+          show: false
+        },
       },
       auth: storeToRefs(useAuthStore()),
       loader: useLoaderStore(),
+      toast: useNuxtApp().$toast as any,
     };
   },
   methods: {
     async updatePassword() {
       this.loader.startLoading();
+      try {
+        if(this.user.novaSenha.value != this.user.confirmarNovaSenha.value) {
+          this.toast.error("Senhas não são iguais.");
+          this.loader.endLoading();
+          return;
+        }
+
+        const data: UserNewPasswordWithLogin = {
+          id: this.auth.user.id_usuario,
+          senha_atual: this.user.senhaAtual.value,
+          senha_nova: this.user.novaSenha.value
+        }
+        const response = await setNewPasswordWithLogin(data);
+
+        if(response.status == 401 || response.status == 400) {
+          this.toast.error("Senha atual digitada não coincide com a salva.");
+          this.loader.endLoading();
+          return;
+        }
+
+        if (response.status == 200) {
+          this.toast.success("Senha alterada com sucesso.");
+          this.$router.push("/perfil");
+        }
+
+        this.toast.error("Erro ao alterar senha.");
+      } catch(err) {
+        this.toast.error("Erro ao alterar senha.");
+      }
       this.loader.endLoading();
     },
   }, 
