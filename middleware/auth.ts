@@ -11,6 +11,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   if (!token.value && to?.name !== "login") {
     abortNavigation();
-    return navigateTo("/login");
+    const firstTime = useCookie("firsttime");
+    if(firstTime.value == "false") return navigateTo("/login");
+    return navigateTo("/boas-vindas");
   }
 });
