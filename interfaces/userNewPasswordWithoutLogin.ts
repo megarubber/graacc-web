@@ -1,3 +1,4 @@
 export default interface UserNewPasswordWithoutLogin {
-  email: string;
+  id: number;
+  senha_nova: string;
 }
