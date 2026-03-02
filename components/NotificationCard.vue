@@ -1,12 +1,13 @@
 <template>
     <v-bottom-sheet
-        v-model="props.show"
+        :v-model="props.show"
         height="75%"
     >
         <v-card class="rounded-xl">
-            <template v-slot:append>
-                <v-avatar @click="$emit('close');" 
-                color="#BCD4FF" size="35" class="cursor-pointer">
+            <template #append>
+                <v-avatar
+                color="#BCD4FF" 
+                size="35" class="cursor-pointer" @click="$emit('close');">
                     <v-icon 
                         color="#0C3784"
                         class="pa-2"
@@ -14,14 +15,14 @@
                     >mdi-close</v-icon>
                 </v-avatar>
             </template>
-            <v-divider :thickness="3"></v-divider>
+            <v-divider :thickness="3"/>
             <v-card-title class="font-weight-bold">
                 {{ props.title }}
             </v-card-title>
             <v-card-text>
                 {{ props.description }}
             </v-card-text>
-            <v-divider :thickness="3"></v-divider>
+            <v-divider :thickness="3"/>
             <v-card-actions>
                 <v-btn 
                     color="#FFAFAF"
@@ -45,5 +46,5 @@
 <script lang="ts" setup>
 import type ShowNotification from "~/interfaces/showNotification";
 const props = defineProps<ShowNotification>();
-
+defineEmits(['close']);
 </script>
