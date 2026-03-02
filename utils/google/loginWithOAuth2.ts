@@ -1,7 +1,9 @@
 import { googleSdkLoaded } from "vue3-google-login";
 import type UserGoogleAuth from "~/interfaces/userGoogleAuth";
 
-export default function loginWithOAuth2(endRequest: Function) {
+type Callback = (status: number, data: any) => void;
+
+export default function loginWithOAuth2(endRequest: Callback) {
   const config = useRuntimeConfig();
   const { $api } = useNuxtApp();
 
