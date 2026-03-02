@@ -32,6 +32,7 @@
             class="w-30 text-body-1 font-weight-bold"
             prepend-icon="mdi-content-copy"
             text="Copiar"
+            @click="contact.callbackClipboard"
           />
           <v-btn
             class="w-30 text-body-1 px-4 font-weight-bold"
@@ -39,6 +40,7 @@
             variant="flat"
             style="color: #0C3784"
             prepend-icon="mdi-open-in-new"
+            @click="contact.callbackAction"
             >{{ contact.action }}</v-btn
           >
         </v-card-actions>
@@ -48,6 +50,10 @@
 </template>
 
 <script lang="ts">
+import changePage from '~/utils/others/changePage';
+import openMap from '~/utils/others/openMap';
+import copyToClipboard from '~/utils/others/copyToClipboard';
+
 export default defineComponent({
   name: "Contacts",
   setup() {
@@ -61,12 +67,16 @@ export default defineComponent({
           title: "Telefone",
           info: ["(11) 5908-9100"],
           action: "Ligar",
+          callbackAction: () => changePage('tel:+551159089100'),
+          callbackClipboard: () => copyToClipboard("(11) 5908-9100")
         },
         {
           icon: "email",
           title: "E-mail",
           info: ["graacc@graacc.org.br"],
           action: "Enviar e-mail",
+          callbackAction: () => changePage('mailto:someone@example.com'),
+          callbackClipboard: () => copyToClipboard("graacc@graacc.org.br")
         },
         {
           icon: "map-marker",
@@ -77,6 +87,8 @@ export default defineComponent({
             "CEP: 04039-001",
           ],
           action: "Abrir no mapa",
+          callbackAction: () => openMap(-23.5982, -46.6423),
+          callbackClipboard: () => copyToClipboard("Rua Pedro de Toledo, 572, Vila Clementino - São Paulo, SP, CEP: 04039-001")
         },
       ],
     };

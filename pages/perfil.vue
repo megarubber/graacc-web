@@ -9,23 +9,30 @@
       </template>
     </v-app-bar>
     <v-main class="text-center d-flex h-100 justify-space-between flex-column">
+      <delete-account 
+        :show="showDelete"
+        :user-id="user.id_usuario"
+        @close="requestDelete"
+      />
       <section class="d-flex flex-column ga-4">
-        <profile-image :size="100" />
-        <h3 style="color: #4b4b4b">{{ parentName }}</h3>
-        <h3 class="mb-4">{{ patientName }}</h3>
+        <client-only>
+          <profile-image :id="user.id_usuario" :main-image="profileImageURL" :size="100" />
+          <h3 style="color: #4b4b4b">{{ user.nome }}</h3>
+          <h3 class="mb-4">{{ patientName }}</h3>
+        </client-only>
         <v-btn
           class="w-100"
           color="#F8F8F8"
           text="Atualizar dados"
           prepend-icon="mdi-pencil-outline"
-          @click="$router.push('/editar-perfil');"
+          to="/editar-perfil"
         />
         <v-btn
           class="w-100"
           color="#F8F8F8"
           text="Preferências de notificações"
           prepend-icon="mdi-bell-outline"
-          @click="$router.push('/configurar-notificacoes');"
+          to="/configurar-notificacoes"
         />
         <v-btn
           class="w-100"
@@ -33,40 +40,40 @@
           text="Desconectar"
           prepend-icon="mdi-exit-to-app"
           to="/login"
-          @click="logUserOut()"
+          @click="logUserOut"
         />
       </section>
-      <p class="text-primary mb-14">Excluir Conta</p>
+      <p class="text-primary mb-14 cursor-pointer" @click="requestDelete">
+        Excluir Conta
+      </p>
     </v-main>
   </v-container>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
+import { storeToRefs } from "pinia";
+const config = useRuntimeConfig();
+const showDelete = ref(false);
 
-export default defineComponent({
-  name: "Profile",
-  setup() {
-    definePageMeta({ middleware: "auth", showHeader: true });
-  },
-  data() {
-    return {
-      auth: useAuthStore(),
-      parentName: ref(''),
-      patientName: ref('')
-    };
-  },
-  mounted() {
-    const { user, patient } = storeToRefs(this.auth);
-    this.parentName = user.value.nome;
-    this.patientName = patient.value.nome;
-  },
-  methods: {
-    logUserOut() {
-      this.auth.logUserOut();
-    },
-  },
-});
+definePageMeta({ middleware: "auth", showHeader: true });
+const auth = useAuthStore();
+const { user, patient } = storeToRefs(auth);
+const patientName = ref('Sem paciente');
+const profileImageURL: Ref<string | string> = ref('');
+
+patientName.value = patient.value.nome;
+
+profileImageURL.value = user.value.foto_perfil ? 
+`${config.public.apiBase}${user.value.foto_perfil}` : 'no-image';
+
+function logUserOut(): void {
+  auth.logUserOut();
+}
+
+function requestDelete(): void {
+  showDelete.value = !showDelete.value;
+}
 </script>
 
 <style scoped>

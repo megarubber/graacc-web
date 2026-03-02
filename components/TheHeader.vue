@@ -50,19 +50,19 @@ export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      auth: useAuthStore(),
+      auth: storeToRefs(useAuthStore()),
       totalNotifications: ref(0),
       currentTab: ref('/'),
+      route: useRoute()
     };
   },
   mounted() {
-    const { notReadNotifications, page } = this.auth;
+    const { notReadNotifications } = this.auth;
     this.totalNotifications = notReadNotifications;
-    this.currentTab = page;
+    this.currentTab = this.route.path;
   },
   methods: {
     changePage() {
-      this.auth.updatePage(this.currentTab);
       this.$router.push(this.currentTab ?? '/');
     },
   },

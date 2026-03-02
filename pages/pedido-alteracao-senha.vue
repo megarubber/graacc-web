@@ -19,8 +19,9 @@
     <v-main class="d-flex flex-column pa-0 mt-14 justify-center align-center">
       <p class="mb-4 text-center">Digite o e-mail associado à sua conta</p>
       <v-text-field 
-        label="E-mail" 
+        label="E-mail"
         class="w-100"
+        v-model="email"
       />
       <div class="d-flex flex-row">
         <p class="mb-4 mr-2">Lembrou sua senha?</p>
@@ -28,26 +29,53 @@
           >Faça login</NuxtLink
         >
       </div>
-      <v-btn class="w-100">Enviar pedido de alteração</v-btn>
+      <v-btn @click="request" class="w-100">Enviar pedido de alteração</v-btn>
     </v-main>
   </v-container>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: "EncontrarSenhaPage",
-  data() {
-    return {
-      email: "",
-    };
-  },
-  methods: {
-    async sendResetPasswordRequest() {
-      this.alert = true;
-      this.alert_message = error.response._data.mensagem;
-    },
-  },
-});
+<script lang="ts" setup>
+import requestNewPassword from '~/utils/api/register/requestNewPassword';
+import { useLoaderStore } from '~/store/loader';
+import { validateEmail } from '~/utils/others/validate';
+
+const email = ref("");
+const toast: any = useNuxtApp().$toast;
+const loader = useLoaderStore();
+const router = useRouter();
+
+async function request() { 
+  if (!validateEmail(email.value)) {
+    toast.error("E-mail inválido.");
+    loader.endLoading();
+    return;
+  }
+
+  loader.startLoading();
+  const response = await requestNewPassword(email.value);
+
+  if(response.status == 200) {
+    toast.success("Pedido enviado.");
+    loader.endLoading();
+    router.push("/login");
+    return;
+  }
+
+  if(response.status == 401) {
+    toast.error("Não existe nenhuma conta cadastrada associada à este e-mail.");
+    loader.endLoading();
+    return;
+  }
+
+  if(response.status == 403) {
+    toast.error("Não foi possível alterar a senha. Tente ativar a conta.");
+    loader.endLoading();
+    return;
+  }
+
+  toast.error("Erro ao requisitar nova senha.");
+  loader.endLoading();
+}
 </script>
 <style scoped>
 a {

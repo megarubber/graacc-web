@@ -35,9 +35,9 @@
         <NuxtLink href="/pedido-alteracao-senha" class="font-weight-bold mb-4 text-blue-dark"
         >Esqueci minha senha</NuxtLink
       >
-      <v-btn @click="login()">Entrar</v-btn>
+      <v-btn @click="login">Entrar</v-btn>
       <p class="text-center">ou</p>
-      <v-btn color="black" width="250" class="align-self-center" variant="outlined">
+      <v-btn color="black" width="250" class="align-self-center" variant="outlined" @click="loginWithGoogle">
         <Icon class="mr-4" name="icons:google-logo" size="30" />
         Entrar com o Google
       </v-btn>
@@ -54,7 +54,7 @@
 <script lang="ts">
 import { useAuthStore } from "~/store/auth";
 import { useLoaderStore } from "~/store/loader";
-import getResponseOAuth2 from "~/utils/google/getResponseOAuth2";
+import { validateEmail } from '~/utils/others/validate';
 
 export default defineComponent({
   name: "Login",
@@ -73,32 +73,56 @@ export default defineComponent({
   },
   methods: {
     loginWithGoogle() {
-      getResponseOAuth2(async (token: string, email: string) => {
-        console.log(token, email);
-        if (!this.authenticated) return;
-      });
+      this.loader.startLoading();
+      this.auth.authenticateUserGoogle(
+        (status: number, confirmUser: boolean) => {
+          if(status != 200) {
+            this.toast.error("Erro ao fazer login.");
+            this.loader.endLoading();
+            return;
+          }
+
+          this.$router.push(confirmUser ? "/" : "/completar-informacoes");
+          this.loader.endLoading();
+        }
+      );
     },
     async login() {
       this.loader.startLoading();
 
-      const testEmail =
-        /^[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-      if (!testEmail.test(this.user.email)) {
+      if (!validateEmail(this.user.email)) {
         this.toast.error("E-mail inválido.");
         this.loader.endLoading();
         return;
+      }
+
+      if(this.user.senha.length <= 0) {
+        this.toast.error("Senha inválida.");
+        this.loader.endLoading();
+        return;        
       }
 
       const status = await this.auth.authenticateUser(this.user);
 
       if (this.authenticated && status == 200) {
         this.$router.push("/");
+        await Notification.requestPermission();
         return;
       }
 
       if (status == 401 || status == 400) {
         this.toast.error("E-mail/senha não encontrado.");
-      } else this.toast.error("Erro ao fazer login.");
+        this.loader.endLoading();
+        return;
+      }
+
+      if(status == 403) {
+        this.toast.error("Conta não confirmada.");
+        this.loader.endLoading();
+        return;
+      }
+      
+      this.toast.error("Erro ao fazer login.");
       this.loader.endLoading();
     },
   },

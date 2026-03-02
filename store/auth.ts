@@ -6,6 +6,7 @@ import type Notification from "~/interfaces/notification";
 import getUserInfo from "~/utils/api/user/getUserInfo";
 import getPatientById from "~/utils/api/patient/getPatientById";
 import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
+import loginWithOAuth2 from "~/utils/google/loginWithOAuth2";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -20,9 +21,12 @@ export const useAuthStore = defineStore("auth", {
     async refreshAuth() {
       try {
         const userInfo = await getUserInfo();
-        if(userInfo.status != 200) return userInfo.status;
-        this.user = userInfo.data;
+        if(userInfo.status != 200) return { status: userInfo.status };
 
+        if(!userInfo.data.cadastro_confirmado) return { status: 403 };
+
+        this.user = userInfo.data;
+        
         const patientInfo = await getPatientById(this.user.id_paciente);
         if(patientInfo.status != 200) return patientInfo.status;
 
@@ -37,10 +41,10 @@ export const useAuthStore = defineStore("auth", {
 
         this.notReadNotifications = notReadNotifications.length;
       } catch(error: any) {
-        console.log(error.status);
-        return error.status;
+        console.error(error.status);
+        return { status: error.status };
       }
-      return 200;
+      return { status: 200 };
     },
     async authenticateUser(user_auth: UserAuth) {
       const { $api } = useNuxtApp();
@@ -54,15 +58,31 @@ export const useAuthStore = defineStore("auth", {
 
         const token = useCookie("token");
         token.value = data.token;
-
-        const userInfoStatus: number = await this.refreshAuth();
-        if (userInfoStatus != 200) return userInfoStatus;
+        
+        const userInfoStatus = await this.refreshAuth();
+        if (userInfoStatus.status != 200) return userInfoStatus.status;
       }
       
       return response.status;
     },
-    updatePage(page: string) {
-      this.page = page;
+    async authenticateUserGoogle(callback: Function) {     
+      loginWithOAuth2(async (status: number, data: any) => {
+        if(status != 200) {
+          callback(status);
+          return;
+        }
+
+        const token = useCookie("token");
+        token.value = data.token;
+        this.user.nome = data.nome;
+        this.user.email = data.email;
+
+        if(!data.cadastro_confirmado) callback(status, false);
+        else {
+          const userInfoStatus = await this.refreshAuth();
+          callback(userInfoStatus.status, true);
+        }
+      });
     },
     logUserOut() {
       const token = useCookie("token");
