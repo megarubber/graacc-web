@@ -7,6 +7,7 @@ import getUserInfo from "~/utils/api/user/getUserInfo";
 import getPatientById from "~/utils/api/patient/getPatientById";
 import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 import loginWithOAuth2 from "~/utils/google/loginWithOAuth2";
+type Callback = (status: number, confirmRegister: boolean) => void;
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -65,10 +66,10 @@ export const useAuthStore = defineStore("auth", {
       
       return response.status;
     },
-    async authenticateUserGoogle(callback: Function) {     
+    async authenticateUserGoogle(callback: Callback) {     
       loginWithOAuth2(async (status: number, data: any) => {
         if(status != 200) {
-          callback(status);
+          callback(status, false);
           return;
         }
 

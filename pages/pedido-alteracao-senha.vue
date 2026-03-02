@@ -19,9 +19,9 @@
     <v-main class="d-flex flex-column pa-0 mt-14 justify-center align-center">
       <p class="mb-4 text-center">Digite o e-mail associado à sua conta</p>
       <v-text-field 
+        v-model="email"
         label="E-mail"
         class="w-100"
-        v-model="email"
       />
       <div class="d-flex flex-row">
         <p class="mb-4 mr-2">Lembrou sua senha?</p>
@@ -29,7 +29,7 @@
           >Faça login</NuxtLink
         >
       </div>
-      <v-btn @click="request" class="w-100">Enviar pedido de alteração</v-btn>
+      <v-btn class="w-100" @click="request">Enviar pedido de alteração</v-btn>
     </v-main>
   </v-container>
 </template>
