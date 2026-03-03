@@ -11,20 +11,6 @@
       @change="filterAppointmentListByTitle"
     />
     <div class="d-flex flex-column ga-2">
-      <div v-if="showExamDetails">
-        <exam-card
-          :id_agendamento="selectedExam.id_agendamento"
-          :titulo="selectedExam.titulo"
-          :descricao="selectedExam.descricao"
-          :medico="selectedExam.medico"
-          :data="selectedExam.data"
-          :local="selectedExam.local"
-          :id_paciente="selectedExam.id_paciente"
-          :lembrete_enviado="selectedExam.lembrete_enviado"
-          :show="showExamDetails"
-          :close="requestDetails"
-        />
-      </div>
       <v-tabs v-model="tab">
         <v-tab class="w-50" color="black" value="appointment">
           <div class="tab-content d-flex align-center">
@@ -76,14 +62,16 @@
         </v-tabs-window-item>
         <v-tabs-window-item value="calendar">
           <section class="calendar">
-            <NewCalendar 
-              locale="pt-BR" 
-              expanded
-              borderless
-              transparent
-              :attributes='attributes'
-              @dayclick="onDayClick"
-            />
+            <client-only>
+              <NewCalendar
+                locale="pt-BR" 
+                expanded
+                borderless
+                transparent
+                :attributes='attributes'
+                @dayclick="onDayClick"
+              />
+            </client-only>
           </section>
           <section v-if="dayExams.length > 0" class="scroll">
             <p class="mt-4 mb-4">Compromissos marcados nesse dia</p>
@@ -94,6 +82,20 @@
           </section>
         </v-tabs-window-item>
       </v-tabs-window>
+    </div>
+    <div v-if="showExamDetails">
+      <exam-card
+        :id_agendamento="selectedExam.id_agendamento"
+        :titulo="selectedExam.titulo"
+        :descricao="selectedExam.descricao"
+        :medico="selectedExam.medico"
+        :data="selectedExam.data"
+        :local="selectedExam.local"
+        :id_paciente="selectedExam.id_paciente"
+        :lembrete_enviado="selectedExam.lembrete_enviado"
+        :show="showExamDetails"
+        @close="showExamDetails = !showExamDetails"
+      />
     </div>
   </v-container>
 </template>
@@ -240,7 +242,6 @@ export default defineComponent({
     requestDetails(exam: Exam) {
       this.showExamDetails = !this.showExamDetails;
       this.selectedExam = exam;
-      console.log(this.selectedExam);
     }
   },
 });

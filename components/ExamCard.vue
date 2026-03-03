@@ -1,6 +1,6 @@
 <template>
     <v-bottom-sheet
-        :v-model="props.show"
+        v-model="status"
         height="75%"
     >
         <v-card class="rounded-xl">
@@ -22,6 +22,14 @@
             <v-card-text>
                 {{ props.descricao }}
             </v-card-text>
+            <section>
+                <v-card-text>
+                    Médico: {{ props.medico }}
+                </v-card-text>
+                <v-card-text>
+                    Local: {{ props.local }}
+                </v-card-text>
+            </section>
             <v-divider :thickness="3"/>
             <v-card-actions>
                 <v-btn 
@@ -38,4 +46,7 @@
 import type ShowExam from "~/interfaces/showExam";
 const props = defineProps<ShowExam>();
 defineEmits(['close']);
+
+const status = ref(false);
+status.value = props.show;
 </script>

@@ -9,11 +9,6 @@
       </template>
     </v-app-bar>
     <v-main class="text-center d-flex h-100 justify-space-between flex-column">
-      <delete-account 
-        :show="showDelete"
-        :user-id="user.id_usuario"
-        @close="requestDelete"
-      />
       <section class="d-flex flex-column ga-4">
         <client-only>
           <profile-image :id="user.id_usuario" :main-image="profileImageURL" :size="100" />
@@ -47,6 +42,13 @@
         Excluir Conta
       </p>
     </v-main>
+    <div v-if="showDelete">
+      <delete-account 
+        :show="showDelete"
+        :user-id="user.id_usuario"
+        @close="requestDelete"
+      />
+    </div>
   </v-container>
 </template>
 

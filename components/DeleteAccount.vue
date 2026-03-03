@@ -1,7 +1,8 @@
 <template>
     <v-bottom-sheet
-        :v-model="props.show"
+        v-model="status"
         height="75%"
+        inset
     >
         <v-card class="rounded-xl">
             <template #append>
@@ -54,6 +55,7 @@ import deleteAccount from "~/utils/api/user/deleteAccount";
 const toast: any = useNuxtApp().$toast;
 const auth = useAuthStore();
 const router = useRouter();
+const status = ref(false)
 
 defineEmits(['close']);
 
@@ -64,6 +66,8 @@ const props = defineProps({
         required: true
     },
 });
+
+status.value = props.show;
 
 async function requestDelete(): Promise<void> {
     const response = await deleteAccount(props.userId);
