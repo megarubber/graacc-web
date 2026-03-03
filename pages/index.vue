@@ -39,7 +39,7 @@
             <p>Sem compromissos nas próximas semanas.</p>
           </section>
           <section v-else>
-            <section v-if="weekExams.length > 0">
+            <section v-if="weekExams.length > 0" class="scroll">
               <p class="mb-2">
                 {{ statusMessage.begin }}
                 <span class="text-blue-dark font-weight-bold">{{
@@ -47,11 +47,15 @@
                 }}</span>
                 {{ statusMessage.end }} para esta semana.
               </p>
-              <exam-card-generator :exams="weekExams" />
+              <section class="scroll">
+                <exam-card-generator :exams="weekExams" />
+              </section>
             </section>
             <section v-if="futureExams.length > 0">
               <p class="mt-4 mb-4">Compromissos futuros</p>
-              <exam-card-generator :exams="futureExams" />
+              <section class="scroll">
+                <exam-card-generator :exams="futureExams" />
+              </section>
             </section>
           </section>
         </v-tabs-window-item>
@@ -62,12 +66,12 @@
             :attributes='attributes'
             @dayclick="onDayClick"
           />
-          <section v-if="dayExams.length > 0">
-            <p class="mt-4 mb-4">Compromissos futuros</p>
+          <section v-if="dayExams.length > 0" class="scroll">
+            <p class="mt-4 mb-4">Compromissos marcados nesse dia</p>
             <exam-card-generator :exams="dayExams" />
           </section>
           <section v-else class="text-center mt-8">
-            Nenhum compromisso neste dia
+            Nenhum compromisso nesse dia
           </section>
         </v-tabs-window-item>
       </v-tabs-window>
@@ -176,3 +180,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.scroll {
+  overflow-y: scroll;
+  height: 400px;
+}
+</style>
