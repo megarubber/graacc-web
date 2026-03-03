@@ -7,8 +7,8 @@
       bg-color="#ECEDF4"
       base-color="white"
       class="mt-6 mx-3"
-      @change="filterAppointmentListByTitle"
       label="Buscar compromisso"
+      @change="filterAppointmentListByTitle"
     />
     <div class="d-flex flex-column ga-2">
       <v-tabs v-model="tab">

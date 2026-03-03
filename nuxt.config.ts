@@ -16,12 +16,22 @@ export default defineNuxtConfig({
     "@nuxtjs/eslint-module",
     "@nuxt/icon",
     "@nuxt/fonts",
+    '@vite-pwa/nuxt',
+    '@pinia/nuxt',
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config: any) => {
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
   ],
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Agendinha GRAACC',
+      short_name: 'Agendinha',
+      theme_color: '#000000'
+    }
+  },
   icon: {
     customCollections: [
       {
