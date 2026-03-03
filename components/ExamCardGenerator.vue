@@ -1,10 +1,10 @@
 <template>
   <div
     v-for="exam in exams"
-    :key="exam.idAgendamento"
-    class="d-flex align-center"
+    :key="exam.id_agendamento"
+    class="d-flex justify-space-between align-center w-100"
   >
-    <section class="text-center mr-4 text-h6 text-blue-dark font-weight-bold">
+    <section class="text-center text-h6 text-blue-dark font-weight-bold">
       <p>{{ formatDate(convertToISODate(exam.data)).day }}</p>
       <p>{{ formatDate(convertToISODate(exam.data)).month }}</p>
     </section>
@@ -12,7 +12,7 @@
       variant="flat"
       color="#E6F6FE"
       rounded="xl"
-      class="w-100 mb-2"
+      class="card mb-2"
       :subtitle="exam.titulo"
       :text="exam.local"
     >
@@ -28,57 +28,60 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import type Exam from "~/interfaces/exam";
+import convertToISODate from "~/utils/others/convertToISODate";
 
-export default defineComponent({
-  name: "ExamCardGenerator",
-  props: {
-    exams: {
-      type: Array as PropType<Exam[]>,
-      required: true,
-    },
-  },
-  methods: {
-    formatDate(date: Date) {
-      const weekdays = [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta",
-        "Sábado",
-      ];
-      const months = [
-        "JAN",
-        "FEV",
-        "MAR",
-        "ABR",
-        "MAI",
-        "JUN",
-        "JUL",
-        "AGO",
-        "SET",
-        "OUT",
-        "NOV",
-        "DEZ",
-      ];
-
-      const formattedDate = date.toLocaleDateString("pt-BR");
-      const formattedTime = date
-        .toLocaleTimeString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-        .replace(":", "h");
-
-      return {
-        weekday: `${weekdays[date.getDay()]} às ${formattedTime}`,
-        day: formattedDate[0] + formattedDate[1],
-        month: months[date.getMonth()],
-      };
-    },
-  },
+defineProps({
+  exams: {
+    type: Array as PropType<Exam[]>,
+    required: true,
+  }
 });
+
+function formatDate(date: Date): any {
+  const weekdays = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta",
+    "Sábado",
+  ];
+  const months = [
+    "JAN",
+    "FEV",
+    "MAR",
+    "ABR",
+    "MAI",
+    "JUN",
+    "JUL",
+    "AGO",
+    "SET",
+    "OUT",
+    "NOV",
+    "DEZ",
+  ];
+
+  const formattedDate = date.toLocaleDateString("pt-BR");
+  const formattedTime = date
+    .toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    .replace(":", "h");
+
+  return {
+    weekday: `${weekdays[date.getDay()]} às ${formattedTime}`,
+    day: formattedDate[0] + formattedDate[1],
+    month: months[date.getMonth()],
+  };
+}
 </script>
+
+<style scoped>
+.card {
+  width: 85%;
+}
+</style>

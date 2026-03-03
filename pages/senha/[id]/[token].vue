@@ -8,18 +8,18 @@
     </v-app-bar>
     <v-main>
       <v-text-field
-        v-model="user.novaSenha.value" 
+        v-model="password" 
         label="Nova Senha"
-        :type="user.novaSenha.show ? 'text' : 'password'"
-        :append-inner-icon="user.novaSenha.show ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append-inner="user.novaSenha.show = !user.novaSenha.show"
+        :type="showPassword ? 'text' : 'password'"
+        :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="showPassword = !showPassword"
         />
       <v-text-field
-        v-model="user.confirmarNovaSenha.value" 
+        v-model="confirmPassword" 
         label="Confirmar Senha"
-        :type="user.confirmarNovaSenha.show ? 'text' : 'password'"
-        :append-inner-icon="user.confirmarNovaSenha.show ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append-inner="user.confirmarNovaSenha.show = !user.confirmarNovaSenha.show"
+        :type="showConfirmPassword ? 'text' : 'password'"
+        :append-inner-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="showConfirmPassword = !showConfirmPassword"
         />
       <v-btn 
         class="w-100"
@@ -38,21 +38,15 @@ const toast: any = useNuxtApp().$toast;
 const loader = useLoaderStore();
 const router = useRouter();
 
-const user = {
-    novaSenha: {
-        value: '',
-        show: false
-    },
-    confirmarNovaSenha: {
-        value: '',
-        show: false
-    },
-}
+const password = ref("");
+const showPassword = ref(false);
+const confirmPassword = ref("");
+const showConfirmPassword = ref(false);
 
 async function updatePassword() {
     loader.startLoading();
 
-    if(user.novaSenha.value != user.confirmarNovaSenha.value) {
+    if(password.value != confirmPassword.value) {
         toast.error("Senhas não são iguais.");
         loader.endLoading();
         return;
@@ -60,7 +54,7 @@ async function updatePassword() {
 
     const data: UserNewPasswordWithoutLogin = {
         id: Number(route.params.id || '0'),
-        senha_nova: user.novaSenha.value
+        senha_nova: password.value
     }
 
     const response = await setNewPasswordWithoutLogin(data);
@@ -77,7 +71,7 @@ async function updatePassword() {
         return;
     }
 
-    toast.success("E-mail confirmado com sucesso!");
+    toast.success("Senha alterada com sucesso!");
     router.push("/login");
     loader.endLoading();
 }
