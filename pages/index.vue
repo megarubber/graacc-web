@@ -11,6 +11,20 @@
       @change="filterAppointmentListByTitle"
     />
     <div class="d-flex flex-column ga-2">
+      <div v-if="showExamDetails">
+        <exam-card
+          :id_agendamento="selectedExam.id_agendamento"
+          :titulo="selectedExam.titulo"
+          :descricao="selectedExam.descricao"
+          :medico="selectedExam.medico"
+          :data="selectedExam.data"
+          :local="selectedExam.local"
+          :id_paciente="selectedExam.id_paciente"
+          :lembrete_enviado="selectedExam.lembrete_enviado"
+          :show="showExamDetails"
+          :close="requestDetails"
+        />
+      </div>
       <v-tabs v-model="tab">
         <v-tab class="w-50" color="black" value="appointment">
           <div class="tab-content d-flex align-center">
@@ -49,13 +63,13 @@
                 {{ statusMessage.end }} para esta semana.
               </p>
               <section class="scroll">
-                <exam-card-generator :exams="weekExams" />
+                <exam-card-generator :exams="weekExams" @request-details="(exam: Exam) => requestDetails(exam)" />
               </section>
             </section>
             <section v-if="futureExams.length > 0">
               <p class="mt-4 mb-4">Compromissos futuros</p>
               <section class="scroll">
-                <exam-card-generator :exams="futureExams" />
+                <exam-card-generator :exams="futureExams" @request-details="(exam: Exam) => requestDetails(exam)" />
               </section>
             </section>
           </section>
@@ -73,7 +87,7 @@
           </section>
           <section v-if="dayExams.length > 0" class="scroll">
             <p class="mt-4 mb-4">Compromissos marcados nesse dia</p>
-            <exam-card-generator :exams="dayExams" />
+            <exam-card-generator :exams="dayExams" @request-details="(exam: Exam) => requestDetails(exam)"/>
           </section>
           <section v-else class="text-center mt-8">
             Nenhum compromisso nesse dia
@@ -122,7 +136,9 @@ export default defineComponent({
         dates: new Date(),
       }]),
       search: ref(''),
-      selectedDate: new Date()
+      selectedDate: new Date(),
+      showExamDetails: ref(false),
+      selectedExam: ref({} as Exam)
     }
   },
   async mounted() {
@@ -220,6 +236,11 @@ export default defineComponent({
       );
 
       this.updateText();
+    },
+    requestDetails(exam: Exam) {
+      this.showExamDetails = !this.showExamDetails;
+      this.selectedExam = exam;
+      console.log(this.selectedExam);
     }
   },
 });

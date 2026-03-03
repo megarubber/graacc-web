@@ -22,7 +22,9 @@
         </span>
       </template>
       <template #append>
-        <v-icon class="mt-6" color="blue-dark" size="35" icon="mdi-chevron-right"/>
+        <v-icon
+        class="mt-6" color="blue-dark" size="35" 
+        icon="mdi-chevron-right" @click="$emit('requestDetails', exam)"/>
       </template>
     </v-card>
   </div>
@@ -38,6 +40,8 @@ defineProps({
     required: true,
   }
 });
+
+defineEmits(['requestDetails']);
 
 function formatDate(date: Date): any {
   const weekdays = [
