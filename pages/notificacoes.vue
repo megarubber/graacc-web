@@ -49,12 +49,15 @@ export default defineComponent({
     this.loader.startLoading();
 
     const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
-    this.readNotifications = notifications.filter(
-      (notification) => notification.lida
-    );
-    this.notReadNotifications = notifications.filter(
-      (notification) => !notification.lida
-    );
+    
+    if(notifications.length > 0) {
+      this.readNotifications = notifications.filter(
+        (notification) => notification.lida
+      );
+      this.notReadNotifications = notifications.filter(
+        (notification) => !notification.lida
+      );
+    }
 
     this.loader.endLoading();
   },
