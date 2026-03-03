@@ -10,19 +10,35 @@
     </v-app-bar>
     <v-main class="d-flex flex-column ga-4 mx-3 mt-3">
       <section v-if="readNotifications.length > 0 || notReadNotifications.length > 0">
-        <section v-if="readNotifications.length > 0">
-          <p>Não lidas</p>
-          <NotificationGenerator :notifications="readNotifications" color="blue-light" />
-        </section>
         <section v-if="notReadNotifications.length > 0">
+          <p class="mb-4">Não Lidas</p>
+          <NotificationGenerator 
+          :notifications="notReadNotifications" 
+          color="blue-light" 
+          @request-details="(notification: Notification) => requestDetails(notification)"
+          />
+        </section> 
+        <section v-if="readNotifications.length > 0">
           <p>Lidas</p>
-          <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
+          <NotificationGenerator 
+          :notifications="readNotifications" 
+          color="#F8F8F8" 
+          @request-details="(notification: Notification) => requestDetails(notification)"/>
         </section>
       </section>
       <section v-else>
         <p class="text-center">Sem notificações encontradas</p>
       </section>
     </v-main>
+    <div v-if="showNotificationDetails">
+      <notification-card
+        :id="selectedNotification.id_notificacao"
+        :title="selectedNotification.titulo"
+        :description="selectedNotification.descricao"
+        :show="showNotificationDetails"
+        @close="showNotificationDetails = !showNotificationDetails"
+      />
+    </div>
   </v-container>
 </template>
 
@@ -42,14 +58,16 @@ export default defineComponent({
       readNotifications: ref([] as Notification[]),
       notReadNotifications: ref([] as Notification[]),
       loader: useLoaderStore(),
-      auth: storeToRefs(useAuthStore())
+      auth: storeToRefs(useAuthStore()),
+      showNotificationDetails: ref(false),
+      selectedNotification: ref({} as Notification)
     };
   },
   async mounted() {
     this.loader.startLoading();
 
     const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
-    
+
     if(notifications.length > 0) {
       this.readNotifications = notifications.filter(
         (notification) => notification.lida
@@ -61,6 +79,12 @@ export default defineComponent({
 
     this.loader.endLoading();
   },
+  methods: {
+    requestDetails(notification: Notification) {
+      this.selectedNotification = notification;
+      this.showNotificationDetails = !this.showNotificationDetails;
+    }
+  }
 });
 </script>
 

@@ -2,7 +2,6 @@
     <v-bottom-sheet
         v-model="status"
         height="75%"
-        inset
     >
         <v-card class="rounded-xl">
             <template #append>

@@ -29,7 +29,6 @@ export const usePush = async (id_usuario: number) => {
     encoding: PushManager.supportedContentEncodings,
   }
   
-  console.log(subscriptionObject);
   const response = await $api("/salvar-inscricao", {
     method: "POST",
     headers: {
