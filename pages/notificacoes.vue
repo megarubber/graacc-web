@@ -11,19 +11,23 @@
     <v-main class="d-flex flex-column ga-4 mx-3 mt-3">
       <section v-if="readNotifications.length > 0 || notReadNotifications.length > 0">
         <section v-if="notReadNotifications.length > 0">
-          <p class="mb-4">Não Lidas</p>
-          <NotificationGenerator 
-          :notifications="notReadNotifications" 
-          color="blue-light" 
-          @request-details="(notification: Notification) => requestDetails(notification)"
-          />
+          <section class="scroll">
+            <p class="mb-4">Não Lidas</p>
+            <NotificationGenerator 
+            :notifications="notReadNotifications" 
+            color="blue-light" 
+            @request-details="(notification: Notification) => requestDetails(notification)"
+            />
+          </section>
         </section> 
         <section v-if="readNotifications.length > 0">
-          <p>Lidas</p>
-          <NotificationGenerator 
-          :notifications="readNotifications" 
-          color="#F8F8F8" 
-          @request-details="(notification: Notification) => requestDetails(notification)"/>
+          <section class="scroll">
+            <p>Lidas</p>
+            <NotificationGenerator 
+            :notifications="readNotifications" 
+            color="#F8F8F8" 
+            @request-details="(notification: Notification) => requestDetails(notification)"/>
+          </section>
         </section>
       </section>
       <section v-else>
@@ -37,6 +41,7 @@
         :description="selectedNotification.descricao"
         :show="showNotificationDetails"
         @close="showNotificationDetails = !showNotificationDetails"
+        @updateNotifications="async () => await updateNotifications()"
       />
     </div>
   </v-container>
@@ -64,25 +69,28 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.loader.startLoading();
-
-    const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
-
-    if(notifications.length > 0) {
-      this.readNotifications = notifications.filter(
-        (notification) => notification.lida
-      );
-      this.notReadNotifications = notifications.filter(
-        (notification) => !notification.lida
-      );
-    }
-
-    this.loader.endLoading();
+    await this.updateNotifications();
   },
   methods: {
     requestDetails(notification: Notification) {
       this.selectedNotification = notification;
       this.showNotificationDetails = !this.showNotificationDetails;
+    },
+    async updateNotifications() {
+      this.loader.startLoading();
+
+      const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
+
+      if(notifications.length > 0) {
+        this.readNotifications = notifications.filter(
+          (notification) => notification.lida
+        );
+        this.notReadNotifications = notifications.filter(
+          (notification) => !notification.lida
+        );
+      }
+
+      this.loader.endLoading();
     }
   }
 });
@@ -93,5 +101,10 @@ hr {
   height: 3px;
   background-color: #e8e9ed;
   border: none;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 400px;
 }
 </style>
