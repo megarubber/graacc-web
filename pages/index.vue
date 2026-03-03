@@ -7,6 +7,7 @@
       bg-color="#ECEDF4"
       base-color="white"
       class="mt-6 mx-3"
+      @change="filterAppointmentListByTitle"
       label="Buscar compromisso"
     />
     <div class="d-flex flex-column ga-2">
@@ -36,7 +37,7 @@
       <v-tabs-window v-model="tab" class="px-3">
         <v-tabs-window-item value="appointment">
           <section v-if="noExams">
-            <p>Sem compromissos nas próximas semanas.</p>
+            <p class="text-center">Sem compromissos nas próximas semanas.</p>
           </section>
           <section v-else>
             <section v-if="weekExams.length > 0" class="scroll">
@@ -60,12 +61,16 @@
           </section>
         </v-tabs-window-item>
         <v-tabs-window-item value="calendar">
-          <NewCalendar 
-            locale="pt-BR" 
-            expanded
-            :attributes='attributes'
-            @dayclick="onDayClick"
-          />
+          <section class="calendar">
+            <NewCalendar 
+              locale="pt-BR" 
+              expanded
+              borderless
+              transparent
+              :attributes='attributes'
+              @dayclick="onDayClick"
+            />
+          </section>
           <section v-if="dayExams.length > 0" class="scroll">
             <p class="mt-4 mb-4">Compromissos marcados nesse dia</p>
             <exam-card-generator :exams="dayExams" />
@@ -100,6 +105,7 @@ export default defineComponent({
       futureExams: ref([] as Exam[]),
       dayExams: [] as Exam[],
       allExams: ref([] as Exam[]),
+      searchedExams: ref([] as Exam[]),
       statusMessage: reactive({ 
         begin: "Existem",
         middle: "0 compromissos",
@@ -115,7 +121,8 @@ export default defineComponent({
         },
         dates: new Date(),
       }]),
-      search: ref('')
+      search: ref(''),
+      selectedDate: new Date()
     }
   },
   async mounted() {
@@ -140,25 +147,43 @@ export default defineComponent({
       })
     );
 
-    this.weekExams = this.allExams.filter((exam) => 
-      this.isDateInThisWeek(convertToISODate(exam.data))
-    );
+    this.updateExamsList();
+    this.updateText();
 
-    this.futureExams = this.allExams.filter(
-      (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
-    );
-
-    this.statusMessage.begin =
-      this.weekExams.length == 1 ? "Existe" : "Existem";
-    this.statusMessage.middle =
-      this.weekExams.length == 1
-        ? "1 compromisso"
-        : `${this.weekExams.length} compromissos`;
-    this.statusMessage.end =
-      this.weekExams.length == 1 ? "agendado" : "agendados";
     this.loader.endLoading();
   },
   methods: {
+    updateExamsList() {
+      this.weekExams = this.allExams.filter((exam) => 
+        this.isDateInThisWeek(convertToISODate(exam.data))
+      );
+
+      this.futureExams = this.allExams.filter(
+        (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
+      );
+    },
+    updateExamsByDay() {
+      let compare = (exam: Exam) => this.compareDate(
+        convertToISODate(exam.data), this.selectedDate
+      );
+
+      if(this.search.length > 0)
+        compare = (exam: Exam) => this.compareDate(
+          convertToISODate(exam.data), this.selectedDate
+        ) && exam.titulo == this.search;
+      
+      this.dayExams = this.allExams.filter(compare);
+    },
+    updateText() {
+      this.statusMessage.begin =
+        this.weekExams.length == 1 ? "Existe" : "Existem";
+      this.statusMessage.middle =
+        this.weekExams.length == 1
+          ? "1 compromisso"
+          : `${this.weekExams.length} compromissos`;
+      this.statusMessage.end =
+        this.weekExams.length == 1 ? "agendado" : "agendados";
+    },
     isDateInThisWeek(date: Date) {
       const now = moment();
       const currentDate = moment(date.toISOString());
@@ -171,11 +196,30 @@ export default defineComponent({
       (firstDate.getFullYear() == secondDate.getFullYear());
     },
     onDayClick(selectedDay: CalendarDay) {
-      this.dayExams = this.allExams.filter(
-        (exam) => this.compareDate(
-          convertToISODate(exam.data), selectedDay.date
-        )
+      this.selectedDate = selectedDay.date;
+      this.updateExamsByDay()
+    },
+    filterAppointmentListByTitle() {
+      if(this.search.length <= 0) {
+        this.updateExamsList();
+        this.updateText();
+        this.updateExamsByDay();
+        return;
+      }
+
+      this.weekExams = this.weekExams.filter(
+        (exam) => exam.titulo == this.search
       );
+
+      this.futureExams = this.futureExams.filter(
+        (exam) => exam.titulo == this.search
+      );
+
+      this.dayExams = this.dayExams.filter(
+        (exam) => exam.titulo == this.search
+      );
+
+      this.updateText();
     }
   },
 });
@@ -185,5 +229,10 @@ export default defineComponent({
 .scroll {
   overflow-y: scroll;
   height: 400px;
+}
+
+.calendar {
+  background-color: #ECEDF4;
+  border-radius: 30px;
 }
 </style>
