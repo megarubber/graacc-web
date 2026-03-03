@@ -18,7 +18,7 @@
         <client-only>
           <profile-image :id="user.id_usuario" :main-image="profileImageURL" :size="100" />
           <h3 style="color: #4b4b4b">{{ user.nome }}</h3>
-          <h3 class="mb-4">{{ patientName }}</h3>
+          <h3 class="mb-4">{{ patient.nome }}</h3>
         </client-only>
         <v-btn
           class="w-100"
@@ -59,10 +59,7 @@ const showDelete = ref(false);
 definePageMeta({ middleware: "auth", showHeader: true });
 const auth = useAuthStore();
 const { user, patient } = storeToRefs(auth);
-const patientName = ref('Sem paciente');
 const profileImageURL: Ref<string | string> = ref('');
-
-patientName.value = patient.value.nome;
 
 profileImageURL.value = user.value.foto_perfil ? 
 `${config.public.apiBase}${user.value.foto_perfil}` : 'no-image';

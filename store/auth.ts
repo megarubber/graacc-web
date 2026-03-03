@@ -4,8 +4,6 @@ import type User from "~/interfaces/user";
 import type Patient from "~/interfaces/patient";
 import type Notification from "~/interfaces/notification";
 import getUserInfo from "~/utils/api/user/getUserInfo";
-import getPatientById from "~/utils/api/patient/getPatientById";
-import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 import loginWithOAuth2 from "~/utils/google/loginWithOAuth2";
 type Callback = (status: number, confirmRegister: boolean) => void;
 
@@ -26,14 +24,15 @@ export const useAuthStore = defineStore("auth", {
 
         if(!userInfo.data.cadastro_confirmado) return { status: 403 };
 
-        this.user = userInfo.data;
-        
-        const patientInfo = await getPatientById(this.user.id_paciente);
-        if(patientInfo.status != 200) return patientInfo.status;
+        const data = userInfo.data;
 
-        this.patient = patientInfo.data;
-        this.notifications = await getUserNotifications() ?? [];
+        this.patient = data.paciente;
+        this.notifications = data.notificacoes;
 
+        delete data.paciente;
+        delete data.notificacoes;
+
+        this.user = data;
         this.authenticated = true;
 
         const notReadNotifications: Notification[] = this.notifications.filter(
