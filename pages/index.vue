@@ -170,7 +170,7 @@ export default defineComponent({
       if(this.search.length > 0)
         compare = (exam: Exam) => this.compareDate(
           convertToISODate(exam.data), this.selectedDate
-        ) && exam.titulo == this.search;
+        ) && exam.titulo.toLowerCase() == this.search.toLowerCase();
       
       this.dayExams = this.allExams.filter(compare);
     },
@@ -208,15 +208,15 @@ export default defineComponent({
       }
 
       this.weekExams = this.weekExams.filter(
-        (exam) => exam.titulo == this.search
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
       );
 
       this.futureExams = this.futureExams.filter(
-        (exam) => exam.titulo == this.search
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
       );
 
       this.dayExams = this.dayExams.filter(
-        (exam) => exam.titulo == this.search
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
       );
 
       this.updateText();
