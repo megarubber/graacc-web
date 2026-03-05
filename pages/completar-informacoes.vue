@@ -17,8 +17,9 @@
         prepend-inner-icon="mdi-card-account-details-outline"
         label="ID do(a) paciente" 
         />
-      <v-btn @click="update"
+      <v-btn 
         class="w-100 mb-5"
+        @click="update"
         >Finalizar</v-btn>
     </v-main>
   </v-container>
@@ -71,7 +72,7 @@ async function update() {
     auth.refreshAuth()
   ]);
 
-  for(var response of responses) {
+  for(const response of responses) {
     if(response.status != 200 && response.status != 204) {
       toast.error("Erro ao atualizar dados.");
       loader.endLoading();

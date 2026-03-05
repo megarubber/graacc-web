@@ -44,12 +44,21 @@
         />
       </section>
       <v-btn class="w-100" @click="register()">Criar conta</v-btn>
+      <!--
       <div class="text-center mt-6">
         <p>Já tem uma conta?</p>
         <NuxtLink 
         href="/login" class="font-weight-bold mb-6 text-blue-dark">
           Faça login aqui.
         </NuxtLink>
+      </div>
+      -->
+      <div class="text-center mt-3">
+        <p class="text-center">ou</p>
+        <v-btn color="black" width="250" class="align-self-center mt-3" variant="outlined" @click="loginWithGoogle">
+          <Icon class="mr-4" name="icons:google-logo" size="30" />
+          Entrar com o Google
+        </v-btn>
       </div>
     </v-main>
   </v-container>
@@ -59,6 +68,7 @@
 import { useLoaderStore } from "~/store/loader";
 import createUser from "~/utils/api/register/createUser";
 import type UserRegister from "~/interfaces/userRegister";
+import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "Registro",
@@ -73,9 +83,25 @@ export default defineComponent({
       show: false,
       loader: useLoaderStore(),
       toast: useNuxtApp().$toast as any,
+      auth: useAuthStore(),
     };
   },
   methods: {
+    loginWithGoogle() {
+      this.loader.startLoading();
+      this.auth.authenticateUserGoogle(
+        (status: number, confirmUser: boolean) => {
+          if(status != 200) {
+            this.toast.error("Erro ao fazer login.");
+            this.loader.endLoading();
+            return;
+          }
+
+          this.$router.push(confirmUser ? "/" : "/completar-informacoes");
+          this.loader.endLoading();
+        }
+      );
+    },
     async register() {
       this.loader.startLoading();
 

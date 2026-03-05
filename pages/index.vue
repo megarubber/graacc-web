@@ -1,6 +1,15 @@
 <template>
   <v-container class="pa-0 h-100 position-fixed">
-    <search-bar class="mt-6 mx-3" label="Buscar compromisso, médico ou data" />
+    <v-text-field
+      v-model="search"
+      prepend-inner-icon="mdi-magnify"
+      rounded="pill"
+      bg-color="#ECEDF4"
+      base-color="white"
+      class="mt-6 mx-3"
+      label="Buscar compromisso"
+      @change="filterAppointmentListByTitle"
+    />
     <div class="d-flex flex-column ga-2">
       <v-tabs v-model="tab">
         <v-tab class="w-50" color="black" value="appointment">
@@ -27,21 +36,66 @@
       </v-tabs>
       <v-tabs-window v-model="tab" class="px-3">
         <v-tabs-window-item value="appointment">
-          <p class="mb-2">
-            {{ statusMessage.begin }}
-            <span class="text-blue-dark font-weight-bold">{{
-              statusMessage.middle
-            }}</span>
-            {{ statusMessage.end }} para esta semana.
-          </p>
-          <exam-card-generator :exams="weekExams" />
-          <p class="mt-4 mb-4">Compromissos futuros</p>
-          <exam-card-generator :exams="futureExams" />
+          <section v-if="noExams">
+            <p class="text-center">Sem compromissos nas próximas semanas.</p>
+          </section>
+          <section v-else>
+            <section v-if="weekExams.length > 0" class="scroll">
+              <p class="mb-2">
+                {{ statusMessage.begin }}
+                <span class="text-blue-dark font-weight-bold">{{
+                  statusMessage.middle
+                }}</span>
+                {{ statusMessage.end }} para esta semana.
+              </p>
+              <section class="scroll">
+                <exam-card-generator :exams="weekExams" @request-details="(exam: Exam) => requestDetails(exam)" />
+              </section>
+            </section>
+            <section v-if="futureExams.length > 0">
+              <p class="mt-4 mb-4">Compromissos futuros</p>
+              <section class="scroll">
+                <exam-card-generator :exams="futureExams" @request-details="(exam: Exam) => requestDetails(exam)" />
+              </section>
+            </section>
+          </section>
         </v-tabs-window-item>
         <v-tabs-window-item value="calendar">
-          <TheCalendar :exams="weekExams" />
+          <section class="calendar">
+            <client-only>
+              <NewCalendar
+                locale="pt-BR" 
+                expanded
+                borderless
+                transparent
+                :attributes='attributes'
+                @dayclick="onDayClick"
+              />
+            </client-only>
+          </section>
+          <section v-if="dayExams.length > 0" class="scroll">
+            <p class="mt-4 mb-4">Compromissos marcados nesse dia</p>
+            <exam-card-generator :exams="dayExams" @request-details="(exam: Exam) => requestDetails(exam)"/>
+          </section>
+          <section v-else class="text-center mt-8">
+            Nenhum compromisso nesse dia
+          </section>
         </v-tabs-window-item>
       </v-tabs-window>
+    </div>
+    <div v-if="showExamDetails">
+      <exam-card
+        :id_agendamento="selectedExam.id_agendamento"
+        :titulo="selectedExam.titulo"
+        :descricao="selectedExam.descricao"
+        :medico="selectedExam.medico"
+        :data="selectedExam.data"
+        :local="selectedExam.local"
+        :id_paciente="selectedExam.id_paciente"
+        :lembrete_enviado="selectedExam.lembrete_enviado"
+        :show="showExamDetails"
+        @close="showExamDetails = !showExamDetails"
+      />
     </div>
   </v-container>
 </template>
@@ -52,6 +106,8 @@ import getUserExams from "~/utils/api/exams/getUserExams";
 import convertToISODate from "~/utils/others/convertToISODate";
 import moment from "moment";
 import { useLoaderStore } from "~/store/loader";
+import type CalendarAttributes from "~/interfaces/calendarAttributes";
+import type CalendarDay from "~/interfaces/calendarDay";
 
 export default defineComponent({
   name: "Home",
@@ -63,44 +119,142 @@ export default defineComponent({
       loader: useLoaderStore(),
       weekExams: ref([] as Exam[]),
       futureExams: ref([] as Exam[]),
+      dayExams: [] as Exam[],
+      allExams: ref([] as Exam[]),
+      searchedExams: ref([] as Exam[]),
       statusMessage: reactive({ 
         begin: "Existem",
         middle: "0 compromissos",
         end: "agendados",
       }),
       tab: ref(null),
+      noExams: ref(false),
+      attributes: ref<CalendarAttributes[]>([{
+        key: "today",
+        highlight: {
+          color: 'blue',
+          fillMode: 'light',
+        },
+        dates: new Date(),
+      }]),
+      search: ref(''),
+      selectedDate: new Date(),
+      showExamDetails: ref(false),
+      selectedExam: ref({} as Exam)
     }
   },
   async mounted() {
     this.loader.startLoading();
-    const allExams: Exam[] = await getUserExams() ?? [];
+    this.allExams = await getUserExams() ?? [];
 
-    if(allExams.length > 1) {
-      this.weekExams = allExams.filter((exam) =>
-        this.isDateInThisWeek(convertToISODate(exam.data)),
-      );
-      this.futureExams = allExams.filter(
-        (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
-      );
+    if(this.allExams.length <= 0) {
+      this.loader.endLoading();
+      this.noExams = true;
+      return;
     }
 
-    this.statusMessage.begin =
-      this.weekExams.length == 1 ? "Existe" : "Existem";
-    this.statusMessage.middle =
-      this.weekExams.length == 1
-        ? "1 compromisso"
-        : `${this.weekExams.length} compromissos`;
-    this.statusMessage.end =
-      this.weekExams.length == 1 ? "agendado" : "agendados";
+    this.allExams.forEach((exam) => 
+      this.attributes.push({
+        key: exam.titulo,
+        bar: {
+          style: {
+            backgroundColor: '#E32585'
+          }
+        },
+        dates: convertToISODate(exam.data),
+      })
+    );
+
+    this.updateExamsList();
+    this.updateText();
+
     this.loader.endLoading();
   },
   methods: {
+    updateExamsList() {
+      this.weekExams = this.allExams.filter((exam) => 
+        this.isDateInThisWeek(convertToISODate(exam.data))
+      );
+
+      this.futureExams = this.allExams.filter(
+        (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
+      );
+    },
+    updateExamsByDay() {
+      let compare = (exam: Exam) => this.compareDate(
+        convertToISODate(exam.data), this.selectedDate
+      );
+
+      if(this.search.length > 0)
+        compare = (exam: Exam) => this.compareDate(
+          convertToISODate(exam.data), this.selectedDate
+        ) && exam.titulo.toLowerCase() == this.search.toLowerCase();
+      
+      this.dayExams = this.allExams.filter(compare);
+    },
+    updateText() {
+      this.statusMessage.begin =
+        this.weekExams.length == 1 ? "Existe" : "Existem";
+      this.statusMessage.middle =
+        this.weekExams.length == 1
+          ? "1 compromisso"
+          : `${this.weekExams.length} compromissos`;
+      this.statusMessage.end =
+        this.weekExams.length == 1 ? "agendado" : "agendados";
+    },
     isDateInThisWeek(date: Date) {
       const now = moment();
       const currentDate = moment(date.toISOString());
 
       return now.isoWeek() === currentDate.isoWeek();
     },
+    compareDate(firstDate: Date, secondDate: Date): boolean {
+      return (firstDate.getDate() == secondDate.getDate())
+      && (firstDate.getMonth() == secondDate.getMonth()) &&
+      (firstDate.getFullYear() == secondDate.getFullYear());
+    },
+    onDayClick(selectedDay: CalendarDay) {
+      this.selectedDate = selectedDay.date;
+      this.updateExamsByDay()
+    },
+    filterAppointmentListByTitle() {
+      if(this.search.length <= 0) {
+        this.updateExamsList();
+        this.updateText();
+        this.updateExamsByDay();
+        return;
+      }
+
+      this.weekExams = this.weekExams.filter(
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+      );
+
+      this.futureExams = this.futureExams.filter(
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+      );
+
+      this.dayExams = this.dayExams.filter(
+        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+      );
+
+      this.updateText();
+    },
+    requestDetails(exam: Exam) {
+      this.showExamDetails = !this.showExamDetails;
+      this.selectedExam = exam;
+    }
   },
 });
 </script>
+
+<style scoped>
+.scroll {
+  overflow-y: scroll;
+  height: 400px;
+}
+
+.calendar {
+  background-color: #ECEDF4;
+  border-radius: 30px;
+}
+</style>

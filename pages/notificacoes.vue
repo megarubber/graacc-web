@@ -9,18 +9,49 @@
       </template>
     </v-app-bar>
     <v-main class="d-flex flex-column ga-4 mx-3 mt-3">
-      <p>Não lidas</p>
-      <NotificationGenerator :notifications="readNotifications" color="blue-light" />
-      <p>Lidas</p>
-      <NotificationGenerator :notifications="notReadNotifications" color="#F8F8F8" />
+      <section v-if="readNotifications.length > 0 || notReadNotifications.length > 0">
+        <section v-if="notReadNotifications.length > 0">
+          <section class="scroll">
+            <p class="mb-4">Não Lidas</p>
+            <NotificationGenerator 
+            :notifications="notReadNotifications" 
+            color="blue-light" 
+            @request-details="(notification: Notification) => requestDetails(notification)"
+            />
+          </section>
+        </section> 
+        <section v-if="readNotifications.length > 0">
+          <section class="scroll">
+            <p>Lidas</p>
+            <NotificationGenerator 
+            :notifications="readNotifications" 
+            color="#F8F8F8" 
+            @request-details="(notification: Notification) => requestDetails(notification)"/>
+          </section>
+        </section>
+      </section>
+      <section v-else>
+        <p class="text-center">Sem notificações encontradas</p>
+      </section>
     </v-main>
+    <div v-if="showNotificationDetails">
+      <notification-card
+        :id="selectedNotification.id_notificacao"
+        :title="selectedNotification.titulo"
+        :description="selectedNotification.descricao"
+        :show="showNotificationDetails"
+        @close="showNotificationDetails = !showNotificationDetails"
+        @updateNotifications="async () => await updateNotifications()"
+      />
+    </div>
   </v-container>
 </template>
 
 <script lang="ts">
 import type Notification from "~/interfaces/notification";
-import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
+import getPatientNotifications from "~/utils/api/notifications/getPatientNotifications";
 import { useLoaderStore } from "~/store/loader";
+import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "Notifications",
@@ -31,22 +62,37 @@ export default defineComponent({
     return {
       readNotifications: ref([] as Notification[]),
       notReadNotifications: ref([] as Notification[]),
-      loader: useLoaderStore()
+      loader: useLoaderStore(),
+      auth: storeToRefs(useAuthStore()),
+      showNotificationDetails: ref(false),
+      selectedNotification: ref({} as Notification)
     };
   },
   async mounted() {
-    this.loader.startLoading();
-
-    const notifications = await getUserNotifications() ?? [];
-    this.readNotifications = notifications.filter(
-      (notification) => notification.lida
-    );
-    this.notReadNotifications = notifications.filter(
-      (notification) => !notification.lida
-    );
-
-    this.loader.endLoading();
+    await this.updateNotifications();
   },
+  methods: {
+    requestDetails(notification: Notification) {
+      this.selectedNotification = notification;
+      this.showNotificationDetails = !this.showNotificationDetails;
+    },
+    async updateNotifications() {
+      this.loader.startLoading();
+
+      const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
+
+      if(notifications.length > 0) {
+        this.readNotifications = notifications.filter(
+          (notification) => notification.lida
+        );
+        this.notReadNotifications = notifications.filter(
+          (notification) => !notification.lida
+        );
+      }
+
+      this.loader.endLoading();
+    }
+  }
 });
 </script>
 
@@ -55,5 +101,10 @@ hr {
   height: 3px;
   background-color: #e8e9ed;
   border: none;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 400px;
 }
 </style>

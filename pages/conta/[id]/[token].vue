@@ -2,7 +2,10 @@
     <v-container class="h-100">
         <v-main class="d-flex flex-column h-100 justify-center align-center">
             <p class="mb-4 text-center">Clique no botão para confirmar cadastro.</p>
-            <v-btn @click="request" class="w-100">Confirmar cadastro</v-btn>
+            <v-btn 
+                class="w-100"
+                @click="request"
+                >Confirmar cadastro</v-btn>
         </v-main>
     </v-container>
 </template>

@@ -51,7 +51,7 @@
 import type UserNewPasswordWithLogin from "~/interfaces/userNewPasswordWithLogin";
 import { useAuthStore } from "~/store/auth";
 import { useLoaderStore } from "~/store/loader";
-import { setNewPasswordWithLogin } from "~/utils/api/user/setNewPassword";
+import setNewPasswordWithLogin from "~/utils/api/user/setNewPasswordWithLogin";
 
 export default defineComponent({
   name: "UpdatePassword",

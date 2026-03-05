@@ -13,7 +13,7 @@
           <p>Contatos</p>
         </div>
       </v-tab>
-      <v-tab value="/notificacoes">
+      <v-tab value="/notificacoes" @click="requestNotifications">
         <div class="custom-tab">
           <v-icon
             :icon="totalNotifications > 0 ? 'mdi-bell-ring-outline' : 'mdi-bell-outline'"
@@ -65,6 +65,9 @@ export default defineComponent({
     changePage() {
       this.$router.push(this.currentTab ?? '/');
     },
+    async requestNotifications() {
+      await usePush(this.auth.user.id_usuario);
+    }
   },
 });
 </script>

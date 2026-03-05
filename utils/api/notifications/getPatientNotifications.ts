@@ -1,10 +1,10 @@
 import type Notification from "~/interfaces/notification";
 
-export default async function getUserNotifications() {
+export default async function getPatientNotifications(patient_id: number) {
   const { $api } = useNuxtApp();
   const token = useCookie("token");
 
-  const response = await $api("/notificacoes/1", {
+  const response = await $api(`/notificacoes/paciente/${patient_id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token.value}`,
