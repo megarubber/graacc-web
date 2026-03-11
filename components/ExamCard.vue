@@ -35,6 +35,7 @@
                 <v-btn 
                     variant="flat" 
                     class="w-100 ml-2 font-weight-bold"
+                    @click="createToGoogleCalendar"
                 >
                     Adicionar ao Google Calendário
                 </v-btn>
@@ -44,9 +45,23 @@
 </template>
 <script lang="ts" setup>
 import type ShowExam from "~/interfaces/showExam";
+import type Exam from "~/interfaces/exam";
+import createTaskIntoCalendar from "~/utils/google/createTaskIntoCalendar";
 const props = defineProps<ShowExam>();
 defineEmits(['close']);
 
 const status = ref(false);
 status.value = props.show;
+
+async function createToGoogleCalendar() {
+    await createTaskIntoCalendar({
+        id_agendamento: props.id_agendamento,
+        id_paciente: props.id_paciente,
+        titulo: props.titulo,
+        descricao: props.descricao,
+        data: props.data,
+        medico: props.medico,
+        lembrete_enviado: props.lembrete_enviado
+    } as Exam);
+}
 </script>
