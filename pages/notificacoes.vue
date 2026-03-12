@@ -41,7 +41,7 @@
         :description="selectedNotification.descricao"
         :show="showNotificationDetails"
         @close="showNotificationDetails = !showNotificationDetails"
-        @updateNotifications="async () => await updateNotifications()"
+        @update-notifications="async () => await updateNotifications()"
       />
     </div>
   </v-container>
