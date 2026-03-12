@@ -59,8 +59,9 @@ export const useAuthStore = defineStore("auth", {
         const token = useCookie("token");
         token.value = data.token;
         
-        const userInfoStatus = await this.refreshAuth();
-        if (userInfoStatus.status != 200) return userInfoStatus.status;
+        this.user = data.usuario;
+        this.patient = data.paciente;
+        this.notifications = data.notificacoes;
       }
       
       return response.status;
@@ -74,13 +75,13 @@ export const useAuthStore = defineStore("auth", {
 
         const token = useCookie("token");
         token.value = data.token;
-        this.user.nome = data.nome;
-        this.user.email = data.email;
-
-        if(!data.cadastro_confirmado) callback(status, false);
+        this.user = data.usuario;
+        
+        if(!data.usuario.cadastro_confirmado) callback(status, false);
         else {
-          const userInfoStatus = await this.refreshAuth();
-          callback(userInfoStatus.status, true);
+          this.patient = data.patient;
+          this.notifications = data.notificacoes;
+          callback(status, true);
         }
       });
     },
