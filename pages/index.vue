@@ -179,6 +179,9 @@ export default defineComponent({
       this.futureExams = this.allExams.filter(
         (exam) => this.isDateInThisWeek(convertToISODate(exam.data)) == 1,
       );
+
+      if(this.weekExams.length <= 0 && this.futureExams.length <= 0)
+        this.noExams = true;
     },
     updateExamsByDay() {
       let compare = (exam: Exam) => this.compareDate(
