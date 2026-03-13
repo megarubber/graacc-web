@@ -3,6 +3,7 @@ import type UserAuth from "~/interfaces/userAuth";
 import type User from "~/interfaces/user";
 import type Patient from "~/interfaces/patient";
 import type Notification from "~/interfaces/notification";
+import type GoogleTokens from "~/interfaces/googleTokens";
 import getUserInfo from "~/utils/api/user/getUserInfo";
 import loginWithOAuth2 from "~/utils/google/loginWithOAuth2";
 type Callback = (status: number, confirmRegister: boolean) => void;
@@ -14,7 +15,8 @@ export const useAuthStore = defineStore("auth", {
     authenticated: false,
     notifications: [] as Notification[],
     notReadNotifications: 0, 
-    page: '/'
+    page: '/',
+    googleTokens: {} as GoogleTokens
   }),
   actions: {
     async refreshAuth() {
@@ -74,10 +76,12 @@ export const useAuthStore = defineStore("auth", {
         }
 
         const token = useCookie("token");
-        token.value = data.token;
-        this.user = data.usuario;
+        token.value = data.loginRequest.token;
         
-        if(!data.usuario.cadastro_confirmado) callback(status, false);
+        this.user = data.loginRequest.usuario;
+        this.googleTokens = data.tokens;
+        
+        if(!this.user.cadastro_confirmado) callback(status, false);
         else {
           this.patient = data.patient;
           this.notifications = data.notificacoes;

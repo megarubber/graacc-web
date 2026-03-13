@@ -27,7 +27,7 @@ export default function loginWithOAuth2(endRequest: Callback) {
             }),
           },
         );
-        
+                
         if(!tokens.access_token || !tokens.id_token) {
           responseCode = 400;
           endRequest(responseCode, {});
@@ -60,7 +60,11 @@ export default function loginWithOAuth2(endRequest: Callback) {
         });
 
         responseCode = login.status;
-        endRequest(responseCode, login.data);
+
+        endRequest(responseCode, {
+          tokens,
+          loginRequest: login.data 
+        });
       }
     }).requestCode();
   });

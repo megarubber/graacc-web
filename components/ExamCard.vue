@@ -35,7 +35,7 @@
                 <v-btn 
                     variant="flat" 
                     class="w-100 ml-2 font-weight-bold"
-                    @click="createToGoogleCalendar"
+                    @click="moveToGoogleCalendar"
                 >
                     Adicionar ao Google Calendário
                 </v-btn>
@@ -53,7 +53,7 @@ defineEmits(['close']);
 const status = ref(false);
 status.value = props.show;
 
-async function createToGoogleCalendar() {
+async function moveToGoogleCalendar() {
     await createTaskIntoCalendar({
         id_agendamento: props.id_agendamento,
         id_paciente: props.id_paciente,
@@ -61,6 +61,7 @@ async function createToGoogleCalendar() {
         descricao: props.descricao,
         data: props.data,
         medico: props.medico,
+        local: props.local,
         lembrete_enviado: props.lembrete_enviado
     } as Exam);
 }
