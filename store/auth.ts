@@ -77,7 +77,7 @@ export const useAuthStore = defineStore("auth", {
 
         const token = useCookie("token");
         token.value = data.loginRequest.token;
-        
+
         this.user = data.loginRequest.usuario;
         this.googleTokens = data.tokens;
         
