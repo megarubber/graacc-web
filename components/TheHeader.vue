@@ -13,7 +13,7 @@
           <p>Contatos</p>
         </div>
       </v-tab>
-      <v-tab value="/notificacoes" @click="requestNotifications">
+      <v-tab value="/notificacoes" @click="totalNotifications = 0">
         <div class="custom-tab">
           <v-icon
             :icon="totalNotifications > 0 ? 'mdi-bell-ring-outline' : 'mdi-bell-outline'"
@@ -50,24 +50,30 @@ export default defineComponent({
   name: "TheHeader",
   data() {
     return {
-      auth: storeToRefs(useAuthStore()),
-      totalNotifications: ref(0),
       currentTab: ref('/'),
-      route: useRoute()
+      route: useRoute(),
     };
   },
   mounted() {
-    const { notReadNotifications } = this.auth;
-    this.totalNotifications = notReadNotifications;
     this.currentTab = this.route.path;
+  },
+  setup() {
+    const totalNotifications = ref(0);
+    const auth = useAuthStore();
+
+    totalNotifications.value = auth.notReadNotifications;
+
+    watch(
+      () => auth.notReadNotifications,
+      (value, oldValue) => totalNotifications.value = value
+    );
+
+    return { totalNotifications };
   },
   methods: {
     changePage() {
       this.$router.push(this.currentTab ?? '/');
     },
-    async requestNotifications() {
-      await usePush(this.auth.user.id_usuario);
-    }
   },
 });
 </script>

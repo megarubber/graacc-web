@@ -2,7 +2,8 @@ import withNuxt from "./.nuxt/eslint.config.mjs";
 
 export default withNuxt({
     rules: {
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-useless-escape": "off"
     }
 });
 // your custom flat configs go here, for example:

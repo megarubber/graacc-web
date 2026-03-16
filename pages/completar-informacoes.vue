@@ -69,7 +69,6 @@ async function update() {
   const responses = await Promise.all([
     updateUserInfo(data),
     confirmAccount(data.email),
-    auth.refreshAuth()
   ]);
 
   for(const response of responses) {

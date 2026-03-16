@@ -8,7 +8,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const { authenticated } = storeToRefs(auth);
     authenticated.value = true;
 
-    auth.refreshAuth();
+    await auth.refreshAuth();
   }
 
   if (!token.value && to?.name !== "login") {

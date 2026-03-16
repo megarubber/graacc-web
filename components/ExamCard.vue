@@ -35,6 +35,7 @@
                 <v-btn 
                     variant="flat" 
                     class="w-100 ml-2 font-weight-bold"
+                    @click="moveToGoogleCalendar"
                 >
                     Adicionar ao Google Calendário
                 </v-btn>
@@ -44,9 +45,50 @@
 </template>
 <script lang="ts" setup>
 import type ShowExam from "~/interfaces/showExam";
+import type Exam from "~/interfaces/exam";
+import createTaskIntoCalendar from "~/utils/google/createTaskIntoCalendar";
+import { useAuthStore } from "~/store/auth";
+import { useLoaderStore } from "~/store/loader";
+import type GoogleTokens from "~/interfaces/googleTokens";
+
+const toast: any = useNuxtApp().$toast;
 const props = defineProps<ShowExam>();
-defineEmits(['close']);
+const auth = useAuthStore();
+const loader = useLoaderStore();
+const emit = defineEmits(['close']);
 
 const status = ref(false);
 status.value = props.show;
+
+async function moveToGoogleCalendar() {
+    loader.startLoading();
+    emit("close");
+    const response = await createTaskIntoCalendar({
+        id_agendamento: props.id_agendamento,
+        id_paciente: props.id_paciente,
+        titulo: props.titulo,
+        descricao: props.descricao,
+        data: props.data,
+        medico: props.medico,
+        local: props.local,
+        lembrete_enviado: props.lembrete_enviado
+    } as Exam);
+
+    if(response.status == 200) {
+        toast.success("Agendamento criado.");
+        const newTokens: any = response.data.tokens;
+        if('access_token' in newTokens) {
+            auth.googleTokens = {
+                access_token: newTokens.access_token as string,
+                id_token: newTokens.id_token as string,
+                refresh_token: newTokens.refresh_token as string
+            } as GoogleTokens;
+        }
+        loader.endLoading();
+        return;
+    }
+
+    toast.error("Erro ao criar agendamento.");
+    loader.endLoading();
+}
 </script>

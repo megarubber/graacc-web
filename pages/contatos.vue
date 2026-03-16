@@ -61,6 +61,7 @@ export default defineComponent({
   },
   data() {
     return {
+      toast: useNuxtApp().$toast as any,
       contacts: [
         {
           icon: "phone",
@@ -68,7 +69,7 @@ export default defineComponent({
           info: ["(11) 5908-9100"],
           action: "Ligar",
           callbackAction: () => changePage('tel:+551159089100'),
-          callbackClipboard: () => copyToClipboard("(11) 5908-9100")
+          callbackClipboard: () => this.copy("(11) 5908-9100")
         },
         {
           icon: "email",
@@ -76,7 +77,7 @@ export default defineComponent({
           info: ["graacc@graacc.org.br"],
           action: "Enviar e-mail",
           callbackAction: () => changePage('mailto:someone@example.com'),
-          callbackClipboard: () => copyToClipboard("graacc@graacc.org.br")
+          callbackClipboard: () => this.copy("graacc@graacc.org.br")
         },
         {
           icon: "map-marker",
@@ -88,11 +89,22 @@ export default defineComponent({
           ],
           action: "Abrir no mapa",
           callbackAction: () => openMap(-23.5982, -46.6423),
-          callbackClipboard: () => copyToClipboard("Rua Pedro de Toledo, 572, Vila Clementino - São Paulo, SP, CEP: 04039-001")
+          callbackClipboard: () => this.copy("Rua Pedro de Toledo, 572, Vila Clementino - São Paulo, SP, CEP: 04039-001")
         },
       ],
     };
   },
+  methods: {
+    copy(data: string) {
+      try {
+        copyToClipboard(data);
+        this.toast.success("Copiado com sucesso!");        
+      } catch(error) {
+        this.toast.error("Houve um erro ao copiar.");
+        console.error(error);
+      }
+    }
+  }
 });
 </script>
 

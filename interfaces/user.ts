@@ -5,4 +5,6 @@ export default interface User {
   cadastro_confirmado: boolean;
   role: string;
   foto_perfil: string | null;
+  ativar_notificacoes_consultas: boolean;
+  ativar_notificacoes_graacc: boolean;
 }

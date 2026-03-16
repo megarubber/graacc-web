@@ -3,6 +3,7 @@ import type UserAuth from "~/interfaces/userAuth";
 import type User from "~/interfaces/user";
 import type Patient from "~/interfaces/patient";
 import type Notification from "~/interfaces/notification";
+import type GoogleTokens from "~/interfaces/googleTokens";
 import getUserInfo from "~/utils/api/user/getUserInfo";
 import loginWithOAuth2 from "~/utils/google/loginWithOAuth2";
 type Callback = (status: number, confirmRegister: boolean) => void;
@@ -14,7 +15,8 @@ export const useAuthStore = defineStore("auth", {
     authenticated: false,
     notifications: [] as Notification[],
     notReadNotifications: 0, 
-    page: '/'
+    page: '/',
+    googleTokens: {} as GoogleTokens
   }),
   actions: {
     async refreshAuth() {
@@ -59,8 +61,9 @@ export const useAuthStore = defineStore("auth", {
         const token = useCookie("token");
         token.value = data.token;
         
-        const userInfoStatus = await this.refreshAuth();
-        if (userInfoStatus.status != 200) return userInfoStatus.status;
+        this.user = data.usuario;
+        this.patient = data.paciente;
+        this.notifications = data.notificacoes;
       }
       
       return response.status;
@@ -73,14 +76,16 @@ export const useAuthStore = defineStore("auth", {
         }
 
         const token = useCookie("token");
-        token.value = data.token;
-        this.user.nome = data.nome;
-        this.user.email = data.email;
+        token.value = data.loginRequest.token;
 
-        if(!data.cadastro_confirmado) callback(status, false);
+        this.user = data.loginRequest.usuario;
+        this.googleTokens = data.tokens;
+        
+        if(!this.user.cadastro_confirmado) callback(status, false);
         else {
-          const userInfoStatus = await this.refreshAuth();
-          callback(userInfoStatus.status, true);
+          this.patient = data.patient;
+          this.notifications = data.notificacoes;
+          callback(status, true);
         }
       });
     },

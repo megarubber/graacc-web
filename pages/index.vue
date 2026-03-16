@@ -173,12 +173,15 @@ export default defineComponent({
   methods: {
     updateExamsList() {
       this.weekExams = this.allExams.filter((exam) => 
-        this.isDateInThisWeek(convertToISODate(exam.data))
+        this.isDateInThisWeek(convertToISODate(exam.data)) == 0
       );
 
       this.futureExams = this.allExams.filter(
-        (exam) => !this.isDateInThisWeek(convertToISODate(exam.data)),
+        (exam) => this.isDateInThisWeek(convertToISODate(exam.data)) == 1,
       );
+
+      if(this.weekExams.length <= 0 && this.futureExams.length <= 0)
+        this.noExams = true;
     },
     updateExamsByDay() {
       let compare = (exam: Exam) => this.compareDate(
@@ -206,7 +209,12 @@ export default defineComponent({
       const now = moment();
       const currentDate = moment(date.toISOString());
 
-      return now.isoWeek() === currentDate.isoWeek();
+      if(now.isoWeek() == currentDate.isoWeek())
+        return 0;
+      else if(now.isoWeek() < currentDate.isoWeek())
+        return 1;
+
+      return -1;
     },
     compareDate(firstDate: Date, secondDate: Date): boolean {
       return (firstDate.getDate() == secondDate.getDate())

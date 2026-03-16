@@ -66,7 +66,6 @@ export default defineComponent({
       },
       show: false,
       auth: useAuthStore(),
-      authenticated: storeToRefs(useAuthStore()),
       loader: useLoaderStore(),
       toast: useNuxtApp().$toast as any,
     };
@@ -75,12 +74,15 @@ export default defineComponent({
     loginWithGoogle() {
       this.loader.startLoading();
       this.auth.authenticateUserGoogle(
-        (status: number, confirmUser: boolean) => {
+        async (status: number, confirmUser: boolean) => {
           if(status != 200) {
             this.toast.error("Erro ao fazer login.");
             this.loader.endLoading();
             return;
           }
+          
+          const permission = await Notification.requestPermission();
+          if(permission == 'granted') await usePush(this.auth.user.id_usuario);
 
           this.$router.push(confirmUser ? "/" : "/completar-informacoes");
           this.loader.endLoading();
@@ -104,9 +106,10 @@ export default defineComponent({
 
       const status = await this.auth.authenticateUser(this.user);
 
-      if (this.authenticated && status == 200) {
+      if (status == 200) {
         this.$router.push("/");
-        await Notification.requestPermission();
+        const permission = await Notification.requestPermission();
+        if(permission == 'granted') await usePush(this.auth.user.id_usuario);
         return;
       }
 

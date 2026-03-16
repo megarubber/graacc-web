@@ -2,7 +2,8 @@
   <v-container class="pa-2 h-100 position-fixed">
     <v-app-bar>
       <template #prepend>
-        <v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+        @click="updateUserNotificationStatus">
           <NuxtLink
             href="/perfil">
             <v-icon 
@@ -23,19 +24,9 @@
       </v-row>
       <v-container v-if="notifications" class="notification-card">
         <v-row class="d-flex justify-space-between mb-2">
-          <p class="mt-2">Notificações sobre consultas</p>
+          <p class="mt-2">Consultas e/ou Exames</p>
           <v-switch 
             v-model="appointments" 
-            class="ma-0 pa-0" 
-            inset 
-            density="compact"
-            hide-details
-            />
-        </v-row>
-        <v-row class="d-flex justify-space-between mb-2">
-          <p class="mt-2">Notificações sobre exames</p>
-          <v-switch 
-            v-model="examinations" 
             class="ma-0 pa-0" 
             inset 
             density="compact"
@@ -67,10 +58,28 @@ export default defineComponent({
     return {
       notifications: ref(false),
       appointments: ref(false),
-      examinations: ref(false),
       graacc: ref(false),
     };
   },
+  async mounted() {
+    const appointments = Boolean(useCookie("appointments").value);
+    const graacc = Boolean(useCookie("graacc").value);
+
+    this.notifications = appointments || graacc;
+    this.appointments = appointments;
+    this.graacc = graacc;
+
+    await Notification.requestPermission();
+  },
+  methods: {
+    updateUserNotificationStatus() {
+      const appointments = useCookie("appointments");
+      appointments.value = this.appointments ? "1" : null;
+
+      const graacc = useCookie("graacc");
+      graacc.value = this.graacc ? "1" : null;
+    }
+  }
 });
 </script>
 
