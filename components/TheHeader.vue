@@ -52,13 +52,23 @@ export default defineComponent({
     return {
       currentTab: ref('/'),
       route: useRoute(),
-      totalNotifications: ref(0),
-      auth: useAuthStore()
     };
   },
   mounted() {
     this.currentTab = this.route.path;
-    this.totalNotifications = this.auth.notReadNotifications;
+  },
+  setup() {
+    const totalNotifications = ref(0);
+    const auth = useAuthStore();
+
+    totalNotifications.value = auth.notReadNotifications;
+
+    watch(
+      () => auth.notReadNotifications,
+      (value, oldValue) => totalNotifications.value = value
+    );
+
+    return { totalNotifications };
   },
   methods: {
     changePage() {
