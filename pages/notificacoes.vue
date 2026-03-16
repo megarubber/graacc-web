@@ -26,7 +26,8 @@
             <NotificationGenerator 
             :notifications="readNotifications" 
             color="#F8F8F8" 
-            @request-details="(notification: Notification) => requestDetails(notification)"/>
+            @request-details="(notification: Notification) => requestDetails(notification)"
+            />
           </section>
         </section>
       </section>
@@ -40,8 +41,10 @@
         :title="selectedNotification.titulo"
         :description="selectedNotification.descricao"
         :show="showNotificationDetails"
+        :read="selectedNotification.lida"
         @close="showNotificationDetails = !showNotificationDetails"
-        @update-notifications="async () => await updateNotifications()"
+        @read="read"
+        @delete="deleteNotificationFromList"
       />
     </div>
   </v-container>
@@ -72,6 +75,20 @@ export default defineComponent({
     await this.updateNotifications();
   },
   methods: {
+    read() {
+      if(this.selectedNotification.lida) return;
+
+      const notifications = this.notReadNotifications.filter(
+        (notification) => notification.id_notificacao !== this.selectedNotification.id_notificacao
+      );
+
+      this.notReadNotifications = notifications;
+      
+      this.selectedNotification.lida = true;
+      this.readNotifications.push(this.selectedNotification);
+
+      this.auth.notReadNotifications = this.notReadNotifications.length;
+    },
     requestDetails(notification: Notification) {
       this.selectedNotification = notification;
       this.showNotificationDetails = !this.showNotificationDetails;
@@ -90,7 +107,24 @@ export default defineComponent({
         );
       }
 
+      this.auth.notReadNotifications = this.notReadNotifications.length;
       this.loader.endLoading();
+    },
+    deleteNotificationFromList() {
+      if(this.selectedNotification.lida) {
+        const notifications = this.readNotifications.filter(
+          notification => notification.id_notificacao !== this.selectedNotification.id_notificacao
+        );
+        this.readNotifications = notifications;
+        return;
+      }
+      
+      const notifications = this.notReadNotifications.filter(
+        notification => notification.id_notificacao !== this.selectedNotification.id_notificacao
+      );
+      this.notReadNotifications = notifications;
+
+      this.auth.notReadNotifications = this.notReadNotifications.length;
     }
   }
 });

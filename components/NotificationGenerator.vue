@@ -36,6 +36,15 @@ defineEmits(['requestDetails']);
 const allNotifications = ref([] as Notification[]);
 allNotifications.value = props.notifications;
 
+watch(
+  () => props.notifications,
+  (value, oldValue) => {
+    if(value.length != oldValue.length)
+      allNotifications.value = value;
+  }
+);
+
+
 const realColor = ref('');
 realColor.value = props.color;
 

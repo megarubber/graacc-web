@@ -66,7 +66,6 @@ export default defineComponent({
       },
       show: false,
       auth: useAuthStore(),
-      authenticated: storeToRefs(useAuthStore()),
       loader: useLoaderStore(),
       toast: useNuxtApp().$toast as any,
     };
@@ -104,9 +103,10 @@ export default defineComponent({
 
       const status = await this.auth.authenticateUser(this.user);
 
-      if (this.authenticated && status == 200) {
+      if (status == 200) {
         this.$router.push("/");
-        await Notification.requestPermission();
+        const permission = await Notification.requestPermission();
+        if(permission == 'granted') await usePush(this.auth.user.id_usuario);
         return;
       }
 

@@ -35,6 +35,7 @@
                     />
                 </v-btn>
                 <v-btn 
+                    v-if="!props.read"
                     variant="flat" 
                     class="w-66 ml-2 font-weight-bold"
                     @click="markAsRead"
@@ -57,7 +58,7 @@ const loader = useLoaderStore();
 
 const status = ref(false);
 status.value = props.show;
-const emit = defineEmits(['close', 'updateNotifications']);
+const emit = defineEmits(['close', 'read', 'delete']);
 
 async function markAsRead() {
     loader.startLoading();
@@ -70,7 +71,8 @@ async function markAsRead() {
     }
 
     loader.endLoading();
-    emit('updateNotifications');
+    emit('read');
+    emit('close');
 }
 
 async function deleteOpenedNotification() {
@@ -84,7 +86,7 @@ async function deleteOpenedNotification() {
     }
 
     loader.endLoading();
-    emit('updateNotifications');
+    emit('delete');
     emit('close');
 }
 </script>
