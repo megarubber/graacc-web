@@ -58,6 +58,7 @@
 </template>
 
 <script lang="ts">
+import { useAuthStore } from '~/store/auth';
 export default defineComponent({
   name: "SettingsNotifications",
   setup() {
@@ -69,7 +70,11 @@ export default defineComponent({
       appointments: ref(false),
       examinations: ref(false),
       graacc: ref(false),
+      auth: useAuthStore(),
     };
+  },
+  mounted() {
+    this.notifications = this.auth.user.ativar_notificacoes;
   },
 });
 </script>

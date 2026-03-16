@@ -5,4 +5,5 @@ export default interface User {
   cadastro_confirmado: boolean;
   role: string;
   foto_perfil: string | null;
+  ativar_notificacoes: boolean;
 }
