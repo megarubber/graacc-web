@@ -74,12 +74,15 @@ export default defineComponent({
     loginWithGoogle() {
       this.loader.startLoading();
       this.auth.authenticateUserGoogle(
-        (status: number, confirmUser: boolean) => {
+        async (status: number, confirmUser: boolean) => {
           if(status != 200) {
             this.toast.error("Erro ao fazer login.");
             this.loader.endLoading();
             return;
           }
+          
+          const permission = await Notification.requestPermission();
+          if(permission == 'granted') await usePush(this.auth.user.id_usuario);
 
           this.$router.push(confirmUser ? "/" : "/completar-informacoes");
           this.loader.endLoading();
