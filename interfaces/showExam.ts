@@ -8,4 +8,5 @@ export default interface Exam {
   id_paciente: number;
   lembrete_enviado: boolean;
   show: boolean;
+  modo_google: boolean;
 }

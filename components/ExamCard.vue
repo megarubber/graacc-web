@@ -31,7 +31,7 @@
                 </v-card-text>
             </section>
             <v-divider :thickness="3"/>
-            <v-card-actions>
+            <v-card-actions v-if="props.modo_google">
                 <v-btn 
                     variant="flat" 
                     class="w-100 ml-2 font-weight-bold"

@@ -94,6 +94,7 @@
         :id_paciente="selectedExam.id_paciente"
         :lembrete_enviado="selectedExam.lembrete_enviado"
         :show="showExamDetails"
+        :modo_google="auth.googleTokens.access_token != undefined"
         @close="showExamDetails = !showExamDetails"
       />
     </div>
@@ -108,6 +109,7 @@ import moment from "moment";
 import { useLoaderStore } from "~/store/loader";
 import type CalendarAttributes from "~/interfaces/calendarAttributes";
 import type CalendarDay from "~/interfaces/calendarDay";
+import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "Home",
@@ -140,7 +142,8 @@ export default defineComponent({
       search: ref(''),
       selectedDate: new Date(),
       showExamDetails: ref(false),
-      selectedExam: ref({} as Exam)
+      selectedExam: ref({} as Exam),
+      auth: useAuthStore(),
     }
   },
   async mounted() {

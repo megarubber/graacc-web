@@ -48,15 +48,6 @@ import { useAuthStore } from "~/store/auth";
 
 export default defineComponent({
   name: "TheHeader",
-  data() {
-    return {
-      currentTab: ref('/'),
-      route: useRoute(),
-    };
-  },
-  mounted() {
-    this.currentTab = this.route.path;
-  },
   setup() {
     const totalNotifications = ref(0);
     const auth = useAuthStore();
@@ -65,10 +56,19 @@ export default defineComponent({
 
     watch(
       () => auth.notReadNotifications,
-      (value, oldValue) => totalNotifications.value = value
+      (value, _) => totalNotifications.value = value
     );
 
     return { totalNotifications };
+  },
+  data() {
+    return {
+      currentTab: ref('/'),
+      route: useRoute(),
+    };
+  },
+  mounted() {
+    this.currentTab = this.route.path;
   },
   methods: {
     changePage() {
