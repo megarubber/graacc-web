@@ -18,7 +18,7 @@ import { useLoaderStore } from './store/loader';
 const loader = useLoaderStore();
 
 useSeoMeta({
-  title: 'Agendinha GRAACC',
+  title: 'Agendinha',
 });
 </script>
 
