@@ -8,7 +8,7 @@
       base-color="white"
       class="mt-6 mx-3"
       label="Buscar compromisso"
-      @change="filterAppointmentListByTitle"
+      @input="filterAppointmentListByTitle"
     />
     <div class="d-flex flex-column ga-2">
       <v-tabs v-model="tab">
@@ -226,26 +226,28 @@ export default defineComponent({
     },
     onDayClick(selectedDay: CalendarDay) {
       this.selectedDate = selectedDay.date;
-      this.updateExamsByDay()
+      this.updateExamsByDay();
     },
     filterAppointmentListByTitle() {
+      this.updateExamsList();
+      this.updateText();
+      this.updateExamsByDay();
+
       if(this.search.length <= 0) {
-        this.updateExamsList();
         this.updateText();
-        this.updateExamsByDay();
         return;
       }
 
       this.weekExams = this.weekExams.filter(
-        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+        (exam) => exam.titulo.toLowerCase().includes(this.search.toLowerCase())
       );
 
       this.futureExams = this.futureExams.filter(
-        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+        (exam) => exam.titulo.toLowerCase().includes(this.search.toLowerCase())
       );
 
       this.dayExams = this.dayExams.filter(
-        (exam) => exam.titulo.toLowerCase() == this.search.toLowerCase()
+        (exam) => exam.titulo.toLowerCase().includes(this.search.toLowerCase())
       );
 
       this.updateText();
