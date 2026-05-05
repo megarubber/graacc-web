@@ -19,7 +19,7 @@
     <v-main>
       <p class="text-h6 mb-2">Dados pessoais</p>
       <v-text-field
-        v-model="user.nomeResponsavel"
+        v-model="user.nome"
         prepend-inner-icon="mdi-account-outline"
         label="Nome do(a) responsável"
         />
@@ -58,7 +58,7 @@ export default defineComponent({
   data() {
     return {
       user: {
-        nomeResponsavel: "",
+        nome: "",
         email: "",
       },
       auth: storeToRefs(useAuthStore()),
@@ -67,13 +67,13 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.user.nomeResponsavel = this.auth.user.nome;
+    this.user.nome = this.auth.user.nome;
     this.user.email = this.auth.user.email;
   },
   methods: {
     async update() {
       const testName = /^[A-Za-z](?:[A-Za-z ]*[A-Za-z])$/;
-      if (!testName.test(this.user.nomeResponsavel)) {
+      if (!testName.test(this.user.nome)) {
         this.toast.error("Nome inválido.");
         return;
       }
@@ -81,9 +81,8 @@ export default defineComponent({
       this.loader.startLoading();
 
       const userUpdate: UserUpdate = {
-        nome: this.user.nomeResponsavel,
+        nome: this.user.nome,
         email: this.user.email,
-        nome_completo_paciente: this.auth.patient.nome,
       };
 
       try {

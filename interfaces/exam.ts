@@ -5,6 +5,5 @@ export default interface Exam {
   medico: string;
   data: string;
   local: string;
-  id_paciente: number;
   lembrete_enviado: boolean;
 }
