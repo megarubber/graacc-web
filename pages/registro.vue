@@ -20,14 +20,9 @@
       <p class="font-weight-bold text-h6 mb-3">Insira seus dados</p>
       <section>
         <v-text-field 
-          v-model="user.nomeResponsavel" 
+          v-model="user.nome" 
           prepend-inner-icon="mdi-account-outline"
-          label="Nome do(a) responsável" 
-          />
-        <v-text-field 
-          v-model="user.id_paciente" 
-          prepend-inner-icon="mdi-card-account-details-outline"
-          label="ID do(a) paciente" 
+          label="Nome" 
           />
         <v-text-field 
           v-model="user.email" 
@@ -44,15 +39,6 @@
         />
       </section>
       <v-btn class="w-100" @click="register()">Criar conta</v-btn>
-      <!--
-      <div class="text-center mt-6">
-        <p>Já tem uma conta?</p>
-        <NuxtLink 
-        href="/login" class="font-weight-bold mb-6 text-blue-dark">
-          Faça login aqui.
-        </NuxtLink>
-      </div>
-      -->
       <div class="text-center mt-3">
         <p class="text-center">ou</p>
         <v-btn color="black" width="250" class="align-self-center mt-3" variant="outlined" @click="loginWithGoogle">
@@ -75,11 +61,10 @@ export default defineComponent({
   data() {
     return {
       user: {
-        nomeResponsavel: "",
-        id_paciente: null,
+        nome: "",
         email: "",
         senha: "",
-      },
+      } as UserRegister,
       show: false,
       loader: useLoaderStore(),
       toast: useNuxtApp().$toast as any,
@@ -116,27 +101,13 @@ export default defineComponent({
         return;
       }
 
-      const testId = /^\d$/;
-      if (!testId.test(`${this.user.id_paciente}`)) {
-        this.toast.error("ID inválido.");
-        this.loader.endLoading();
-        return;
-      }
-
       if (this.user.senha.length <= 0) {
         this.toast.error("Senha inválida.");
         this.loader.endLoading();
         return;
       }
 
-      const userRequest: UserRegister = {
-        nome: this.user.nomeResponsavel,
-        email: this.user.email,
-        senha: this.user.senha,
-        id_paciente: Number(this.user.id_paciente),
-      };
-
-      const response = await createUser(userRequest);
+      const response = await createUser(this.user);
       if(response.status == 200) this.$router.push("/login");
       else this.toast.error("Erro ao fazer o cadastro.");
 
