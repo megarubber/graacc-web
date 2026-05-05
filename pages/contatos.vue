@@ -3,7 +3,7 @@
     <v-app-bar>
       <template #prepend>
         <v-app-bar-title
-          class="font-weight-bold ml-2">Contatos do GRAACC</v-app-bar-title>
+          class="font-weight-bold ml-2">Contatos da APARTE</v-app-bar-title>
       </template>
     </v-app-bar>
     <v-main class="d-flex flex-column ga-2">
@@ -66,30 +66,31 @@ export default defineComponent({
         {
           icon: "phone",
           title: "Telefone",
-          info: ["(11) 5908-9100"],
+          info: ["(12) 98245-4711"],
           action: "Ligar",
-          callbackAction: () => changePage('tel:+551159089100'),
-          callbackClipboard: () => this.copy("(11) 5908-9100")
+          callbackAction: () => changePage('tel:+1298245-4711'),
+          callbackClipboard: () => this.copy("(12) 98245-4711")
         },
         {
           icon: "email",
           title: "E-mail",
-          info: ["graacc@graacc.org.br"],
+          info: ["aparte@gmail.com.br"],
           action: "Enviar e-mail",
-          callbackAction: () => changePage('mailto:someone@example.com'),
-          callbackClipboard: () => this.copy("graacc@graacc.org.br")
+          callbackAction: () => changePage('mailto:aparte@gmail.com.br'),
+          callbackClipboard: () => this.copy("aparte@gmail.com.br")
         },
         {
           icon: "map-marker",
           title: "Endereço",
           info: [
-            "Rua Pedro de Toledo, 572",
-            "Vila Clementino - São Paulo, SP",
-            "CEP: 04039-001",
+            "Av. Santa Cruz do Areão, 2495",
+            "Res. Santa Izabel, Taubaté - SP",
+            "CEP: 12061-100",
+            
           ],
           action: "Abrir no mapa",
-          callbackAction: () => openMap(-23.5982, -46.6423),
-          callbackClipboard: () => this.copy("Rua Pedro de Toledo, 572, Vila Clementino - São Paulo, SP, CEP: 04039-001")
+          callbackAction: () => openMap(-22.9924362, -45.5746279),
+          callbackClipboard: () => this.copy("Av. Santa Cruz do Areão, 2495, Res. Santa Izabel, Taubaté - SP, CEP: 12061-100")
         },
       ],
     };

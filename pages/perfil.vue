@@ -11,9 +11,8 @@
     <v-main class="text-center d-flex h-100 justify-space-between flex-column">
       <section class="d-flex flex-column ga-4">
         <client-only>
-          <profile-image :id="user.id_usuario" :main-image="profileImageURL" :size="100" />
+          <profile-image :id="user.id_usuario || -1" :main-image="profileImageURL" :size="100" />
           <h3 style="color: #4b4b4b">{{ user.nome }}</h3>
-          <h3 class="mb-4">{{ patient.nome }}</h3>
         </client-only>
         <v-btn
           class="w-100"
@@ -60,7 +59,7 @@ const showDelete = ref(false);
 
 definePageMeta({ middleware: "auth", showHeader: true });
 const auth = useAuthStore();
-const { user, patient } = storeToRefs(auth);
+const { user } = storeToRefs(auth);
 const profileImageURL: Ref<string | string> = ref('');
 
 profileImageURL.value = user.value.foto_perfil ? 

@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex justify-center align-center">
-    <v-img v-if="image != 'no-image'" class="rounded-circle" :max-width="size" cover :aspect-ratio="1" :src="image" :height="size" />
+    <v-img v-if="image != 'no-image' && id != -1" class="rounded-circle" :max-width="size" cover :aspect-ratio="1" :src="image" :height="size" />
     <svg v-else :width="size" :height="size" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill="#E8F0FF"/>
       <g opacity="0.8">
