@@ -6,5 +6,5 @@ export default interface User {
   role: string;
   foto_perfil: string | null;
   ativar_notificacoes_consultas: boolean;
-  ativar_notificacoes_graacc: boolean;
+  ativar_notificacoes_agendinha: boolean;
 }

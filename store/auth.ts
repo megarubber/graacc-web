@@ -1,7 +1,6 @@
 import type UserToken from "~/interfaces/userToken";
 import type UserAuth from "~/interfaces/userAuth";
 import type User from "~/interfaces/user";
-import type Patient from "~/interfaces/patient";
 import type Notification from "~/interfaces/notification";
 import type GoogleTokens from "~/interfaces/googleTokens";
 import getUserInfo from "~/utils/api/user/getUserInfo";
@@ -11,7 +10,6 @@ type Callback = (status: number, confirmRegister: boolean) => void;
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: {} as User,
-    patient: {} as Patient,
     authenticated: false,
     notifications: [] as Notification[],
     notReadNotifications: 0, 
@@ -28,10 +26,8 @@ export const useAuthStore = defineStore("auth", {
 
         const data = userInfo.data;
 
-        this.patient = data.paciente;
         this.notifications = data.notificacoes;
 
-        delete data.paciente;
         delete data.notificacoes;
 
         this.user = data;
@@ -62,7 +58,6 @@ export const useAuthStore = defineStore("auth", {
         token.value = data.token;
         
         this.user = data.usuario;
-        this.patient = data.paciente;
         this.notifications = data.notificacoes;
       }
       
@@ -83,7 +78,6 @@ export const useAuthStore = defineStore("auth", {
         
         if(!this.user.cadastro_confirmado) callback(status, false);
         else {
-          this.patient = data.patient;
           this.notifications = data.notificacoes;
           callback(status, true);
         }

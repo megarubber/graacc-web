@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import type Notification from "~/interfaces/notification";
-import getPatientNotifications from "~/utils/api/notifications/getPatientNotifications";
+import getUserNotifications from "~/utils/api/notifications/getUserNotifications";
 import { useLoaderStore } from "~/store/loader";
 import { useAuthStore } from "~/store/auth";
 
@@ -96,7 +96,7 @@ export default defineComponent({
     async updateNotifications() {
       this.loader.startLoading();
 
-      const notifications = await getPatientNotifications(this.auth.patient.id_paciente) ?? [];
+      const notifications = await getUserNotifications(this.auth.user.id_usuario) ?? [];
 
       if(notifications.length > 0) {
         this.readNotifications = notifications.filter(
