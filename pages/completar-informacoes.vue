@@ -29,7 +29,6 @@
 import { useAuthStore } from "~/store/auth";
 import updateUserInfo from "~/utils/api/user/updateUserInfo";
 import type UserUpdate from "~/interfaces/userUpdate";
-import getPatientById from "~/utils/api/patient/getPatientById";
 import { useLoaderStore } from "~/store/loader";
 import confirmAccount from "~/utils/api/register/confirmAccount";
 
@@ -53,17 +52,9 @@ async function update() {
     return;
   }
 
-  const patientInfo = await getPatientById(formUser.idPaciente.value as number);
-  if(patientInfo.status != 200) {
-    toast.error("ID do paciente inválido.");
-    loader.endLoading();
-    return;    
-  }
-
   const data: UserUpdate = {
     nome: formUser.nomeResponsavel.value,
     email: formUser.email,
-    nome_completo_paciente: patientInfo.data.nome
   };
 
   const responses = await Promise.all([

@@ -91,7 +91,6 @@
         :medico="selectedExam.medico"
         :data="selectedExam.data"
         :local="selectedExam.local"
-        :id_paciente="selectedExam.id_paciente"
         :lembrete_enviado="selectedExam.lembrete_enviado"
         :show="showExamDetails"
         :modo_google="auth.googleTokens.access_token != undefined"

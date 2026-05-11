@@ -34,9 +34,9 @@
             />
         </v-row>
         <v-row class="d-flex justify-space-between">
-          <p class="mt-2">Informações sobre o GRAACC</p>
+          <p class="mt-2">Informações sobre a APARTE</p>
           <v-switch 
-            v-model="graacc" 
+            v-model="aparte" 
             class="ma-0 pa-0" 
             inset 
             density="compact"
@@ -58,16 +58,16 @@ export default defineComponent({
     return {
       notifications: ref(false),
       appointments: ref(false),
-      graacc: ref(false),
+      aparte: ref(false),
     };
   },
   async mounted() {
     const appointments = Boolean(useCookie("appointments").value);
-    const graacc = Boolean(useCookie("graacc").value);
+    const aparte = Boolean(useCookie("aparte").value);
 
-    this.notifications = appointments || graacc;
+    this.notifications = appointments || aparte;
     this.appointments = appointments;
-    this.graacc = graacc;
+    this.aparte = aparte;
 
     await Notification.requestPermission();
   },
@@ -76,8 +76,8 @@ export default defineComponent({
       const appointments = useCookie("appointments");
       appointments.value = this.appointments ? "1" : null;
 
-      const graacc = useCookie("graacc");
-      graacc.value = this.graacc ? "1" : null;
+      const aparte = useCookie("aparte");
+      aparte.value = this.aparte ? "1" : null;
     }
   }
 });
